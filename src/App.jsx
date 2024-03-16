@@ -1,11 +1,14 @@
 
 import './App.css'
-import Cart from './components/cartComponent/Cart'
-
+import { Home } from './pages/Home'
 function App() {
  
   return (
-   <Cart />
+  <div >
+   
+   <Home />
+   
+   </div>
   )
 }
 
