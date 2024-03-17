@@ -1,10 +1,10 @@
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 
-const Cart = ({price,description,address,postedAgo}) => {
+const Cart = ({price,description,address,postedAgo,image}) => {
   return (
   <>
   <div className=' w-[18rem] h-[20rem] bg-[#f0e9e9] p-2 relative border-[1px] border-solid border-slate-700 '>
-    <img src="../../src/assets/car.webp" alt="Laptop" className=' object-cover h-[200px] w-[100%] ' />
+    <img src={image} alt="Laptop" className=' object-cover h-[200px] w-[100%] ' />
     
     <div className=' absolute p-2 w-full left-1'>
       

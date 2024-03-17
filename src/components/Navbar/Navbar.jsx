@@ -7,7 +7,7 @@ export const Navbar = () => {
         <nav class="flex justify-between  bg-gray-200 text-black w-screen">
           <div class=" flex w-full items-center px-8 py-3">
             <div className="pointer h-full w-20 px-4 cursor-pointer">
-               <img src="../../src/assets/logo.png" alt="logo" className= " object-cover" /> 
+               <img src="../../src/assets/swapify.png" alt="logo" className= " object-cover" /> 
              
             </div>
     

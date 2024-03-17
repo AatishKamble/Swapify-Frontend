@@ -38,7 +38,7 @@ export const HomeCarousel = () => {
     <div className="slider-contaier m-6 ">
     
     
-        <Slider {...settings} className="bg-[#ffff] w-full h-[460px]  ">
+        <Slider {...settings} className="bg-[#ffff] w-full h-[460px] ">
         <div  className="h-[450px] w-full p-[10px] " >
           <img src="../../src/assets/booksGroup.jpg" alt="The Flower"className="object-fill w-full  h-full  "  />
           </div>
@@ -47,12 +47,6 @@ export const HomeCarousel = () => {
           </div>
           <div  className="h-[500px] w-full p-[10px]" >
           <img src="https://res.cloudinary.com/bloomnation/c_limit,d_vendor:global:catalog:product:image.png,f_auto,fl_preserve_transparency,q_auto/v1582168249/vendor/4906/catalog/product/2/0/20170131101257_file_58910be931aed.jpg" alt="The Flower"className="object-fill w-full  h-full  "  />
-          </div>
-          <div  className="h-[500px] w-full p-[10px]" >
-          <img src="http://images2.fanpop.com/image/photos/11300000/Red-roses-roses-11353937-1400-1132.jpg" alt="The Flower"className="object-fill w-full  h-full  "  />
-          </div>
-          <div  className="h-[500px] w-full p-[10px] " >
-          <img src="http://images2.fanpop.com/image/photos/11300000/Red-roses-roses-11353937-1400-1132.jpg" alt="The Flower"className="object-fill w-full  h-full  "  />
           </div>
           <div  className="h-[500px] w-full p-[10px]" >
           <img src="http://images2.fanpop.com/image/photos/11300000/Red-roses-roses-11353937-1400-1132.jpg" alt="The Flower"className="object-fill w-full  h-full  "  />
