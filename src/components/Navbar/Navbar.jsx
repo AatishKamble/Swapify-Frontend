@@ -9,12 +9,13 @@ export const Navbar = () => {
       
         <nav class="flex justify-between  bg-gray-200 text-black w-screen">
           
-          <div class=" flex w-full items-center px-8 py-3">
+          <div class=" flex w-full items-center px-8 py-1">
             <Link to="/">
-            <div className="pointer h-full w-20 px-4 cursor-pointer">
-               <img src="../../src/assets/swapify.png" alt="logo" className= " object-cover" /> 
-             
-            </div>
+           
+        <div class="text-teal-600 flex pt-2 ">
+        <img src="../../src/assets/swapify-removebg.png" alt="logo" className=' object-cover h-20 w-36' />
+       
+        </div>
     </Link>
             <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
               <li><a class="hover:text-gray-900" href="#">Home</a></li>

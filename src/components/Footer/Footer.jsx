@@ -8,7 +8,7 @@ export const Footer = () => {
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
       <div>
         <div class="text-teal-600 flex ">
-        <img src="../../src/assets/swapify.png" alt="logo" className=' object-cover h-20 w-36' />
+        <img src="../../src/assets/swapify-removebg.png" alt="logo" className=' object-cover h-20 w-36' />
        
         </div>
 
