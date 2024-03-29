@@ -25,6 +25,7 @@ export const Navbar = () => {
             </ul>
        
             <div class="hidden xl:flex items-center space-x-5 ">
+              <a href="../../Login/index.html">SignIn</a>
             <Link to="/profile"  className="no-underline mx-7">
             <div className=" text-center text-[12px] " >
               <PersonOutlinedIcon />
