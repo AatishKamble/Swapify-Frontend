@@ -1,5 +1,7 @@
-import Cart from "../cartComponent/Cart"
+import Cart from "../cartComponent/Cart";
+import product from '../../dataset.js';
 import { useState } from "react";
+import products from "../../dataset.js";
 const items = [
     {
       price: 2000,
@@ -60,6 +62,9 @@ const items = [
     
   ];
   
+
+
+
 export const LandingPageRecommandations = () => {
   const ItemsToShow=7;
   const [itemsToShow, setItemsToShow] = useState(ItemsToShow); // Initial number of items to display
@@ -77,14 +82,14 @@ export const LandingPageRecommandations = () => {
   <p className="text-[2rem]">Recommandations</p>
   </div>
     <div className="grid justify-center grid-cols-3 gap-8  ">
-    {items.slice(0, itemsToShow).map((item, index) => (
-        <Cart key={index} price={item.price} description={item.description} address={item.address} postedAgo={item.postedAgo} image={item.image} />
+    {products.slice(0, itemsToShow).map((products, index) => (
+        <Cart key={index} productName={products.productName} productImage={products.productImage} productPrice={products.productPrice} address={products.address} postedAgoDays={products.postedAgoDays}    />
       ))}
 
 
 
    </div>
-   {itemsToShow < items.length && (
+   {itemsToShow < products.length && (
         <div className="w-full flex justify-center m-10">
           <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center" onClick={handleLoadMore}>
             <span>Load More</span>

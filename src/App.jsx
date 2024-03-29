@@ -9,6 +9,8 @@ import Address from './components/Address/Address'
 import OrderSummary from './components/OrderSummary/OrderSummary'
 import ShoppingCart from './pages/Shopingcart';
 import OrderDetails from './components/OrderDetails/OrderDetail'
+
+import Products from './components/Products/Products';
 function App() {
   return (
     <Router>
@@ -21,6 +23,8 @@ function App() {
           <Route path='/address-edit' element={<Address/>} />
           <Route path='/Orders' element={<OrderDetails/>} />
           <Route path='/cart' element={<ShoppingCart/>} />
+          <Route path='/items' element={<Products/>} />
+
         </Routes>
         <Footer />
       </div>
