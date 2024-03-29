@@ -37,9 +37,19 @@ body {
   color: lightblue;
 }
 
-.login-container hr{
-  margin: 20px;
-  color: lightblue;
+.login-container h2 {
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid #000; 
+   line-height: 0.1em;
+   margin: 20px 0 20px;
+   font-size: 20px; 
+} 
+
+h2 span { 
+    background:#fff; 
+    padding:0 10px; 
+    color: #3e4152;
 }
 
 
@@ -92,8 +102,6 @@ body {
   height: 50vh;
   width: 45vw;
   margin: 50px;
-
-
 }
 
 .social-media-icons img {
