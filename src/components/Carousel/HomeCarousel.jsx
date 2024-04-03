@@ -45,6 +45,15 @@ export const HomeCarousel = () => {
           <div  className="h-[500px] w-full p-[10px] " >
           <img src="../../src/assets/booksGroup.jpg" alt="The Flower"className="object-fill w-full  h-full  "  />
           </div>
+          <div  className="h-[500px] w-full p-[10px] " >
+          <img src="../../src/assets/booksGroup.jpg" alt="The Flower"className="object-fill w-full  h-full  "  />
+          </div>
+          <div  className="h-[500px] w-full p-[10px] " >
+          <img src="../../src/assets/booksGroup.jpg" alt="The Flower"className="object-fill w-full  h-full  "  />
+          </div>
+          <div  className="h-[500px] w-full p-[10px] " >
+          <img src="../../src/assets/booksGroup.jpg" alt="The Flower"className="object-fill w-full  h-full  "  />
+          </div>
          
         </Slider>
         </div>

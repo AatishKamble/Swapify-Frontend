@@ -12,6 +12,7 @@ import OrderDetails from './components/OrderDetails/OrderDetail'
 
 import Products from './components/Products/Products';
 import Register from './components/Register/Register';
+import Login from './components/Login/Login.jsx';
 function App() {
   return (
     <Router>
@@ -25,7 +26,8 @@ function App() {
           <Route path='/Orders' element={<OrderDetails/>} />
           <Route path='/cart' element={<ShoppingCart/>} />
           <Route path='/items' element={<Products/>} />
-          <Route path='/register' element={<Register />} />
+          <Route path='/Signup' element={<Register />} />
+          <Route path='/SignIn' element={<Login />} />
         </Routes>
         <Footer />
       </div>

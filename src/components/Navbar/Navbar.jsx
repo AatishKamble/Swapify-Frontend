@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import LoginIcon from '@mui/icons-material/Login';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { Login } from '@mui/icons-material';
 export const Navbar = () => {
   return (
  <>
@@ -25,19 +27,26 @@ export const Navbar = () => {
             </ul>
        
             <div class="hidden xl:flex items-center space-x-5 ">
-              <a href="../../Login/index.html">SignIn</a>
+            <Link to="/SignIn"  className="no-underline mx-7">
+            <div className=" text-center text-[12px] " >
+              <LoginIcon/>
+              <p className="p-0 m-0 font-bold">SignIn</p>
+            </div>
+          </Link>
             <Link to="/profile"  className="no-underline mx-7">
             <div className=" text-center text-[12px] " >
               <PersonOutlinedIcon />
               <p className="p-0 m-0 font-bold">Profile</p>
             </div>
           </Link>
+
           <Link className="no-underline mx-7">
             <div className="text-center text-[12px] ">
               <FavoriteBorderIcon />
               <p className="p-0 m-0 font-bold">Wishlist</p>
             </div>
           </Link>
+
           <Link to="/cart" className="no-underline mx-7">
             <div className="text-center text-[12px]">
               <ShoppingCartOutlinedIcon />
