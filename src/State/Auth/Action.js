@@ -2,7 +2,6 @@ import axios from "axios";
 import { API_BASE_URL } from "../../configApi/configApi";
 import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, REGISTRER_FAILURE, REGISTRER_REQUEST, REGISTRER_SUCCESS } from "./ActionType";
 
-const token = localStorage.getItem("jwt");
 
 const registerRequest = () => ({ type: REGISTRER_REQUEST });
 const registerSuccess = (user) => ({ type: REGISTRER_SUCCESS, payload: user });
@@ -52,12 +51,12 @@ const login = (userData) => async (dispatch) => {
 }
 
 
-const getUserProfile = () => async (dispatch) => {
+const getUserProfile = (jwt) => async (dispatch) => {
     dispatch(getUserRequest());
     try {
-        const response = await axios.post(`${API_BASE_URL}/api/users/profile`, {
+        const response = await axios.get(`${API_BASE_URL}/api/users/profile`, {
             headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${jwt}`
             }
         });
         const user = response.data;
