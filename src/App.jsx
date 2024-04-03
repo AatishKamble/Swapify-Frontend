@@ -11,6 +11,7 @@ import ShoppingCart from './pages/Shopingcart';
 import OrderDetails from './components/OrderDetails/OrderDetail'
 
 import Products from './components/Products/Products';
+import Register from './components/Register/Register';
 function App() {
   return (
     <Router>
@@ -24,7 +25,7 @@ function App() {
           <Route path='/Orders' element={<OrderDetails/>} />
           <Route path='/cart' element={<ShoppingCart/>} />
           <Route path='/items' element={<Products/>} />
-
+          <Route path='/register' element={<Register />} />
         </Routes>
         <Footer />
       </div>
