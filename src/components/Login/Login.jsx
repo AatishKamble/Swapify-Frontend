@@ -35,7 +35,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex  items-center h-[800px] bg-gray-100">
+    <div className="flex  items-center h-[650px] bg-100">
       <div
         className="bg-white ms-[100px] rounded-lg shadow-lg p-8 w-96"
         style={{ boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)" }}
@@ -80,7 +80,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md"
+            className="w-full bg-blue-500 hover:bg-[#283655] text-white font-semibold py-2 px-4 rounded-md shadow-md"
           >
             Login
           </button>

@@ -47,7 +47,7 @@ const Register = () => {
   };
 
   return (
-    <div className=" bg-[#C1E1DC] registration-container px-[50px] py-5 w-[600px] mx-auto my-11  rounded-xl shadow-md space-y-5 ">
+    <div className=" bg-[#e3f2fd] registration-container px-[50px] py-12 w-[600px] mx-auto my-11  rounded-xl shadow-md space-y-5 ">
       <p className="text-[30px] text-center font-extrabold ">User Registration</p>
       
       <form onSubmit={handleSubmit} >
@@ -109,7 +109,7 @@ const Register = () => {
           />
         </div>
 <div className='flex justify-center my-4 '>
-        <button type="submit" className="w-full px-8  text-white bg-[#283655] rounded-md py-2  ">Register</button>
+        <button type="submit" className="w-full px-8  text-white bg-blue-500 hover:bg-[#283655] rounded-md py-2  ">Register</button>
     </div>  </form>
       <div className='flex justify-center text-[16px] font-semibold'>
       <p >Already registered?<Link to="/signin"> <span className='text-blue-500'> <button  className='underline font-bold '>Login</button></span> </Link> </p>
