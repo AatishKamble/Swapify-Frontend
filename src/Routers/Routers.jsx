@@ -8,7 +8,7 @@ import Address from '../components/Address/Address'
 import OrderSummary from '../components/OrderSummary/OrderSummary'
 import ShoppingCart from '../pages/Shopingcart';
 import OrderDetails from '../components/OrderDetails/OrderDetail'
-
+import Login from "../components/Login/Login.jsx"
 import Products from '../components/Products/Products';
 import Register from '../components/Register/Register';
 const Routers = () => {
@@ -24,7 +24,8 @@ const Routers = () => {
           <Route path='/Orders' element={<OrderDetails/>} />
           <Route path='/cart' element={<ShoppingCart/>} />
           <Route path='/items' element={<Products/>} />
-          <Route path='/register' element={<Register />} />
+          <Route path='/signup' element={<Register />} />
+          <Route path="/signin" element={<Login />} />
         </Routes>
         <Footer />
       </div>

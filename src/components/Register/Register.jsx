@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserProfile, register } from '../../State/Auth/Action.js';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 
 const Register = () => {
+
+ const navigate=useNavigate();
+  const dispatch=useDispatch();
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -9,7 +16,6 @@ const Register = () => {
     password: '',
   });
 
-  const [statusMessage, setStatusMessage] = useState('');
 
   const handleChange = (e) => {
     setForm({
@@ -18,48 +24,45 @@ const Register = () => {
     });
   };
 
+  const jwt=localStorage.getItem("jwt");
+  
+  useEffect(()=>{
+   
+    if(jwt){
+      
+    dispatch(getUserProfile(jwt));
+    }
+  },[jwt]
+  
+  );
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (form.firstName && form.lastName && form.email && form.password) {
-      // Here you can add your registration logic
-      // For demonstration purposes, let's just log the values
-      console.log('Form values:', form);
-
-      // Clear form fields
-      setForm({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-      });
-
-      // Display success message
-      setStatusMessage('Registration successful!');
-
-      // Hide message after 3 seconds
-      setTimeout(() => {
-        setStatusMessage('');
-      }, 3000);
-    } else {
-      setStatusMessage('Please fill in all fields.');
-    }
+    console.log("store:",auth)
+    console.log("Registered from data :",form)
+    dispatch(register(form));
+    // navigate("/")
+    
   };
 
   return (
-    <div className="registration-container p-[50px] w-[600px] mx-auto my-11  rounded-xl shadow-md space-y-5 p-2">
-      <h2 className="text-2xl font-bold text-center">User Registration</h2>
+    <div className=" bg-[#C1E1DC] registration-container px-[50px] py-5 w-[600px] mx-auto my-11  rounded-xl shadow-md space-y-5 ">
+      <p className="text-[30px] text-center font-extrabold ">User Registration</p>
       
       <form onSubmit={handleSubmit} >
-        <div className="form-group pb-[15px]">
-          <label htmlFor="firstName" className="block">First Name:</label>
+
+        <div className='flex w-full justify-between '>
+        <div className="form-group pb-[15px] ">
+          <label htmlFor="firstName" className="block ">First Name:</label>
           <input
+            placeholder='Enter First Name'
             type="text"
             id="firstName"
             name="firstName"
             value={form.firstName}
             onChange={handleChange}
-            className="w-full border-gray-300 rounded-md shadow-md focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-0 p-2"
+            className="w-full border-gray-600 border-solid border-2 outline-none   p-2 rounded-md"
             required
           />
         </div>
@@ -67,47 +70,50 @@ const Register = () => {
         <div className="form-group pb-[15px]">
           <label htmlFor="lastName" className="block">Last Name:</label>
           <input
+          placeholder='Enter Last Name'
             type="text"
             id="lastName"
             name="lastName"
             value={form.lastName}
             onChange={handleChange}
-            className="w-full border-gray-300 rounded-md shadow-md focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-0 p-2"
+            className="w-full border-gray-600 border-solid border-2 outline-none p-2 rounded-md"
             required
           />
         </div>
-
+        </div>
         <div className="form-group pb-[15px]">
           <label htmlFor="email" className="block">Email:</label>
           <input
+          placeholder='Enter Email'
             type="email"
             id="email"
             name="email"
             value={form.email}
             onChange={handleChange}
-            className="w-full border-gray-300 rounded-md shadow-md focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-0 p-2"
+            className="w-full border-gray-600 border-solid border-2 outline-none p-2 rounded-md"
             required
           />
         </div>
 
-        <div className="form-group pb-[15px]">
+        <div className="form-group pb-[15px] border-slate-500">
           <label htmlFor="password" className="block">Password:</label>
           <input
+          placeholder='Enter Password'
             type="password"
             id="password"
             name="password"
             value={form.password}
             onChange={handleChange}
-            className="w-full border-gray-300 rounded-md shadow-md focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-0 p-2"
+            className="w-full border-gray-600 border-solid border-2 outline-none  p-2 rounded-md"
             required
           />
         </div>
-
-        <button type="submit" className="w-full px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700">Register</button>
-      </form>
-      {statusMessage && <p className="text-center text-green-500">{statusMessage}</p>}
-      <p className=" text-center font-bold "> Welcome to Swapify</p>
-    </div>
+<div className='flex justify-center my-4 '>
+        <button type="submit" className="w-full px-8  text-white bg-[#283655] rounded-md py-2  ">Register</button>
+    </div>  </form>
+      <div className='flex justify-center text-[16px] font-semibold'>
+      <p >Already registered?<Link to="/signin"> <span className='text-blue-500'> <button  className='underline font-bold '>Login</button></span> </Link> </p>
+   </div> </div>
   );
 };
 

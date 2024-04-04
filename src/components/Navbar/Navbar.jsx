@@ -4,62 +4,86 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import LoginIcon from '@mui/icons-material/Login';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Login } from '@mui/icons-material';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
+import { getUserProfile } from '../../State/Auth/Action.js';
 export const Navbar = () => {
-  return (
- <>
-    
+  
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
+  const auth = useSelector(store => store.auth);
+ 
+  useEffect(() => {
+
+    if (jwt) {
       
-        <nav class="flex justify-between  bg-gray-200 text-black w-screen">
-          
-          <div class=" flex w-full items-center px-8 py-1">
-            <Link to="/">
-           
-        <div class="text-teal-600 flex pt-2 ">
-        <img src="../../src/assets/swapify-removebg.png" alt="logo" className=' object-cover h-20 w-36' />
-       
-        </div>
-    </Link>
-            <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
-              <li><a class="hover:text-gray-900" href="#">Home</a></li>
-              <li><a class="hover:text-gray-900" href="#">Catagory</a></li>
-              <li><a class="hover:text-gray-900" href="#">Collections</a></li>
-              <li><a class="hover:text-gray-900" href="#">Contact Us</a></li>
-            </ul>
-       
-            <div class="hidden xl:flex items-center space-x-5 ">
-            <Link to="/SignIn"  className="no-underline mx-7">
-            <div className=" text-center text-[12px] " >
-              <LoginIcon/>
-              <p className="p-0 m-0 font-bold">SignIn</p>
-            </div>
-          </Link>
-            <Link to="/profile"  className="no-underline mx-7">
-            <div className=" text-center text-[12px] " >
-              <PersonOutlinedIcon />
-              <p className="p-0 m-0 font-bold">Profile</p>
-            </div>
-          </Link>
+      dispatch(getUserProfile(jwt));
+    }
+  }, [jwt]
 
-          <Link className="no-underline mx-7">
-            <div className="text-center text-[12px] ">
-              <FavoriteBorderIcon />
-              <p className="p-0 m-0 font-bold">Wishlist</p>
-            </div>
-          </Link>
+  );
 
-          <Link to="/cart" className="no-underline mx-7">
-            <div className="text-center text-[12px]">
-              <ShoppingCartOutlinedIcon />
-              <p className="p-0 m-0 font-bold">Cart</p>
+  return (
+    <>
+
+
+      <nav class="flex justify-between  bg-gray-200 text-black w-screen">
+
+        <div class=" flex w-full items-center px-8 py-1">
+          <Link to="/">
+
+            <div class="text-teal-600 flex pt-2 ">
+              <img src="../../src/assets/swapify-removebg.png" alt="logo" className=' object-cover h-20 w-36' />
+
             </div>
           </Link>
-        </div>
+          <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
+            <li><a class="hover:text-gray-900" href="#">Home</a></li>
+            <li><a class="hover:text-gray-900" href="#">Catagory</a></li>
+            <li><a class="hover:text-gray-900" href="#">Collections</a></li>
+            <li><a class="hover:text-gray-900" href="#">Contact Us</a></li>
+          </ul>
+
+
+
+          <div class="hidden xl:flex items-center space-x-5 ">
+            {true ? <><Link to="/signin" className="no-underline ms-7 me-4">
+              <div className=" text-center text-[12px] " >
+                <LoginIcon />
+                <p className="p-0 m-0 font-bold">Sign In</p>
+              </div>
+            </Link>
+            </> :
+
+
+              <Link to="/profile" className="no-underline mx-4">
+                <div className='bg-[#336B87] w-[40px] h-10 rounded-[100%] flex items-center justify-center'>
+                  <div className='  font-bold'><p className=" text-center text-[20px] text-black " >A</p></div>
+
+                </div>
+              </Link>
+            }
+            <Link className="no-underline mx-7">
+              <div className="text-center text-[12px] ">
+                <FavoriteBorderIcon />
+                <p className="p-0 m-0 font-bold">Wishlist</p>
+              </div>
+            </Link>
+
+            <Link to="/cart" className="no-underline mx-7">
+              <div className="text-center text-[12px]">
+                <ShoppingCartOutlinedIcon />
+                <p className="p-0 m-0 font-bold">Cart</p>
+              </div>
+            </Link>
           </div>
-        
-          
-         
-        </nav>
-    
+        </div>
+
+
+
+      </nav>
+
     </>
   )
 }

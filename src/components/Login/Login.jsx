@@ -30,15 +30,12 @@ const Login = () => {
 
     validateEmail();
 
-    console.log("Username:", username);
-    console.log("Password:", password);
-
     setUsername("");
     setPassword("");
   };
 
   return (
-    <div className="flex  items-center h-screen bg-gray-100">
+    <div className="flex  items-center h-[800px] bg-gray-100">
       <div
         className="bg-white ms-[100px] rounded-lg shadow-lg p-8 w-96"
         style={{ boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)" }}
@@ -46,7 +43,7 @@ const Login = () => {
         <div className="flex items-center justify-center mb-4">
           <img
             src="../../src/assets/swapify-removebg.png"
-            alt="Facebook"
+            alt="logo"
             className=" h-[200px] w- object-cover"
           />
         </div>
@@ -98,10 +95,10 @@ const Login = () => {
           </a>
         </p>
 
-        <p className="text-center">
-          Don't have an account?{" "}
-          <Link to="/Signup"  className="no-underline mx-7">
-          <button > Sign up</button>
+        <p className="text-center m-0">
+         <span> Don't have an account?</span>
+          <Link to="/signup"  className="no-underline ms-2">
+          <button className="text-blue-600" >Sign up</button>
           </Link>
         </p>
 
@@ -109,7 +106,7 @@ const Login = () => {
 
 {/* div 2 */}
       <div
-        className="bg-white ms-[40px] h-auto w-[780px] rounded-lg shadow-lg p-8 w-96"
+        className="bg-white ms-[40px] h-auto w-[780px] rounded-lg shadow-lg p-8 "
         style={{ boxShadow: "1px 2px 5px rgba(0, 0, 0, 0.1)" }}
       >
         <div className="flex items-center justify-center mb-4">
