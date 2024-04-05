@@ -10,6 +10,7 @@ import ShoppingCart from '../pages/Shopingcart';
 import OrderDetails from '../components/OrderDetails/OrderDetail'
 import Login from "../components/Login/Login.jsx"
 import Products from '../components/Products/Products';
+// import Product from '../components/Product/Product.jsx';
 import Register from '../components/Register/Register';
 const Routers = () => {
   return (
@@ -26,6 +27,7 @@ const Routers = () => {
           <Route path='/items' element={<Products/>} />
           <Route path='/signup' element={<Register />} />
           <Route path="/signin" element={<Login />} />
+          {/* <Route path="/product" element={<Product/>} /> */}
         </Routes>
         <Footer />
       </div>
