@@ -1,37 +1,37 @@
-import React, { useState } from "react";
-import { Link } from 'react-router-dom';
-
+import React, { useState,useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from 'react-router-dom';
+import { getUserProfile, login} from "../../State/Auth/Action.js"
 const Login = () => {
-  
+
+  const dispatch=useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const auth=useSelector(store=>store.auth);
 
-  const validateEmail = () => {
-    const isValid = username.includes("@");
-    if (isValid) {
-      alert("Email is valid!");
-    } else {
-      alert("Please enter a valid email address!");
+  useEffect(()=>{
+   
+    if(auth.jwt){
+    
+    dispatch(getUserProfile(auth.jwt));
     }
-  };
+    
+  },[auth.jwt]
+  
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!username) {
-      alert("Username is required");
-      return;
+    const userData={
+      email:username,
+       password:password
     }
 
-    if (!password) {
-      alert("Password is required");
-      return;
-    }
-
-    validateEmail();
+    dispatch(login(userData));
 
     setUsername("");
     setPassword("");
+    
   };
 
   return (

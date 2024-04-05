@@ -16,7 +16,7 @@ const getUserSuccess = (user) => ({ type:GET_USER_SUCCESS, payload: user });
 const getUserFailure = (error) => ({ type:GET_USER_FAILURE, payload: error });
 
 
-const logoutUser = () => ({ type: LOGOUT, payload: null });
+
 
 const register = (userData) => async (dispatch) => {
     dispatch(registerRequest());
@@ -40,7 +40,8 @@ const register = (userData) => async (dispatch) => {
 const login = (userData) => async (dispatch) => {
     dispatch(loginRequest());
     try {
-        const response = await axios.post(`${API_BASE_URL}/api/auth/singin`, userData);
+    
+        const response = await axios.post(`${API_BASE_URL}/api/auth/signin`,userData);
         const user = response.data;
         if (user.jwt) {
             localStorage.setItem("jwt", user.jwt);
@@ -73,7 +74,7 @@ const getUserProfile = (jwt) => async (dispatch) => {
 }
 
 const logout = () => (dispatch) => {
-    dispatch(logoutUser());
+    dispatch({ type: LOGOUT, payload: null });
     localStorage.clear();
 }
 

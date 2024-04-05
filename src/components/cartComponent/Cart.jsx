@@ -1,6 +1,11 @@
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 
-const Cart = ({ productName,productImage,productPrice,address,postedAgoDays}) => {
+const Cart = ({ productName,productImage,productPrice,dateCreated}) => {
+  dateCreated=new Date(dateCreated);
+  const today = new Date();
+  const differenceInMilliseconds = today - dateCreated;
+  const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+
   return (
   <>
   <div className=' w-[18rem] h-[20rem] bg-[#f0e9e9] p-2 relative border-[1px] border-solid border-slate-700 hover:scale-105 duration-200 cursor-pointer hover:shadow-lg hover:shadow-slate-800'>
@@ -11,10 +16,10 @@ const Cart = ({ productName,productImage,productPrice,address,postedAgoDays}) =>
       <p className=' text-[1.25rem] font-semibold align-middle m-0 '><span><CurrencyRupeeIcon /></span><span>{productPrice}</span></p>
       <p className='text-[1rem] p-1 align-middle font-normal   '>{productName}</p>
 
-      <div className="flex justify-between text-[1rem] mt-1 ">
+      <div className="flex justify-end text-[1rem] mt-1 ">
 
-        <span className='text-[12px] text-gray-600 p-1 '>{address}</span>
-        <span className='text-[12px] text-gray-600 p-1 '>{postedAgoDays} days</span>
+      
+        <span className='text-[12px] text-gray-600 p-1 '>{differenceInDays} days</span>
       </div>
     </div>
   </div>

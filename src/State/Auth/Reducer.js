@@ -29,7 +29,7 @@ const initialState = {
             return { ...state, isLoading: false, error: action.payload }
 
         case LOGOUT:
-            return { ...state }
+            return {...initialState}
         default:
             return state;
     }

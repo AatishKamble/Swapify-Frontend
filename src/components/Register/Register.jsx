@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProfile, register } from '../../State/Auth/Action.js';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import { useEffect } from 'react';
 
 
 const Register = () => {
-
- const navigate=useNavigate();
+  const navigate=useNavigate();
   const dispatch=useDispatch();
   const [form, setForm] = useState({
     firstName: '',
@@ -24,15 +23,15 @@ const Register = () => {
     });
   };
 
-  const jwt=localStorage.getItem("jwt");
-  
+  const auth=useSelector(store=>store.auth);
   useEffect(()=>{
    
-    if(jwt){
+    if(auth.jwt){
       
-    dispatch(getUserProfile(jwt));
+    dispatch(getUserProfile(auth.jwt));
     }
-  },[jwt]
+    
+  },[auth.jwt]
   
   );
   
@@ -43,12 +42,18 @@ const Register = () => {
     console.log("Registered from data :",form)
     dispatch(register(form));
     // navigate("/")
+    setForm({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+    });
     
   };
 
   return (
     <div className=" bg-[#C1E1DC] registration-container px-[50px] py-5 w-[600px] mx-auto my-11  rounded-xl shadow-md space-y-5 ">
-      <p className="text-[30px] text-center font-extrabold ">User Registration</p>
+      <p className="text-[30px] text-center font-extrabold font-serif ">User Registration</p>
       
       <form onSubmit={handleSubmit} >
 

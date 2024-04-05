@@ -1,28 +1,37 @@
 import React, { useState } from 'react'
 import Cart from '../cartComponent/Cart';
 import products from "../../dataset.js";
-
+import {useSelector} from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 
 const FilteredProducts = () => {
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const {product}=useSelector(store=>store);
+  console.log(product)
+
   const ProductsPerPage = 10;
-  const startIndex = (currentPage - 1) * ProductsPerPage;
+  const startIndex = product.products && product.products.content?.currentPage
+  * ProductsPerPage;
   const endIndex = startIndex + ProductsPerPage;
 
-
+const location=useLocation();
+ const navigate=useNavigate();
   function handlePageChange(event, page) {
+  const searchParams=new URLSearchParams(location.search);
+    searchParams.set("page",page);
+    const query=searchParams.toString();
+    navigate({search:`?${query}`})
 
-    setCurrentPage(page);
   }
 
   return (
     <>
       <div className='grid grid-cols-3 justify-between gap-10 h-full'>
-        {products.slice(startIndex, endIndex).map((products, index) => (
+        {product.products && product.products.content?.map((item, index) => (
           <div key={index} className='flex justify-center '>
-            <Cart key={index} productName={products.productName} productImage={products.productImage} productPrice={products.productPrice} address={products.address} postedAgoDays={products.postedAgoDays} />
+            
+            <Cart key={index} productName={item.title} productImage={item.imageURL} productPrice={item.price} dateCreated={item.createdAt} />
 
           </div>
         ))}
@@ -30,10 +39,9 @@ const FilteredProducts = () => {
         <div className='col-span-3'>
           <div className='w-full h-20 flex justify-center items-center'>
             <Pagination
-              count={Math.ceil(products.length / ProductsPerPage)}
+              count={product.products?.totalPages}
               variant="outlined"
               shape="rounded"
-              page={currentPage}
               onChange={handlePageChange}
             />
           </div>
