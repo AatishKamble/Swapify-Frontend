@@ -1,7 +1,11 @@
 import Cart from "../cartComponent/Cart";
-import product from '../../dataset.js';
+
 import { useState } from "react";
-import products from "../../dataset.js";
+import product from "../../dataset.js";
+
+import {useSelector,useDispatch} from "react-redux";
+import { useEffect } from "react";
+import { findProducts } from "../../State/Product/Action.js"
 const items = [
     {
       price: 2000,
@@ -66,14 +70,33 @@ const items = [
 
 
 export const LandingPageRecommandations = () => {
-  const ItemsToShow=7;
-  const [itemsToShow, setItemsToShow] = useState(ItemsToShow); // Initial number of items to display
-  const [loading,setLoading]=useState(false);
+  
+  
+  const dispatch=useDispatch();
+  const recommandationProducts=useSelector(store=>store.product);
+  const [ItemsToShow,setItemsToShow]=useState(10);
+
+ 
+const sortBy="Date-Created";
+  useEffect(()=>{
+   const data = {
+      category: [] ,
+      minPrice:0,
+      maxPrice:1000000,
+      sort: sortBy,
+      pageNumber:0,
+      pageSize:0
+    }
+dispatch(findProducts(data));
+
+  },[sortBy]);
+
   const handleLoadMore = () => {
-    
-    setItemsToShow(prevItemsToShow => prevItemsToShow + ItemsToShow);
+ setItemsToShow(pre=>pre+10)
   };
   
+
+
   return (
     <>
    
@@ -81,21 +104,21 @@ export const LandingPageRecommandations = () => {
 <div className=" border-b-2 border-solid  border-gray-900 m-4 mb-8 mx-0">
   <p className="text-[2rem]">Recommandations</p>
   </div>
-    <div className="grid justify-center grid-cols-3 gap-8  ">
-    {products.slice(0, itemsToShow).map((products, index) => (
-        <Cart key={index} productName={products.productName} productImage={products.productImage} productPrice={products.productPrice} address={products.address} postedAgoDays={products.postedAgoDays}    />
-      ))}
+    <div className="grid justify-center grid-cols-4 gap-8  ">
+    {recommandationProducts.products?.content?.slice(0,ItemsToShow).map((item, index) => (
+      <Cart key={index} productName={item?.title} productImage={item?.imageURL} productPrice={item?.price} dateCreated={item?.createdAt} productId={item?._id} />
+    ))}
 
 
 
    </div>
-   {itemsToShow < products.length && (
+   {ItemsToShow <=recommandationProducts.products?.content?.length &&
         <div className="w-full flex justify-center m-10">
           <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center" onClick={handleLoadMore}>
             <span>Load More</span>
           </button>
         </div>
-      )}
+     }
 
    </div>
  </> )

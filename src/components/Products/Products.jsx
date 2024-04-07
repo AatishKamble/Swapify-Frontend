@@ -74,7 +74,8 @@ console.log(categoryValue)
 
     if (value) {
       searchParams.delete('sort')
-      searchParams.append("sort", value);
+      searchParams.set("sort", value);
+      searchParams.set("page",pageNumber)
     }
 
     history({ search: `?${searchParams.toString()}` });

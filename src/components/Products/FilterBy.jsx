@@ -15,7 +15,9 @@ const FilterBy = ({ FilterByType, dataArray, More }) => {
     const [toShowElement, setToShowElement] = useState(dataArray.slice(0, 5));
 
     const location=useLocation();
+
     const history=useNavigate();
+    
     const searchParams=new URLSearchParams(location.search);
   
 

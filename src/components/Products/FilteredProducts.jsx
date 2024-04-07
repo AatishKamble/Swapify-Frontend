@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Cart from '../cartComponent/Cart';
 import products from "../../dataset.js";
 import {useSelector} from 'react-redux';
@@ -6,24 +6,25 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 
 const FilteredProducts = () => {
+  
+  const location=useLocation();
+  
+   const navigate=useNavigate();
+  const searchParams=new URLSearchParams(location.search);
 
   const {product}=useSelector(store=>store);
-  console.log(product)
+  
 
-  const ProductsPerPage = 10;
-  const startIndex = product.products && product.products.content?.currentPage
-  * ProductsPerPage;
-  const endIndex = startIndex + ProductsPerPage;
-
-const location=useLocation();
- const navigate=useNavigate();
   function handlePageChange(event, page) {
-  const searchParams=new URLSearchParams(location.search);
+    
     searchParams.set("page",page);
     const query=searchParams.toString();
     navigate({search:`?${query}`})
+    window.scrollTo(0, 0);
 
   }
+
+ 
 
   return (
     <>
@@ -31,13 +32,13 @@ const location=useLocation();
         {product.products && product.products.content?.map((item, index) => (
           <div key={index} className='flex justify-center '>
             
-            <Cart key={index} productName={item.title} productImage={item.imageURL} productPrice={item.price} dateCreated={item.createdAt} />
+            <Cart key={index} productName={item.title} productImage={item.imageURL} productPrice={item.price} dateCreated={item.createdAt} productId={item._id} />
 
           </div>
         ))}
 
-        <div className='col-span-3'>
-          <div className='w-full h-20 flex justify-center items-center'>
+        <div className='col-span-3 flex items-end justify-center'>
+          <div className=' w-full h-20 flex justify-center items-center'>
             <Pagination
               count={product.products?.totalPages}
               variant="outlined"

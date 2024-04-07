@@ -4,6 +4,7 @@ import { LandingPageRecommandations } from "../components/LandingPageRecommandat
 import { Navbar } from "../components/Navbar/Navbar"
 
 export const Home = () => {
+
   return (
    <>
 

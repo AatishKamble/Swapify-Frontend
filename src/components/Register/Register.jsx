@@ -52,13 +52,8 @@ const Register = () => {
   };
 
   return (
-<<<<<<< HEAD
     <div className=" bg-[#C1E1DC] registration-container px-[50px] py-5 w-[600px] mx-auto my-11  rounded-xl shadow-md space-y-5 ">
       <p className="text-[30px] text-center font-extrabold font-serif ">User Registration</p>
-=======
-    <div className=" bg-[#e3f2fd] registration-container px-[50px] py-12 w-[600px] mx-auto my-11  rounded-xl shadow-md space-y-5 ">
-      <p className="text-[30px] text-center font-extrabold ">User Registration</p>
->>>>>>> 1bbb1c2969b26baa0e1c72f22a6ef2ddc66c1461
       
       <form onSubmit={handleSubmit} >
 
@@ -125,6 +120,6 @@ const Register = () => {
       <p >Already registered?<Link to="/signin"> <span className='text-blue-500'> <button  className='underline font-bold '>Login</button></span> </Link> </p>
    </div> </div>
   );
-};
+}
 
 export default Register;

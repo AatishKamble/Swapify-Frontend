@@ -4,11 +4,11 @@ import {FIND_PRODUCTS_REQUEST,FIND_PRODUCTS_SUCCESS,FIND_PRODUCTS_FAILURE,FIND_P
 export const findProducts = (reqData) => async (dispatch) => {
     dispatch({type:FIND_PRODUCTS_REQUEST})
     const { category, minPrice, maxPrice, sort, pageNumber, pageSize } = reqData;
-    console.log(reqData)
+    
     try {
-        console.log("req")
+       
 const {data}=await api.get(`/api/products?category=${category}&minPrice=${minPrice}&maxPrice=${maxPrice}&sort=${sort}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
-console.log(data)
+
 dispatch({type:FIND_PRODUCTS_SUCCESS,payload:data});
     } catch (error) {
 dispatch({type:FIND_PRODUCTS_FAILURE,payload:error.message})
