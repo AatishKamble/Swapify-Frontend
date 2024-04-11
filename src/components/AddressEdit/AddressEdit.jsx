@@ -13,7 +13,7 @@ const AddressEdit = ({setCurrentStep}) => {
                 <div className='  bg-slate-700 px-2 flex items-center h-[40px] rounded-t-xl' onClick={()=>setCurrentStep(2)}>
                     <h2 className='text-blue-500 font-bold text-[1.25rem] '><span className='px-5'>Delivery Address</span></h2>
                 </div>
-                <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 ">
+                <form className="bg-slate-300 shadow-md rounded px-8 pt-6 pb-8 ">
                     <div className="flex justify-between">
                         <div className="mb-4 w-1/2 mr-2">
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">
@@ -138,7 +138,7 @@ const AddressEdit = ({setCurrentStep}) => {
                
  
             </div>
-            <div className='justify-between bg-white px-9   py-10  flex items-center h-[40px] rounded-b-xl' >
+            <div className='justify-between bg-inherit px-9   py-10  flex items-center h-[40px] rounded-b-xl' >
                     <button
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="button"

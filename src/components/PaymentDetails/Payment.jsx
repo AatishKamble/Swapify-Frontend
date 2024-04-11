@@ -9,11 +9,11 @@ const Payment = ({ setCurrentStep }) => {
     return (
 
 
-        <div className='w-[800px] h-auto bg-slate-200 relative rounded-xl '>
+        <div className='w-[800px] h-auto bg-inherit relative rounded-xl '>
             <div className='  bg-slate-700 px-2 flex items-center h-[40px] rounded-t-xl'>
                 <h2 className='text-blue-500 font-bold text-[1.25rem] '><span className='px-5'>Payment Information</span></h2>
             </div>
-            <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 ">
+            <form className="bg-inherit shadow-md rounded px-8 pt-6 pb-8 ">
 
                 <div className='flex '>
 

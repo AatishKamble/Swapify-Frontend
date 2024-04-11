@@ -36,7 +36,7 @@ const Checkout = () => {
   return (
     <>
 
-      <div className='w-full h-auto bg-red-300 mt-10'>
+      <div className='w-full h-auto bg-slate-100 mt-10'>
 
 
 

@@ -20,10 +20,10 @@ useEffect(()=>{
 
   return (
     <>
-      <div className='w-full h-auto bg-slate-200 relative   '>
+      <div className='w-full h-auto bg-inherit relative   '>
     <h2 className="font-bold flex justify-start text-[2rem] px-5 text-slate-500">Order Information</h2>
 
-        <div className='flex  justify-evenly h-[250px] px-10 py-4 border-2 border-solid border-slate-800'>
+        <div className='flex  justify-evenly h-[250px] px-10 py-4 border-[2px] border-solid border-slate-200 shadow-sm shadow-slate-900'>
           <div className='w-[300px] h-auto px-5'>
             <h2 className='font-bold'>Shipping Address</h2>
             <p> First Name   Last Name</p>
@@ -53,14 +53,14 @@ useEffect(()=>{
 
         </div>
 
-        <h2 className="font-bold flex justify-start text-[1.5rem] px-5 text-slate-500">Items</h2>
+        <h2 className="mt-10 font-bold flex justify-start text-[1.5rem] px-5 text-slate-500 ">PRODUCTS</h2>
 
-        <div className="border-2 border-solid border-slate-800 mt-5 px-20 ">
+        <div className="border-2 border-solid border-slate-800 mt-5 px-20 pt-10 ">
         
 <CartItems cart={cart} />
         </div>
 
-        <div className='justify-between bg-white px-9   py-10  flex items-center h-[40px] rounded-b-xl' >
+        <div className='justify-between bg-inherit px-9   py-10  flex items-center h-[40px] rounded-b-xl' >
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
