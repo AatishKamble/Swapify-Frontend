@@ -43,6 +43,7 @@ const FilteredProducts = () => {
               count={product.products?.totalPages}
               variant="outlined"
               shape="rounded"
+              page={product.products?.currentPage}
               onChange={handlePageChange}
             />
           </div>

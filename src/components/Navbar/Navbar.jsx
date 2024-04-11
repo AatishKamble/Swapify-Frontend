@@ -39,8 +39,11 @@ export const Navbar = () => {
   }
 
   function handleLogout() {
+    
     dispatch(logout());
+   
     setOpen(false);
+    window.location.reload();
   }
 
   return (
@@ -67,6 +70,12 @@ export const Navbar = () => {
 
 
           <div class="hidden xl:flex items-center space-x-5 ">
+          <Link to="/sell-product" className="no-underline ms-7 me-4">
+                <div className=" text-center text-[12px] " >
+                  <SellIcon />
+                  <p className="p-0 m-0 font-bold">Sell</p>
+                </div>
+              </Link>
             {(!auth.user) ? <><Link to="/signin" className="no-underline ms-7 me-4">
               <div className=" text-center text-[12px] " >
                 <LoginIcon />
@@ -74,12 +83,7 @@ export const Navbar = () => {
               </div>
             </Link>
 
-              <Link to="#" className="no-underline ms-7 me-4">
-                <div className=" text-center text-[12px] " >
-                  <SellIcon />
-                  <p className="p-0 m-0 font-bold">Sell</p>
-                </div>
-              </Link>
+             
 
             </> :
 
@@ -99,12 +103,11 @@ export const Navbar = () => {
               </div>
             </Link>
 
-            <Link to="/cart" className="no-underline mx-7">
-              <div className="text-center text-[12px]">
+              <div className="text-center text-[12px] cursor-pointer" onClick={()=>navigate("/cart")}>
                 <ShoppingCartOutlinedIcon />
                 <p className="p-0 m-0 font-bold">Cart</p>
               </div>
-            </Link>
+          
           </div>
         </div>
         {open &&
@@ -112,7 +115,7 @@ export const Navbar = () => {
 
             <button className='hover:bg-[#E3CD81FF] font-semibold rounded-xl rounded-b-none  text-[1.25rem] h-[2.5rem] '>Account</button>
             <hr />
-            <button className='hover:bg-[#E3CD81FF] rounded-b-xl rounded-t-none font-semibold text-[1.25rem] h-[2.5rem]' onClick={handleLogout}>Logout</button>
+            <button className='hover:bg-[#E3CD81FF] rounded-b-xl rounded-t-none font-semibold text-[1.25rem] h-[2.5rem]' onClick={()=>handleLogout()}>Logout</button>
           </div>
         }
       </nav>

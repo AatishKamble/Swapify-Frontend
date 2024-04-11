@@ -5,7 +5,7 @@ export const addToCart=(reqData)=> async(dispatch)=>{
 
     dispatch({type:ADD_TO_CART_REQUEST});
 try {
-   
+   console.log("in add action",reqData)
         const {data}=await api.post("/api/cart/add",reqData);
         console.log("this is user cart after added =",data);
         dispatch({type:ADD_TO_CART_SUCCESS,payload:data});

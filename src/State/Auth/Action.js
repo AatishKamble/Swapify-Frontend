@@ -45,7 +45,9 @@ const login = (userData) => async (dispatch) => {
         const user = response.data;
         if (user.jwt) {
             localStorage.setItem("jwt", user.jwt);
+            window.location.reload();
         }
+
         dispatch(loginSuccess(user.jwt));
 
     } catch (error) {
@@ -60,7 +62,7 @@ const getUserProfile = (jwt) => async (dispatch) => {
     try {
         const response = await axios.get(`${API_BASE_URL}/api/users/profile`, {
             headers: {
-                "Authorization": `Bearer ${jwt}`
+                "authorization":`Bearer ${jwt}`
             }
         });
         const user = response.data;
@@ -74,8 +76,10 @@ const getUserProfile = (jwt) => async (dispatch) => {
 }
 
 const logout = () => (dispatch) => {
-    dispatch({ type: LOGOUT, payload: null });
+  
+    dispatch({ type: LOGOUT});
     localStorage.clear();
+   
 }
 
 export {register,login,logout,getUserProfile};

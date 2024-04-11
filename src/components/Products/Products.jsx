@@ -84,32 +84,40 @@ console.log(categoryValue)
   }
   function handleOptionChange(event) {
     const value = event.currentTarget.getAttribute('data-value');
-    setSelectedOption(prevSelectedOption => {
-      // if(!prevSelectedOption){
-        let newOption;
-        if(value ==="Price: Low to High"){
-           newOption ="asc-price";
-        }
-        else if(value ==="Price: High to Low"){
-          newOption ="desc-price";
-        }
-        else{
-          newOption = value;
-        }
-       
-      updatedUrl(newOption);
-      return newOption;
-      // }
-      // else{
-      //   return prevSelectedOption;
-      // }
-    })
+console.log("this is valu",value)
+    let newOption;
+    if(value ==="Price: Low to High"){
+       newOption ="asc-price";
+    }
+    else if(value ==="Price: High to Low"){
+      newOption ="desc-price";
+    }
+    else{
+      newOption = value;
+    }
+    setSelectedOption(value);
+  updatedUrl(newOption);
+  
+
     setDropDown(!dropDown);
   }
 
   useEffect(() => {
     const selected = searchParams.getAll('sort');
-    setSelectedOption(selected[0]);
+   
+   let newOption;
+    if(selected[0] ==="asc-price"){
+       newOption ="Price: Low to High";
+    }
+    
+    else if(selected[0]  ==="desc-price"){
+      newOption ="Price: High to Low";
+    }
+    else{
+      newOption = selected[0] ;
+    }
+    setSelectedOption(newOption);
+      
   }, [location.search]);
 
   useEffect(() => {
