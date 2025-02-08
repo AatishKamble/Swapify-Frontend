@@ -50,7 +50,7 @@ export const Navbar = () => {
     <>
 
 
-      <nav class="flex justify-between  bg-gray-200 text-black w-screen relative">
+      <nav class="flex justify-between h-20 bg-gray-100 text-black w-screen relative">
 
         <div class=" flex w-full items-center px-8 py-1">
           <Link to="/">
@@ -115,7 +115,7 @@ export const Navbar = () => {
 
             <button className='hover:bg-[#E3CD81FF] font-semibold rounded-xl rounded-b-none  text-[1.25rem] h-[2.5rem] '>Account</button>
             <hr />
-            <button className='hover:bg-[#E3CD81FF] rounded-b-xl rounded-t-none font-semibold text-[1.25rem] h-[2.5rem]' onClick={()=>handleLogout()}>Logout</button>
+            <button className='hover:bg-[#E3CD81FF] rounded-b-xl rounded-t-none font-semibold text-[1.25rem] h-[2rem]' onClick={()=>handleLogout()}>Logout</button>
           </div>
         }
       </nav>

@@ -130,11 +130,11 @@ console.log("this is valu",value)
 
   return (
     <>
-      <div className='bg-slate-200 p-0 py-10 m-0 relative h-auto w-full mt-4 grid grid-cols-[280px,1fr]   justify-center'>
+      <div className='p-0 py-10 m-0 relative h-auto w-full mt-4 grid grid-cols-[280px,1fr]   justify-center'>
 
 
 
-        <div className=' bg-slate-200  grid-cols-[280px,1fr] h-auto border-e-2   '>
+        <div className='   grid-cols-[280px,1fr] h-auto border-e-1   '>
           <div className='bg-slate-100 '>
             <div className=' px-5 h-[4rem] flex  items-center justify-between '>
               <p className='text-[1.5rem] font-bold '>Filters</p> <span><FilterListIcon /></span>

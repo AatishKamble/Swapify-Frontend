@@ -85,7 +85,7 @@ const FilterBy = ({ FilterByType, dataArray, More }) => {
 
     return (
         <>
-            <div className='bg-slate-100 h-12'>
+            <div className=' h-12'>
      
                 {showInput ? (
                     <div className='h-full flex items-center justify-center'>
@@ -106,7 +106,7 @@ const FilterBy = ({ FilterByType, dataArray, More }) => {
                 )}
             </div>
 
-            <div className={`${visible ? 'w-full h-auto pb-6 ps-4 pt-3 bg-slate-100 transition-all duration-1000 ease-in-out' : 'hidden'}`}>
+            <div className={`${visible ? 'w-full h-auto pb-6 ps-4 pt-3 transition-all duration-1000 ease-in-out' : 'hidden'}`}>
                 <ul className='list-none'>
                     {search ? (
                         searchResult.map((item, index) => (
