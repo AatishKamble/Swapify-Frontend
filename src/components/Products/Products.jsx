@@ -166,10 +166,10 @@ console.log("this is valu",value)
             {
               dropDown ?
                 (
-                  <div className='bg-red-600 w-[250px] h-auto absolute top-2 z-50 right-2   '>
+                  <div className='bg-[#e7eded] w-[250px] h-auto absolute top-2 z-50 right-2   '>
                     <div className='flex flex-col   w-full '>
                       {sortByOptions.map((item, index) => (
-                        <div key={index} className='h-[2.5rem] ps-10 flex items-center hover:bg-orange-500 cursor-pointer' data-value={item} onClick={handleOptionChange}>
+                        <div key={index} className='h-[2.5rem] ps-10 flex items-center hover:bg-[#bdc7c8] cursor-pointer' data-value={item} onClick={handleOptionChange}>
                           {selectedOption.toString() === item && <span className='me-5 absolute left-2'><DoneIcon /></span>}
                           <span>{item}</span>
                         </div>

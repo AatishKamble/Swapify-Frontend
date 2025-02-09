@@ -80,7 +80,7 @@ const FilterBy = ({ FilterByType, dataArray, More }) => {
     useEffect(() => {
       
         const combinedItems = [...selected, ...dataArray.filter(item => !selected.includes(item))];
-        setToShowElement(combinedItems.slice(0, 5));
+        setToShowElement(combinedItems.slice(0, 10));
     }, [selected, dataArray]);
 
     return (
