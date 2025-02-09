@@ -78,7 +78,7 @@ console.log(categoryValue)
       searchParams.set("page",pageNumber)
     }
 
-    history({ search: ?${searchParams.toString()} });
+    history({ search:`?${searchParams.toString()} `});
 
 
   }
