@@ -13,8 +13,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch} from 'react-redux';
 import {findProducts} from "../../State/Product/Action.js";
 const Products = () => {
-  const uniqueCategories = ["Smartphones","Bikes"];
-  const uniqueAddresses = ["maharashtra", "Gujrat", "Delhi", "Karnatka", "Rajshthan", "Tamilnadu", "Jammu Kashmir"]
+  const uniqueCategories = ["Electronic","Books & Study Materials","Photography & Videography","Clothing & Accessories","Furniture & Home Essentials","Gaming & Accessories","Sports & Fitness","Toy's","Miscellaneous"];
+  const uniqueAddresses = ["Maharashtra", "Gujrat", "Delhi", "Karnatka", "Rajshthan", "Tamilnadu", "Jammu Kashmir"]
   const sortByOptions = ["Date-Created", "Price: Low to High", "Price: High to Low"];
   const priceRange = ['1000-2000', '2000-3000', '3000-6000', '6000-10000', '>10000 '];
   const More = true;
@@ -78,7 +78,7 @@ console.log(categoryValue)
       searchParams.set("page",pageNumber)
     }
 
-    history({ search: `?${searchParams.toString()}` });
+    history({ search: ?${searchParams.toString()} });
 
 
   }
@@ -130,14 +130,14 @@ console.log("this is valu",value)
 
   return (
     <>
-      <div className='p-0 py-10 m-0 relative h-auto w-full mt-4 grid grid-cols-[280px,1fr]   justify-center'>
+      <div className='p-0 py-10 m-0 relative  h-auto w-full mt-4 grid grid-cols-[280px,1fr]   justify-center'>
 
 
 
         <div className='   grid-cols-[280px,1fr] h-auto border-e-1   '>
           <div className='bg-slate-100 '>
             <div className=' px-5 h-[4rem] flex  items-center justify-between '>
-              <p className='text-[1.5rem] font-bold '>Filters</p> <span><FilterListIcon /></span>
+              <p className='text-[1.5rem] inter-new '>Filters</p> <span><FilterListIcon /></span>
             </div>
 
             <FilterBy FilterByType="Categories" dataArray={uniqueCategories} More={More} />
@@ -156,20 +156,20 @@ console.log("this is valu",value)
 
 
             <div className='cursor-pointer absolute right-0 bottom-1 w-[250px]' onClick={handleDropDown}>
-              <span className='m-2 text-neutral-900 font-semibold text-[1rem]'>SORT BY :</span>
+              <span className='m-2 text-neutral-900 inter-new text-[1rem]'>SORT BY :</span>
 
-              <span className=' text-neutral-900 font-normal text-[1rem] pe-6 '>{selectedOption}</span>
+              <span className=' text-neutral-900 inter-new text-[1rem] pe-6 '>{selectedOption}</span>
               <div className='relative  ms-5'>
-                <span className=' text-neutral-900 font-normal text-[1rem] ms-2 absolute right-2 bottom-0'><FilterAltIcon /></span>
+                <span className=' text-neutral-900 inter-new text-[1rem] ms-2 absolute right-2 bottom-0'><FilterAltIcon /></span>
 
               </div>      </div>
             {
               dropDown ?
                 (
-                  <div className='bg-[#eff3f3] w-[250px] h-auto absolute top-2 z-50 right-2   '>
+                  <div className='bg-red-600 w-[250px] h-auto absolute top-2 z-50 right-2   '>
                     <div className='flex flex-col   w-full '>
                       {sortByOptions.map((item, index) => (
-                        <div key={index} className='h-[2.5rem] ps-10 flex items-center hover:bg-[#cdd2d6] cursor-pointer' data-value={item} onClick={handleOptionChange}>
+                        <div key={index} className='h-[2.5rem] ps-10 flex items-center hover:bg-orange-500 cursor-pointer' data-value={item} onClick={handleOptionChange}>
                           {selectedOption.toString() === item && <span className='me-5 absolute left-2'><DoneIcon /></span>}
                           <span>{item}</span>
                         </div>
