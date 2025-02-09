@@ -1,124 +1,127 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from 'react-router-dom';
-import { getUserProfile, login} from "../../State/Auth/Action.js"
+import { Link } from 'react-router-dom';
+import { getUserProfile, login } from "../../State/Auth/Action.js";
+
 const Login = () => {
-
-  const dispatch=useDispatch();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const auth=useSelector(store=>store.auth);
-
-  useEffect(()=>{
-   
-    if(auth.jwt){
-    
-    dispatch(getUserProfile(auth.jwt));
-    }
-    
-  },[auth.jwt]
+  const dispatch = useDispatch();
+  const auth = useSelector(store => store.auth);
   
-  );
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  });
+
+  useEffect(() => {
+    if (auth.jwt) {
+      dispatch(getUserProfile(auth.jwt));
+    }
+  }, [auth.jwt, dispatch]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const userData={
-      email:username,
-       password:password
-    }
-
-    dispatch(login(userData));
-   
-    setUsername("");
-    setPassword("");
-    
+    dispatch(login(formData));
+    setFormData({ email: "", password: "" });
   };
 
   return (
-    <div className="flex  items-center h-[650px] bg-100">
-      <div
-        className="bg-white ms-[100px] rounded-lg shadow-lg p-8 w-96"
-        style={{ boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)" }}
-      >
-        <div className="flex items-center justify-center mb-4">
-          <img
-            src="../../src/assets/swapify-removebg.png"
-            alt="logo"
-            className=" h-[200px] w- object-cover"
-          />
-        </div>
-
-        <h2 className="text-2xl text-center mb-6">
-          <span className="bg-white font-semibold">Login</span>
-        </h2>
-
-        <form action="#" method="post" onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <input
-              type="text"
-              name="username"
-              id="username"
-              placeholder="Username"
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+      <div className="flex gap-8 w-full max-w-6xl mx-auto">
+        {/* Login Form */}
+        <div className="bg-white rounded-xl shadow-md p-8 w-full max-w-md">
+          <div className="flex justify-center mb-6">
+            <img
+              src="../../src/assets/swapify-removebg.png"
+              alt="Swapify Logo"
+              className="h-32 object-contain"
             />
           </div>
 
-          <div className="mb-4">
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            />
+          <h2 className="text-2xl font-semibold text-center mb-8">
+            Welcome Back
+          </h2>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Email address"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none"
+                required
+              />
+            </div>
+
+            <div>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Password"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200"
+            >
+              Sign In
+            </button>
+          </form>
+
+          <div className="mt-6 space-y-4">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">OR</span>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <Link to="/forgot-password" className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                Forgot your password?
+              </Link>
+            </div>
+
+            <div className="text-center text-sm">
+              <span className="text-gray-600">Don't have an account?</span>
+              <Link to="/signup" className="ml-2 text-blue-600 hover:text-blue-700 font-medium">
+                Sign up
+              </Link>
+            </div>
           </div>
-
-          <button
-            type="submit"
-            className="w-full bg-blue-500 hover:bg-[#283655] text-white font-semibold py-2 px-4 rounded-md shadow-md"
-          >
-            Login
-          </button>
-        </form>
-        <h2 className="text-center mt-4 text-gray-500">
-          <span className="text-black">OR</span>
-        </h2>
-
-        <p className="text-center">
-          <a href="#" className="text-blue-500">
-            Forgot password?
-          </a>
-        </p>
-
-        <p className="text-center m-0">
-         <span> Don't have an account?</span>
-          <Link to="/signup"  className="no-underline ms-2">
-          <button className="text-blue-600" >Sign up</button>
-          </Link>
-        </p>
-
-      </div>
-
-{/* div 2 */}
-      <div
-        className="bg-white ms-[40px] h-auto w-[780px] rounded-lg shadow-lg p-8 "
-        style={{ boxShadow: "1px 2px 5px rgba(0, 0, 0, 0.1)" }}
-      >
-        <div className="flex items-center justify-center mb-4">
-          <img
-            src="../../src/assets/xchange.png"
-            alt="ad"
-            className="object-cover"
-          />
         </div>
-        <p className="text-center text-black-500 font-bold">
-          Swap your way to savings and sustainability with Swapify.
-        </p>
+
+        {/* Feature Showcase */}
+        <div className="hidden lg:block bg-white rounded-xl shadow-md p-8 w-full max-w-2xl">
+          <div className="flex flex-col h-full">
+            <div className="flex-1 flex items-center justify-center">
+              <img
+                src="../../src/assets/xchange.png"
+                alt="Swapify Features"
+                className="max-w-full h-auto rounded-lg"
+              />
+            </div>
+            <p className="text-center text-lg font-semibold text-gray-800 mt-6">
+              Swap your way to savings and sustainability with Swapify
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

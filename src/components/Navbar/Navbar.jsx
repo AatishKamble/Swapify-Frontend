@@ -1,128 +1,267 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import LoginIcon from '@mui/icons-material/Login';
 import SellIcon from '@mui/icons-material/Sell';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import { Login } from '@mui/icons-material';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-
+import SearchIcon from '@mui/icons-material/Search';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { getUserProfile, logout } from '../../State/Auth/Action.js';
+
+const categories = [
+  {
+    name: "Books & Study Materials",
+    subcategories: ["Fiction", "Non-fiction", "Fantasy", "Textbooks & Reference Books", "Notebooks & Stationery"]
+  },
+  {
+    name: "Electronic",
+    subcategories: ["Mobile Phones & Tablets", "Laptops & Accessories", "Cameras", "Headphones & Speakers", "Smartwatches & Gadgets", "Desktops & Monitors", "Keyboards & Mice", "Wi-Fi Routers & Modems", "Cables & Adapters", "USB Hubs"]
+  },
+  {
+    name: "Photography & Videography",
+    subcategories: ["DSLR & Mirrorless Cameras", "Camera Accessories", "Lighting & Studio Equipment"]
+  },
+  {
+    name: "Clothing & Accessories",
+    subcategories: ["Formal Wear", "Casual Wear", "Shoes & Bags"]
+  },
+  {
+    name: "Furniture & Home Essentials",
+    subcategories: ["Desks & Chairs", "Beds & Mattresses", "Kitchen Appliances"]
+  },
+  {
+    name: "Gaming & Accessories",
+    subcategories: ["Gaming Consoles & Controllers", "VR Headsets & Simulators", "Gaming Chairs & Desks"]
+  },
+  {
+    name: "Sports & Fitness",
+    subcategories: ["Dumbbells & Resistance Bands", "Yoga Mats & Foam Rollers", "Footballs & Basketballs", "Cricket Bats & Kits", "Badminton & Tennis Rackets"]
+  },
+  {
+    name: "Toy",
+    subcategories: ["Action Figures", "Board Games", "Puzzles"]
+  },
+  {
+    name: "Miscellaneous",
+    subcategories: ["Sports & Fitness Equipment", "Hobby & Musical Instruments"]
+  }
+];
+
 export const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
   const auth = useSelector(store => store.auth);
+  const [open, setOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showCategories, setShowCategories] = useState(false);
 
   useEffect(() => {
-
     if (jwt) {
       dispatch(getUserProfile(jwt));
     }
-
   }, [jwt]);
 
   useEffect(() => {
-
     if (location.pathname === "/signin" || location.pathname === "/signup") {
       navigate(-1);
     }
+  }, [auth.user]);
 
-  }, [auth.user])
-
-  const [open, setOpen] = useState(false);
-
-  function handleProfileClick() {
-    setOpen(!open);
-
-  }
-
-  function handleLogout() {
-    
+  const handleProfileClick = () => setOpen(!open);
+  
+  const handleLogout = () => {
     dispatch(logout());
-   
     setOpen(false);
     window.location.reload();
-  }
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    // navigate(/search?q=${searchQuery});
+  };
+
+  const handleCategoryClick = (category) => {
+    // navigate(/items?category=${encodeURIComponent(category)});
+    setShowCategories(false);
+  };
+
+  const handleSubcategoryClick = (category, subcategory) => {
+    // navigate(/items?category=${encodeURIComponent(category)}&subcategory=${encodeURIComponent(subcategory)});
+    setShowCategories(false);
+  };
 
   return (
-    <>
+    <div className="sticky top-0 z-50">
+      <nav className="bg-white shadow-md">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex justify-between items-center h-20">
+            {/* Logo */}
+            <Link to="/" className="flex-shrink-0">
+              <img 
+                src="/src/assets/swapify-removebg.png" 
+                alt="logo" 
+                className="h-16 w-auto object-contain transition-transform hover:scale-105"
+              />
+            </Link>
 
+            {/* Navigation Links */}
+            <ul className="hidden md:flex items-center space-x-8">
+              <li>
+                <Link
+                  to="/"
+                  className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm"
+                >
+                  Home
+                </Link>
+              </li>
+              <li className="relative">
+                <button
+                  className="flex items-center text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm gap-1"
+                  onClick={() => setShowCategories(!showCategories)}
+                >
+                  Categories
+                  <KeyboardArrowDownIcon className="h-5 w-5" />
+                </button>
+                
+                {/* Mega Menu */}
+                {showCategories && (
+                  <div 
+                    className="absolute left-0 mt-2 w-[1000px] bg-white shadow-xl rounded-lg p-6"
+                    onMouseLeave={() => setShowCategories(false)}
+                  >
+                    <div className="grid grid-cols-3 gap-6">
+                      {categories.map((category) => (
+                        <div key={category.name} className="space-y-3">
+                          <button
+                            onClick={() => handleCategoryClick(category.name)}
+                            className="w-full text-left font-semibold text-blue-600 text-sm hover:text-blue-700 transition-colors duration-200"
+                          >
+                            {category.name}
+                          </button>
+                          <div className="space-y-2 ml-2 border-l-2 border-gray-100 pl-3">
+                            {category.subcategories.map((subcategory) => (
+                              <button
+                                key={subcategory}
+                                onClick={() => handleSubcategoryClick(category.name, subcategory)}
+                                className="block w-full text-left text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded px-2 py-1 transition-colors duration-200"
+                              >
+                                {subcategory}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </li>
+              {['Collections', 'Contact Us'].map((item) => (
+                <li key={item}>
+                  <Link
+                    to={item=='Collections' && '/items'}
+                    className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm"
+                  >
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
 
-      <nav class="flex justify-between h-20 bg-gray-100 text-black w-screen relative">
+            {/* Search Bar */}
+            <form 
+              onSubmit={handleSearch} 
+              className="hidden md:flex items-center max-w-md w-full mx-4"
+            >
+              <div className="relative w-full">
+                <input 
+                  type="text" 
+                  placeholder="Search products..." 
+                  value={searchQuery} 
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-4 py-2 rounded-full border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 outline-none text-sm"
+                />
+                <button 
+                  type="submit"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-500 transition-colors duration-200"
+                >
+                  <SearchIcon className="h-5 w-5" />
+                </button>
+              </div>
+            </form>
 
-        <div class=" flex w-full items-center px-8 py-1">
-          <Link to="/">
-
-            <div class="text-teal-600 flex pt-2 ">
-              <img src="../../src/assets/swapify-removebg.png" alt="logo" className=' object-cover h-20 w-36' />
-
-            </div>
-          </Link>
-          <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
-            <li><a class="hover:text-gray-900" href="#">Home</a></li>
-            <li><Link to="/items" class="hover:text-gray-900" >Catagories</Link></li>
-            <li><a class="hover:text-gray-900" href="#">Collections</a></li>
-            <li><a class="hover:text-gray-900" href="#">Contact Us</a></li>
-          </ul>
-
-
-
-          <div class="hidden xl:flex items-center space-x-5 ">
-          <Link to="/sell-product" className="no-underline ms-7 me-4">
-                <div className=" text-center text-[12px] " >
-                  <SellIcon />
-                  <p className="p-0 m-0 font-bold">Sell</p>
-                </div>
+            {/* Right Side Icons */}
+            <div className="hidden xl:flex items-center space-x-6">
+              <Link 
+                to="/sell-product" 
+                className="group flex flex-col items-center text-gray-700 hover:text-blue-600 transition-colors duration-200"
+              >
+                <SellIcon className="h-6 w-6" />
+                <span className="text-xs font-medium mt-1">Sell</span>
               </Link>
-            {(!auth.user) ? <><Link to="/signin" className="no-underline ms-7 me-4">
-              <div className=" text-center text-[12px] " >
-                <LoginIcon />
-                <p className="p-0 m-0 font-bold">Sign In</p>
-              </div>
-            </Link>
 
-             
+              {auth.user ? (
+                <div className="relative">
+                  <button 
+                    onClick={handleProfileClick}
+                    className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center text-white hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-md"
+                  >
+                    <span className="text-lg font-semibold">
+                      {auth.user?.firstName[0].toUpperCase()}
+                    </span>
+                  </button>
 
-            </> :
+                  {open && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50 border border-gray-100">
+                      <button 
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+                        onClick={() => navigate('/account')}
+                      >
+                        Account
+                      </button>
+                      <hr className="my-1" />
+                      <button 
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link 
+                  to="/signin" 
+                  className="group flex flex-col items-center text-gray-700 hover:text-blue-600 transition-colors duration-200"
+                >
+                  <LoginIcon className="h-6 w-6" />
+                  <span className="text-xs font-medium mt-1">Sign In</span>
+                </Link>
+              )}
 
+              <Link 
+                to="/wishlist" 
+                className="group flex flex-col items-center text-gray-700 hover:text-blue-600 transition-colors duration-200"
+              >
+                <FavoriteBorderIcon className="h-6 w-6" />
+                <span className="text-xs font-medium mt-1">Wishlist</span>
+              </Link>
 
-
-
-
-              <div className='bg-[#336B87] w-[40px] h-10 rounded-[100%] flex items-center justify-center'>
-                <button className='  font-bold' onClick={handleProfileClick}><p className=" text-center text-[20px] text-black " >{auth.user?.firstName[0].toUpperCase()}</p></button>
-              </div>
-
-            }
-            <Link className="no-underline mx-7">
-              <div className="text-center text-[12px] ">
-                <FavoriteBorderIcon />
-                <p className="p-0 m-0 font-bold">Wishlist</p>
-              </div>
-            </Link>
-
-              <div className="text-center text-[12px] cursor-pointer" onClick={()=>navigate("/cart")}>
-                <ShoppingCartOutlinedIcon />
-                <p className="p-0 m-0 font-bold">Cart</p>
-              </div>
-          
+              <button 
+                onClick={() => navigate("/cart")}
+                className="group flex flex-col items-center text-gray-700 hover:text-blue-600 transition-colors duration-200"
+              >
+                <ShoppingCartOutlinedIcon className="h-6 w-6" />
+                <span className="text-xs font-medium mt-1">Cart</span>
+              </button>
+            </div>
           </div>
         </div>
-        {open &&
-          <div className='bg-[#B1B3B3FF] flex flex-col shadow-md shadow-gray-900  w-[110px] h-auto absolute right-20 rounded-xl top-20 z-50'>
-
-            <button className='hover:bg-[#E3CD81FF] font-semibold rounded-xl rounded-b-none  text-[1.25rem] h-[2.5rem] '>Account</button>
-            <hr />
-            <button className='hover:bg-[#E3CD81FF] rounded-b-xl rounded-t-none font-semibold text-[1.25rem] h-[2rem]' onClick={()=>handleLogout()}>Logout</button>
-          </div>
-        }
       </nav>
+    </div>
+  );
+};
 
-
-
-
-    </>
-  )
-}
+export default Navbar;

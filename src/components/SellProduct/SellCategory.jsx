@@ -1,5 +1,3 @@
-
-
 import { useState } from "react";
 import {useNavigate} from "react-router-dom"
 const SellCategory = ({ onSelectCategory }) => {
@@ -7,11 +5,20 @@ const SellCategory = ({ onSelectCategory }) => {
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [open, setOpen] = useState(false);
 const navigate=useNavigate();
-  const categories = ["Electronic", "Books", "Toy"];
+  const categories = ["Books & Study Materials","Electronic","Photography & Videography","Clothing & Accessories","Furniture & Home Essentials","Gaming & Accessories", "Sports & Fitness","Toy","Miscellaneous"];
+
   const subcategories = {
-    Electronic: ["Smartphones", "Laptops", "Cameras"],
-    Books: ["Fiction", "Non-fiction", "Fantasy"],
-    Toy: ["Action Figures", "Board Games", "Puzzles"]
+
+    Electronic: ["Mobile Phones & Tablets", "Laptops & Accessories", "Cameras"," Headphones & Speakers","Smartwatches & Gadgets","Desktops & Monitors","Keyboards & Mice","Wi-Fi Routers & Modems","Cables & Adapters","USB Hubs"],
+    "Books & Study Materials" : ["Fiction", "Non-fiction", "Fantasy","Textbooks & Reference Books" ,"Notebooks & Stationery"],
+    Toy: ["Action Figures", "Board Games", "Puzzles"],
+    "Furniture & Home Essentials" : ["Desks & Chairs","Beds & Mattresses","Kitchen Appliances"],
+    "Clothing & Accessories" : ["Formal Wear"," Casual Wear","Shoes & Bags"],
+    Miscellaneous : ["Sports & Fitness Equipment ","Hobby & Musical Instruments"],
+    "Gaming & Accessories": ["Gaming Consoles & Controllers","VR Headsets & Simulators","Gaming Chairs & Desks"],
+    "Photography & Videography":["DSLR & Mirrorless Cameras","Camera Accessories","Lighting & Studio Equipment"],
+    "Sports & Fitness":["Dumbbells & Resistance Bands","Yoga Mats & Foam Rollers","Footballs & Basketballs","Cricket Bats & Kits","Badminton & Tennis Rackets"]
+
   };
 
   function handleParentCategory(item) {
@@ -38,35 +45,35 @@ const navigate=useNavigate();
   }
   return (
     <>
-   <div className="my-2 mx-auto w-[500px] font-bold text-[2rem] text-slate-600">
+   <div className="my-5 mx-auto w-[300px] font-bold text-[2.5rem] text-slate-600">
    <h2>Select Category </h2>
    </div>
 
-      <div className='bg-slate-100 w-[500px] h-[500px] border-2 border-solid border-slate-900 flex mx-auto my-10 px-1'>
+      <div className='bg-slate-100 w-[650px] h-[500px] border-1 border-solid border-slate-800 flex mx-auto my-10 px-1 rounded-xl'>
         
      
-        <div className="bg-slate-200 w-[200px] h-full">
+        <div className=" w-[300px] h-full"> {/*first category */}
 
           {
             categories.map((item, index) => {
               return (<div onClick={() => handleParentCategory(item)}
-                className="bg-gray-400 hover:bg-gray-600 w-full h-[50px] px-2 my-1 flex items-center text-[1.25rem] text-slate-900 font-semibold">
+                className="bg-gray-400 inter-new hover:bg-gray-300 w-full h-[50px] px-2 my-1 flex items-center text-[1.2rem] text-slate-900  rounded-md">
                 <p>{item}</p>
               </div>)
             })
           }
 
         </div>
-        {/*subca*/}
+         {/* second category */}
 
         {
           open &&
-          <div className="bg-slate-200 border-x-2 border-solid border-slate-200  w-[200px] h-full mx-1">
+          <div className=" border-x-2 border-solid border-slate-100 w-[300px] h-full mx-1">
 {
 subcategories[selectedParentCategory].map((item,index)=>{
         return(
             <div onClick={() => handlesubCategory(item)}
-              className="bg-gray-400 hover:bg-gray-600 w-full h-[50px] px-2 my-1 flex items-center text-[1.25rem] text-slate-900 font-semibold">
+              className="bg-gray-400 inter-new hover:bg-gray-300 w-full h-[30px] px-2 my-1 flex items-center text-[1.1 rem] text-slate-900 from-neutral-900 rounded-md">
               <p>{item}</p>
             </div>
             )
