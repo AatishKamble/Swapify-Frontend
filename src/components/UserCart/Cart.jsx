@@ -30,7 +30,7 @@ const Cart = () => {
         <>
             {(auth.user && cart.cart?.totalItems) ?
 
-                <div className='bg-[#F1F1F2] w-full flex pb-20  h-auto justify-evenly py-8 overflow-y-scroll my-2  '>
+                <div className='w-full flex pb-20  h-auto justify-evenly py-8 overflow-y-scroll my-2  '>
 
 <div className="w-[60%] pb-10">
                         <div className=" ms-10 h-[800px]   ">
@@ -50,7 +50,7 @@ const Cart = () => {
 
 
                 :
-                <div className="w-full h-[500px] bg-[#E3CCB2] flex flex-col justify-center items-center">
+                <div className="w-full h-[500px] bg-[#def9fa] flex flex-col justify-center items-center">
 
                     <div>
 

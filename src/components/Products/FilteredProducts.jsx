@@ -8,7 +8,7 @@ import Pagination from '@mui/material/Pagination';
 const FilteredProducts = () => {
   
   const location=useLocation();
-  
+ 
    const navigate=useNavigate();
   const searchParams=new URLSearchParams(location.search);
 

@@ -18,10 +18,22 @@ import ShoppingCart from '../pages/ShoppingCart.jsx';
 import Checkout from '../pages/Checkout.jsx';
 import SellProduct from '../components/SellProduct/SellProduct.jsx';
 import ProductsUpload from '../components/SellProduct/ProductsUpload.jsx';
+import { useLocation } from 'react-router-dom';
+import AccountDetail from '../components/AccountDetails/AccountDetail.jsx';
 const Routers = () => {
+
+// const location=useLocation();
+//   const sellRoutes=[
+//     '/sell-category',
+//     '/sell-product-detail'
+//   ];
+
+
   return (
     <Router>
       <div>
+
+        {/* {sellRoutes.some(location.pathname.startsWith(sellRoutes))} */}
         <Navbar />
         <Routes>
           <Route path='/' element={<Home/>} />
@@ -34,7 +46,8 @@ const Routers = () => {
           <Route path='/items' element={<Products/>} />
           <Route path='/signup' element={<Register />} />
           <Route path="/signin" element={<Login />} />
-
+          <Route path="/account" element={ <AccountDetail />} />
+         
           <Route path="/product/:productId" element={<ProductDetails />} />
 
 
