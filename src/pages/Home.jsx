@@ -151,7 +151,7 @@ const products = [
   <div class="flex justify-center mt-10 text-4xl font-regular">
     Why Swapify?
   </div>
-  <div class="container max-w-fit mx-auto px-5 py-12 mx-auto">
+  <div class="container max-w-fit mx-auto px-5 py-12 ">
     <div class="flex flex-wrap text-center justify-center">
       <div class="p-4 md:w-1/4 sm:w-1/2">
         <div class="px-4 py-6 transform transition duration-500 hover:scale-110">
