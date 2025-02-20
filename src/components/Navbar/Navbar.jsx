@@ -10,6 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { getUserProfile, logout } from '../../State/Auth/Action.js';
 
+
 const categories = [
   {
     name: "Books & Study Materials",
@@ -120,16 +121,18 @@ export const Navbar = () => {
               <li className="relative">
                 <button
                   className="flex items-center text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm gap-1"
-                  onClick={() => setShowCategories(!showCategories)}
+                  onMouseEnter={() => setShowCategories(!showCategories)}
+                  
                 >
                   Categories
-                  <KeyboardArrowDownIcon className="h-5 w-5" />
+                  <KeyboardArrowDownIcon className='h-2 w-2 pr-2 '/>
+
                 </button>
                 
                 {/* Mega Menu */}
                 {showCategories && (
                   <div 
-                    className="absolute left-0 mt-2 w-[1000px] bg-white shadow-xl rounded-lg p-6"
+                    className="absolute left-0 mt-2 w-[1100px] bg-white shadow-xl rounded-lg p-6 overflow-y-auto max-h-72 transition-all duration-300 ease-in-out hover:max-h-[500px]"
                     onMouseLeave={() => setShowCategories(false)}
                   >
                     <div className="grid grid-cols-3 gap-6">
@@ -137,7 +140,7 @@ export const Navbar = () => {
                         <div key={category.name} className="space-y-3">
                           <button
                             onClick={() => handleCategoryClick(category.name)}
-                            className="w-full text-left font-semibold text-blue-600 text-sm hover:text-blue-700 transition-colors duration-200"
+                            className="w-full text-left font-semibold text-black text-sm transition-all duration-300 transform hover:scale-110"
                           >
                             {category.name}
                           </button>
@@ -146,7 +149,7 @@ export const Navbar = () => {
                               <button
                                 key={subcategory}
                                 onClick={() => handleSubcategoryClick(category.name, subcategory)}
-                                className="block w-full text-left text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded px-2 py-1 transition-colors duration-200"
+                                className="block w-full text-left text-sm text-gray-600 hover:text-blue-500 hover:bg-blue-50 rounded px-2 py-1 transition-all duration-300 ease-in-out transform hover:translate-x-1"
                               >
                                 {subcategory}
                               </button>
@@ -157,6 +160,7 @@ export const Navbar = () => {
                     </div>
                   </div>
                 )}
+
               </li>
               {['Collections', 'Contact Us'].map((item) => (
                 <li key={item}>
@@ -169,6 +173,7 @@ export const Navbar = () => {
                 </li>
               ))}
             </ul>
+
 
             {/* Search Bar */}
             <form 

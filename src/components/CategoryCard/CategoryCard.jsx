@@ -1,6 +1,6 @@
 const CategoryCard = ({ title, price, image, category }) => {
     return (
-      <div className="flex-shrink-0 m-6 relative overflow-hidden bg-teal-500 rounded-lg max-w-xs shadow-lg group hover:shadow-xl transition-shadow duration-300">
+      <div className="flex-shrink-0 m-6 relative overflow-hidden bg-teal-800 rounded-lg max-w-xs shadow-lg group hover:shadow-xl transition-shadow duration-300">
         <svg 
           className="absolute bottom-0 left-0 mb-8 scale-150 group-hover:scale-[1.65] transition-transform" 
           viewBox="0 0 375 283" 
