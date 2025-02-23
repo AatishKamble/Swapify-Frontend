@@ -88,9 +88,9 @@ const FilterBy = ({ FilterByType, dataArray, More }) => {
             <div className=' h-12'>
      
                 {showInput ? (
-                    <div className='h-full flex items-center justify-center'>
-                        <input type="text" placeholder='search' value={search} className='ps-1 rounded-md text-[1.25rem] outline-none' onChange={handleSearch} />
-                        <CloseOutlinedIcon style={{ fontSize: "1.75rem" }} onClick={handleInputShow} />
+                    <div className='h-full mt-2 flex items-center justify-center '>
+                        <input type="text" placeholder='search' value={search} className='ps-1 border px-2 py-1 border-blue-200 rounded-md text-[1.25rem] outline-none' onChange={handleSearch} />
+                       <span className=' cursor-pointer ms-2'><CloseOutlinedIcon style={{ fontSize: "1.75rem" }} onClick={handleInputShow} /></span> 
                     </div>
                 ) : (
                     <div className={`ps-4 flex items-center justify-start relative`}>
@@ -106,27 +106,44 @@ const FilterBy = ({ FilterByType, dataArray, More }) => {
                 )}
             </div>
 
-            <div className={`${visible ? 'w-full h-auto pb-6 ps-4 pt-3 transition-all duration-1000 ease-in-out' : 'hidden'}`}>
-                <ul className='list-none'>
-                    {search ? (
-                        searchResult.map((item, index) => (
-                            <li className='text-[1.2rem] font-normal' key={index}>
-                                <div className='flex items-center'>
-                                    <input type="checkbox" name={item} value={item} checked={selected.includes(item)} className='h-5 w-[18px] me-3 cursor-pointer ' onChange={handleInputChnage} /><label htmlFor={item}>{item}</label>
-                                </div>
-                            </li>
-                        ))
-                    ) : (
-                        toShowElement.map((item, index) => (
-                            <li className='text-[1.2rem] font-normal' key={index}>
-                                <div className='flex items-center'>
-                                    <input type="checkbox" name={item} value={item} className='h-5 w-[18px] me-3 cursor-pointer text-red-950' checked={selected.includes(item)} onChange={handleInputChnage} /><label htmlFor={item}>{item}</label>
-                                </div>
-                            </li>
-                        ))
-                    )}
-                </ul>
-            </div>
+            <div className={`overflow-hidden ${visible ? 'w-full h-auto pb-4 ps-4 pt-3 transition-all duration-300 ease-in-out' : 'hidden'}`}>
+  <ul className="list-none bg-white shadow-lg rounded-xl p-3">
+    {search ? (
+      searchResult.map((item, index) => (
+        <li key={index} className="text-lg font-medium py-2 px-3 rounded-lg hover:bg-gray-100 transition-all duration-200">
+          <div className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              name={item}
+              value={item}
+              checked={selected.includes(item)}
+              className="h-5 w-5 accent-blue-500 rounded-md cursor-pointer"
+              onChange={handleInputChnage}
+            />
+            <label htmlFor={item} className="cursor-pointer text-gray-800">{item}</label>
+          </div>
+        </li>
+      ))
+    ) : (
+      toShowElement.map((item, index) => (
+        <li key={index} className="text-lg font-medium py-2 px-3 rounded-lg hover:bg-gray-100 transition-all duration-200">
+          <div className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              name={item}
+              value={item}
+              checked={selected.includes(item)}
+              className="h-5 w-5 accent-blue-500 rounded-md cursor-pointer"
+              onChange={handleInputChnage}
+            />
+            <label htmlFor={item} className="cursor-pointer text-gray-800">{item}</label>
+          </div>
+        </li>
+      ))
+    )}
+  </ul>
+</div>
+
             
         </>
     );

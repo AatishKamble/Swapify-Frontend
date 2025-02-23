@@ -28,17 +28,19 @@ const FilteredProducts = () => {
 
   return (
     <>
-      <div className='grid grid-cols-3 justify-between gap-10 h-full'>
+      <div className='grid grid-cols-3  px-10 justify-between mx-auto gap-8 '>
         {product.products && product.products.content?.map((item, index) => (
-          <div key={index} className='flex justify-center '>
+          <div key={index} className='flex  justify-center '>
             
             <Cart key={index} productName={item.title} productImage={item.imageURL} productPrice={item.price} dateCreated={item.createdAt} productId={item._id} />
 
           </div>
         ))}
 
-        <div className='col-span-3 flex items-end justify-center'>
-          <div className=' w-full h-20 flex justify-center items-center'>
+        
+      </div>
+      <div className='col-span-3  flex items-end justify-center'>
+          <div className=' w-full h-20 flex justify-center  items-center'>
             <Pagination
               count={product.products?.totalPages}
               variant="outlined"
@@ -48,8 +50,6 @@ const FilteredProducts = () => {
             />
           </div>
         </div>
-      </div>
-
     </>
   )
 }
