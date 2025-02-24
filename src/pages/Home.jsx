@@ -12,43 +12,43 @@ export const Home = () => {
     {
       title: "The Alchemist",
       subCategory: "Fiction",
-      price: "$12.99",
+      price: "12.99",
       image: "https://down-th.img.susercontent.com/file/th-11134207-23030-tk280chrklov08",
     },
     {
       title: "Lenovo",
       subCategory: "Laptop",
-      price: "$1200",
+      price: "1200",
       image: "https://5.imimg.com/data5/SELLER/Default/2022/9/SE/KH/KN/101111/used-refurbished-lenovo-thinkpad-l460-500x500.jpeg",
     },
     {
       title: "Canon EOS 90D",
       subCategory: "Photography & Videography",
-      price: "$499.99",
+      price: "499.99",
       image: "https://tse3.mm.bing.net/th?id=OIP.MHKM2xCcmMjALsDkBU1lYgHaHa&pid=Api&P=0&h=180",
     },
     {
       title: "Levi's Denim Jacket",
       subCategory: "Clothing & Accessories",
-      price: "$29.99",
+      price: "29.99",
       image: "https://image.made-in-china.com/2f0j00tpLocJmnMqbk/School-Cloth.jpg",
     },
     {
       title: "Ergonomic Office Chair",
       subCategory: "Furniture & Home Essentials",
-      price: "$199.99",
+      price: "199.99",
       image: "https://ik.imagekit.io/2xkwa8s1i/img/npl_modified_images/Chair_image/WSCHRALLENBBCBBNBNBN/WSCHRALLENBBCBBNBNBN_1.jpg?tr=w-1200",
     },
     {
       title: "Dummbell",
       subCategory: "Sports & Fitness",
-      price: "$199.99",
+      price: "199.99",
       image: "https://i5.walmartimages.com/asr/1919deb4-8b44-4a77-9e83-630d9afe1495_1.5f004859de4efd15aea4c51f25685ddd.jpeg",
     },
     {
       title: "Snake Ladder",
       subCategory: "Board Games",
-      price: "$199.99",
+      price: "199.99",
       image: "https://cf.shopee.ph/file/0302f7f77cf35db3070603a73a626e6b",
     }
   ];
@@ -83,7 +83,7 @@ export const Home = () => {
                 <h3 className="text-gray-800 font-medium text-base">{product.title}</h3>
                 <p className="uppercase text-green-600 text-xs font-medium">{product.subCategory}</p>
                 <div className="flex items-end justify-between mt-2">
-                  <span className="text-blue-600 text-xl font-semibold">{product.price}</span>
+                  <span className="text-blue-600 text-xl font-semibold"><span className='i'>₹ </span>{product.price}</span>
                   <button className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center shadow text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
                       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -149,7 +149,7 @@ export const Home = () => {
 
       <section class="text-gray-700 mt-20 body-font">
         <div class="flex justify-center mt-10 text-4xl font-regular">
-          Why Swapify?
+          Why Swapify ?
         </div>
         <div class="container max-w-fit mx-auto px-5 py-12 ">
           <div class="flex flex-wrap text-center justify-center">

@@ -55,13 +55,13 @@ const SellCategory = ({ onSelectCategory, onNavigate }) => {
               {categories.map((item, index) => (
                 <button
                   key={index}
-                  onClick={() => handleParentCategory(item)}
+                  onMouseEnter={() => handleParentCategory(item)}
                   className={`w-full px-4 py-3 text-left rounded-lg transition-all duration-200 
                     ${selectedParentCategory === item 
                       ? 'bg-blue-500 text-white shadow-md' 
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }
-                    text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
+                    text-sm font-medium `}
                 >
                   {item}
                 </button>
@@ -80,7 +80,11 @@ const SellCategory = ({ onSelectCategory, onNavigate }) => {
                         ? 'bg-green-500 text-white shadow-md' 
                         : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
                       }
-                      text-sm font-medium focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50`}
+                      text-sm font-medium hover:ring-2 hover:ring-green-400 focus:outline-none  focus:ring-opacity-5`
+                    
+                    }
+                    
+                      
                   >
                     {item}
                   </button>

@@ -18,7 +18,7 @@ const Cart = () => {
 
         dispatch(getUserCart());
 
-    }, [cart.deleteCartItem]);
+    }, [cart.cart]);
 
 
 

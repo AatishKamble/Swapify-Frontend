@@ -38,7 +38,7 @@ export const cartReducer=(state=initialState,action)=>{
                                 return  {
                                     ...state,
                                     loading:false,
-                                    deleteCartItem:action.payload
+                                    cart:cart.filter(item => {item._id != action.payload})
                                 };
 
                     case GET_USER_CART_FAILURE:

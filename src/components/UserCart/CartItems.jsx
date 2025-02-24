@@ -1,54 +1,56 @@
-import { removeItemFromCart } from "../../State/Cart/Action"
+import { removeItemFromCart } from "../../State/Cart/Action";
+import { useDispatch } from "react-redux";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { useNavigate } from "react-router-dom";
 
-import {  useDispatch } from 'react-redux';
-import CancelIcon from '@mui/icons-material/Cancel';
-const CartItems = ({cart}) => {
+const CartItems = ({ cart }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const dispatch = useDispatch();
-    
-    function handleClickToDelete(Id) {
+  function handleClickToDelete(Id) {
+    dispatch(removeItemFromCart(Id));
+  }
 
-        dispatch(removeItemFromCart(Id))
-
-    }
   return (
-    <>
-    
+                    <div className="p-6 w-full max-w-4xl mx-auto">
+                    {cart.cart?.cartItems?.map((item) => (
+                        <div
+                        key={item?._id}
+                        className="relative bg-white shadow-md border border-gray-100 rounded-lg flex items-center p-4 mb-4 hover:shadow-lg transition"
+                        >
+                        {/* Image Container */}
+                        <div className="w-32 h-32 flex-shrink-0 bg-gray-100 rounded-md overflow-hidden">
+                            <img onClick={()=>navigate(`/product/${item?._id}`) }
+                            src={item.product?.imageURL}
+                            alt="product image"
+                            className="w-full h-full object-cover"
+                            />
+                        </div>
 
-                            {cart.cart?.cartItems?.map((item, index) => {
-                                return (
-                                    <div className="relative bg-[#e3e8ec] border-[2px] border-red-50  h-[200px]  flex items-center px-10 cursor-pointer  mb-5" key={item?._id}  >
-                                        <div className=" flex" >
-                                            <div className="w-[150px] h-[170px]  bg-[#e4e8ea]" >
-                                                <img src={item.product?.imageURL} alt="product image" className="  object-fill w-full h-full" />
-                                            </div>
+                        {/* Product Details */}
+                        <div className="flex-1 px-6">
+                            <p className="text-lg i font-semibold text-gray-900 mb-1">
+                            {item.product?.title}
+                            </p>
+                            <p className="text-sm i text-gray-600 mb-2 line-clamp-2">
+                            {item.product?.description}
+                            </p>
+                            <p className="text-xl i font-bold text-gray-800">
+                            ₹ {item.product?.price}
+                            </p>
+                        </div>
 
-                                            <div className=" bg-inherit mx-16 h-full p-5 py-5">
-                                                <p className="font-normal text-[1.5rem] font-serif mb-5 ">{item.product?.title}</p>
-                                                <p className="font-normal text-[1rem] font-serif  ">i phone 15 promax 4 gb new model</p>
-                                                <p className="font-bold text-[1.25rem] font-serif my-5 "> <span>$</span>{item.product?.price}</p>
+                        {/* Remove Button */}
+                        <button
+                            className="absolute i top-3 right-3 px-4 py-1 text-sm font-semibold text-black rounded-md hover:bg-red-500 hover:text-white hover:shadow-xl transition-all"
+                            onClick={() => handleClickToDelete(item._id)}
+                        >
+                            REMOVE
+                        </button>
+                        </div>
+                    ))}
+                    </div>
+  );
+};
 
-                                            </div></div>
-
-
-                                        <div className="w-10 h-10  bg-inherit absolute top-2 right-3 flex item-center justify-center" >
-                                            <button className="text-[#bfcedc]" onClick={() => handleClickToDelete(item._id)}><CancelIcon fontSize="large" /></button>
-
-                                        </div>
-
-
-                                    </div>
-
-                                )
-                            })}
-
-
-
-                        
-    
-    
-    </>
-  )
-}
-
-export default CartItems
+export default CartItems;
