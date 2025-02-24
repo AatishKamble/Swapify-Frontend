@@ -32,7 +32,7 @@ const FilteredProducts = () => {
         {product.products && product.products.content?.map((item, index) => (
           <div key={index} className='flex  justify-center '>
             
-            <Cart key={index} productName={item.title} productImage={item.imageURL} productPrice={item.price} dateCreated={item.createdAt} productId={item._id} />
+            <Cart key={index} productName={item.title} productImage={item.imageURL} productPrice={item.price}  productId={item._id} />
 
           </div>
         ))}

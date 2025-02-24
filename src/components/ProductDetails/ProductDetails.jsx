@@ -22,12 +22,13 @@ const ProductDetails = () => {
 
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(null);
-
+ 
   useEffect(() => {
     const data = {
       productId: params.productId,
     };
     dispatch(findProductById(data));
+    
   }, [params.productId, dispatch]);
 
   const handleAddToCart = () => {

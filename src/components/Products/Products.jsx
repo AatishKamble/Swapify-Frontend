@@ -84,7 +84,7 @@ const Products = () => {
   }
   function handleOptionChange(event) {
     const value = event.currentTarget.getAttribute('data-value');
-    console.log("this is valu", value)
+   
     let newOption;
     if (value === "Price: Low to High") {
       newOption = "asc-price";
