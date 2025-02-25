@@ -68,7 +68,7 @@ const OrderDetail = () => {
 
 
                     <div>
-                        <p className='font-normal me-4  mb-2'><span className='font-semibold'>Total: </span>$7888</p>
+                        <p className='font-normal me-4  mb-2'><span className='font-semibold'>Total: </span>₹7888</p>
 
                         <p className='font-normal me-4  mb-2'><span className='font-semibold'>Discount: </span>20%</p>
 

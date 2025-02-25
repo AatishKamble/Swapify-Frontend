@@ -32,14 +32,14 @@ const Cart = () => {
 
                 <div className='w-full flex pb-20  h-auto justify-evenly py-8 overflow-y-scroll my-2  '>
 
-<div className="w-[60%] pb-10">
-                        <div className=" ms-10 h-[800px]   ">
+                <div className="w-[60%] pb-10">
+                    <div className=" ms-10 h-[800px]   ">
                     <CartItems cart={cart} />
 
                     </div>
 
 
-</div>
+                    </div>
                     <CartPriceDetails cart={cart} />
 
 

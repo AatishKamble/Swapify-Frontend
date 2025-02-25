@@ -23,7 +23,7 @@ const CartItems = ({ cart }) => {
                             <img onClick={()=>navigate(`/product/${item?._id}`) }
                             src={item.product?.imageURL}
                             alt="product image"
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-contain "
                             />
                         </div>
 
