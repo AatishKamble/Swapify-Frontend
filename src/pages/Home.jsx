@@ -70,7 +70,7 @@ export const Home = () => {
         //Featured products
 
       }
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto  px-4 py-8">
         <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">Recommanded Products</h2>
 
         <div className="grid grid-cols-4 max-w-fit mx-auto  gap-4 gap-x-5">
@@ -147,8 +147,8 @@ export const Home = () => {
 
       {/* {why choose use} */}
 
-      <section class="text-gray-700 mt-20 body-font">
-        <div class="flex justify-center mt-10 text-4xl font-regular">
+      <section class="text-gray-700  mt-20 body-font">
+        <div class="flex justify-center  mt-10 text-4xl i ">
           Why Swapify ?
         </div>
         <div class="container max-w-fit mx-auto px-5 py-12 ">

@@ -50,17 +50,14 @@ const Cart = () => {
 
 
                 :
-                <div className="w-full h-[500px] bg-[#def9fa] flex flex-col justify-center items-center">
+                <div className="w-full h-[500px]  flex flex-col justify-center items-center">
 
                     <div>
-
-                        <p className="text-[3rem] font-serif text-slate-600">Sorry Your Cart is Empty</p>
-
-
+                        <p className="text-[3rem] i text-slate-600">Sorry Your Cart is Empty</p>
                     </div>
 
-                    <div className="w-[200px] h-[200px] relative cursor-pointer mt-10" onClick={() => navigate("/items")}>
-                        <img src="../../src/assets/cartEmpty.png" alt="cart empty" className=" object-cover" />
+                    <div className="relative cursor-pointer w-[25vw] h-[50vh] mt-5  rounded-full" onClick={() => navigate("/items")}>
+                        <img src="../../src/assets/E-commerce shopping cart.png" alt="cart empty" className=" object-cover rounded-full hover:scale-105 transition-all duration-300 ease-in-out" />
                     </div>
                 </div>
             }

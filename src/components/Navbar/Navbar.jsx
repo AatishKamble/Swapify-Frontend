@@ -95,14 +95,14 @@ export const Navbar = () => {
   };
 
   return (
-    <div className="sticky top-0 z-50">
+    <div className="sticky top-0 z-50 bg-[#E5D0CF]">
       <nav className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <Link to="/" className="flex-shrink-0">
               <img 
-                src="/src/assets/swapify-removebg.png" 
+                src="src/assets/swapify-with-logo.png" 
                 alt="logo" 
                 className="h-16 w-auto object-contain transition-transform hover:scale-105"
               />
