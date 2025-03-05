@@ -57,6 +57,7 @@ const FilterBy = ({ FilterByType, dataArray, More }) => {
         
         const selectedValues=searchParams.getAll(FilterByType);
         setSelected(selectedValues);
+        setVisible(true);
 
     },[location.search,FilterByType])
 

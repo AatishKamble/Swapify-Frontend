@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
+
 const CategoryCard = ({ title, price, image, category }) => {
+  const navigate=useNavigate();
     return (
-      <div className="flex-shrink-0 m-6 relative overflow-hidden bg-teal-800 rounded-lg max-w-xs shadow-lg group hover:shadow-xl transition-shadow duration-300">
+      <div className="cursor-pointer flex-shrink-0 m-6 relative overflow-hidden bg-teal-800 rounded-lg max-w-xs shadow-lg group hover:shadow-xl transition-shadow duration-300" onClick={()=>navigate(`/items?Categories=${title}`)}>
         <svg 
           className="absolute bottom-0 left-0 mb-8 scale-150 group-hover:scale-[1.65] transition-transform" 
           viewBox="0 0 375 283" 
@@ -47,6 +50,7 @@ const CategoryCard = ({ title, price, image, category }) => {
             )}
           </div>
         </div>
+      
       </div>
     );
   };
