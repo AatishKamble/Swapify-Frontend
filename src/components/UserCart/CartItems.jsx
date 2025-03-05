@@ -46,7 +46,7 @@ const CartItems = ({ cart }) => {
                             className="absolute i top-3 right-3 px-4 py-1 text-sm font-semibold text-black rounded-md hover:bg-red-500 hover:text-white hover:shadow-xl transition-all"
                             onClick={() => handleClickToDelete(item._id)}
                         >
-                            REMOVE
+                            REMOVE  
                         </button> */}
 
                         <button className="relative group flex flex-col justify-center items-center p-4 bg-[rgba(100,77,237,0.08)] border-0 rounded-xl transition-all duration-200

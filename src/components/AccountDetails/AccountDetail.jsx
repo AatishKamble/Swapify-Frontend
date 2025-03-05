@@ -17,8 +17,8 @@ const AccountDetail = () => {
                 className="w-full p-2 border border-gray-300 rounded"
                 name="firstName"
                 required
-                disabled
-                value="John"
+               
+                
               />
             </div>
             <div>
@@ -27,8 +27,7 @@ const AccountDetail = () => {
                 className="w-full p-2 border border-gray-300 rounded"
                 name="lastName"
                 required
-                disabled
-                value="Doe"
+                
               />
             </div>
           </div>
@@ -97,6 +96,8 @@ const AccountDetail = () => {
         <button className="w-full bg-red-700 text-white p-2 rounded">Delete Account</button>
       </div>
     </div>
+
+    
   );
 };
 

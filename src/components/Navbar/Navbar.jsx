@@ -261,11 +261,13 @@ export const Navbar = () => {
 
               {/* wishlist  */}
               <Link 
+                onClick={() => navigate("/list")}
                 to="/wishlist" 
                 className="group flex  items-center  space-x-2 text-gray-700 hover:text-blue-600 transition-colors duration-200"
               >
                 <FavoriteBorderIcon className="h-6 w-6" />
                 <span className="text-sm font-semibold ">Wishlist</span>
+                
               </Link>
 
               {/* cart */}

@@ -1,20 +1,19 @@
-import { removeItemFromCart } from "../../State/Cart/Action";
+import { removeItemFromWishlist } from "../../State/Cart/Action";
 import { useDispatch } from "react-redux";
-import CancelIcon from "@mui/icons-material/Cancel";
 import { useNavigate } from "react-router-dom";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
-const CartItems = ({ cart }) => {
+const Wishlist = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   function handleClickToDelete(Id) {
-    dispatch(removeItemFromCart(Id));
+    dispatch(removeItemFromWishlist(Id));
   }
 
   return (
                     <div className="p-6 w-full max-w-4xl mx-auto">
-                    {cart.cart?.cartItems?.map((item) => (
+                     {cart.cart?.cartItems?.map((item) => (
                         <div
                         key={item?._id}
                         className="relative bg-white shadow-md border border-gray-100 rounded-lg flex items-center p-4 mb-4 hover:shadow-lg transition"
@@ -68,4 +67,4 @@ const CartItems = ({ cart }) => {
   );
 };
 
-export default CartItems;
+export default Wishlist;

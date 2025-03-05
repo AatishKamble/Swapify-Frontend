@@ -3,7 +3,7 @@ import products from '../../dataset';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { findProductById } from '../../State/Product/Action.js';
-import { addToCart, getUserCart } from '../../State/Cart/Action.js';
+import { addToCart, addToWishlist, getUserCart } from '../../State/Cart/Action.js';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite'; 
 import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
@@ -44,9 +44,16 @@ const ProductDetails = () => {
   // Handle Favorite Toggle
   const handleFavoriteToggle = () => {
     setIsFavorite(!isFavorite);
-    dispatch(addToCart(data));
+
+
+    const data = {
+      productId: params.productId,
+    };
+
+
+    dispatch(addToWishlist(data));
     dispatch(getUserCart());
-    navigate('/Wishlist');
+    navigate('/list');
   };
 
   
@@ -65,9 +72,10 @@ const ProductDetails = () => {
                               {/* Favorite Icon */}
                               <div 
                                 className="absolute top-2 right-2 bg-slate-200 border-solid border-2 rounded-2xl cursor-pointer"
-                                onClick={handleFavoriteToggle}>
+                                onClick={handleFavoriteToggle}
+                                >
                                 {isFavorite ? (
-                                  <FavoriteIcon className="h-8 w-7 p-1 text-pink-400" />
+                                  <FavoriteIcon className="h-8 w-7 p-1 text-pink-400"  />
                                 ) : (
                                   <FavoriteBorderIcon className="h-8 w-7 p-1 text-gray-500" />
                                 )}
