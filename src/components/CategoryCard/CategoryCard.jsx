@@ -44,7 +44,7 @@ const CategoryCard = ({ title, price, image, category }) => {
           <div className="flex justify-between items-center">
             <span className="block font-semibold text-xl">{title}</span>
             {price && (
-              <span className="block bg-white rounded-full text-teal-500 text-xs font-bold px-3 py-2 leading-none flex items-center">
+              <span className=" bg-white rounded-full text-teal-500 text-xs font-bold px-3 py-2 leading-none flex items-center">
                 {price}
               </span>
             )}

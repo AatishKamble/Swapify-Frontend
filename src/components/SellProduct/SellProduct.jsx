@@ -1,6 +1,6 @@
 import ProductsUpload from "./ProductsUpload.jsx";
 import SellCategory from "./SellCategory.jsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const SellProduct = () => {
     
     const [selectedCategory,setSelectedCategory]=useState(
@@ -9,14 +9,28 @@ const SellProduct = () => {
             subcategory:""
         }
     )
-    console.log("in main",selectedCategory);
+
+
+  
+const backButton=()=>{
+  setSelectedCategory({
+    mainCategory:"",
+    subcategory:""
+})
+}
+   
+
+    
   return (
     <>
 
-  
- <SellCategory onSelectCategory={setSelectedCategory}/>
-
-
+{(selectedCategory.mainCategory=="" || selectedCategory.subcategory=="") && (
+           
+ <SellCategory onSelectCategory={setSelectedCategory} selectedCategory={selectedCategory}/>
+)}
+ {selectedCategory.mainCategory && selectedCategory.subcategory && (
+                <ProductsUpload selectedCategory={selectedCategory} backButton={backButton}/>
+            )}
 
 
 
