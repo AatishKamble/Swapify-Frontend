@@ -1,113 +1,89 @@
-import {useEffect} from 'react'
+import { useEffect } from "react";
 
 const Payment = ({ setCurrentStep }) => {
-    useEffect(()=>{
-        window.scrollTo(1,1);
-      })
+  useEffect(() => {
+    window.scrollTo(1, 1);
+  }, []);
 
+  return (
+    <div className="w-full max-w-xl bg-white shadow-lg rounded-xl mx-auto">
+      {/* Header */}
+      <div className="bg-gray-800 px-4 py-3 flex items-center rounded-t-xl">
+        <h2 className="text-blue-100 font-semibold text-lg">Payment Information</h2>
+      </div>
 
-    return (
-
-
-        <div className='w-[800px] h-auto bg-inherit relative rounded-xl '>
-            <div className='  bg-slate-700 px-2 flex items-center h-[40px] rounded-t-xl'>
-                <h2 className='text-blue-500 font-bold text-[1.25rem] '><span className='px-5'>Payment Information</span></h2>
-            </div>
-            <form className="bg-inherit shadow-md rounded px-8 pt-6 pb-8 ">
-
-                <div className='flex '>
-
-                    <p className='text-[1.25rem] font-bold text-slate-500'>
-                    Pay by Card
-                    </p>
-
-
-                </div>
-
-
-                <div className='m-5 w-[500px] mx-auto'>
-                    <div className="mb-4  mr-2">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="city">
-                            Name Of card holder
-                        </label>
-                        <input
-                            className="border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="cardHolder"
-                            type="text"
-                            placeholder="Enter Name"
-                        />
-                    </div>
-
-                    <div className="mb-4  mr-2">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="city">
-                            Card Number
-                        </label>
-                        <input
-                            className=" border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="cardNumber"
-                            type="text"
-                            placeholder="Enter  Card Number"
-                        />
-                    </div>
-
-
-                    <div className='flex  justify-between'>
-
-
-
-                        <div className="mb-4  mr-2">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="city">
-                                Expiry Month
-                            </label>
-                            <input
-                                className="border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="ExpiryMonth"
-                                type="month"
-                                placeholder="Enter Expiry Month"
-                            />
-                        </div>
-
-
-
-                        <div className="mb-4  mr-2">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="city">
-                                CVC
-                            </label>
-                            <input
-                                className="border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="CVC"
-                                type="text"
-                                placeholder="Enter CVC"
-                            />
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div className="flex items-center justify-between">
-                    <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        type="button"
-                        onClick={() => {
-
-                            setCurrentStep(2)
-                        }}
-                    >
-                        Previous
-                    </button>
-                    <button
-                        className="bg-green-600 hover:bg-green-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        type="submit"
-                    >
-                        Place Order
-                    </button>
-                </div>
-            </form>
-
+      {/* Form */}
+      <form className="px-6 py-6 space-y-5">
+        {/* Pay by Card Title */}
+        <div>
+          <p className="text-xl font-semibold text-gray-600">Pay by Card</p>
         </div>
-    )
-}
 
-export default Payment
+        {/* Card Holder Name */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">Name of Card Holder</label>
+          <input
+            className="border border-gray-300 focus:ring-2 focus:ring-blue-400 rounded-lg w-full py-2 px-3 text-gray-700 focus:outline-none"
+            id="cardHolder"
+            type="text"
+            placeholder="Enter Name"
+          />
+        </div>
+
+        {/* Card Number */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">Card Number</label>
+          <input
+            className="border border-gray-300 focus:ring-2 focus:ring-blue-400 rounded-lg w-full py-2 px-3 text-gray-700 focus:outline-none"
+            id="cardNumber"
+            type="password"
+            placeholder="Enter Card Number"
+          />
+        </div>
+
+        {/* Expiry Month & CVC */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">Expiry Month</label>
+            <input
+              className="border border-gray-300 focus:ring-2 focus:ring-blue-400 rounded-lg w-full py-2 px-3 text-gray-700 focus:outline-none"
+              id="ExpiryMonth"
+              type="month"
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">CVC</label>
+            <input
+              className="border border-gray-300 focus:ring-2 focus:ring-blue-400 rounded-lg w-full py-2 px-3 text-gray-700 focus:outline-none"
+              id="CVC"
+              type="password"
+              placeholder="Enter CVC"
+            />
+          </div>
+        </div>
+
+        {/* Buttons */}
+        <div className="flex justify-between pt-4">
+          <button
+            className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-6 rounded-lg transition-all"
+            type="button"
+            onClick={() => setCurrentStep(2)}
+          >
+            Previous
+          </button>
+
+          <button
+            className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-lg transition-all"
+            type="submit"
+          >
+            Place Order
+            
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default Payment;

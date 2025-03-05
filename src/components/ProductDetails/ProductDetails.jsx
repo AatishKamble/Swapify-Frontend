@@ -49,7 +49,7 @@ const ProductDetails = () => {
   
   return (
     <>
-                      <div className="flex h-[100vh] p-10 py-2">  
+                      <div className="flex h-[100vh]  p-10 py-2">  
                       {/* Left Fixed Image + Buttons Section */}
                       <div className="sticky top-[70px] h-[calc(100vh-64px)] max-h-[452px] overflow-hidden py-5 pl-1">
                         <div className="relative border-4 border-solid ">
@@ -78,13 +78,17 @@ const ProductDetails = () => {
                               <div className="my-1 grid grid-cols-2 gap-6">
                               <button
                                 onClick={handleAddToCart}
-                                className="w-full h-12 mt-4 mb-4 font-semibold bg-[#e4472b] rounded-md flex justify-center items-center"
+                                className="w-full h-12 mt-4 mb-4 font-semibold flex justify-center items-center px-8 z-30 py-4 bg-[#e4472b] rounded-md text-white relative 
+                                 after:-z-20 after:absolute after:h-1 after:w-1 after:bg-rose-800 after:left-5 overflow-hidden after:bottom-0 after:translate-y-full after:rounded-md after:hover:scale-[300] after:hover:transition-all after:hover:duration-700 after:transition-all after:duration-700 transition-all duration-700 
+                                 [text-shadow:3px_5px_2px_#be123c;] hover:[text-shadow:2px_2px_2px_#fda4af] text-2xl "
                               >
                                 <ShoppingCartTwoToneIcon className="text-white" />
                                 <span className="text-[1.2rem] text-white px-2">ADD TO CART</span>
                               </button>
 
-                              <button className="w-full h-12 mt-4 mb-4 font-semibold bg-[#7589cc] rounded-md flex justify-center items-center">
+                              <button className="w-full h-12 mt-4 mb-4 font-semibold bg-[#7589cc] rounded-md flex justify-center items-center px-8 z-30 py-4 bg-rose-400  text-white relative
+                               after:-z-20 after:absolute after:h-1 after:w-1 after:bg-[#7589cc] after:left-5 overflow-hidden after:bottom-0 after:translate-y-full after:rounded-md after:hover:scale-[300] after:hover:transition-all after:hover:duration-700 after:transition-all after:duration-700 transition-all duration-700
+                                [text-shadow:3px_5px_2px_#be123c;] hover:[text-shadow:2px_2px_2px_#fda4af] text-2xl ">
                                 <FlashOnIcon className="text-white" />
                                 <span className="text-[1.2rem] text-white px-2">BUY NOW</span>
                               </button>
@@ -99,7 +103,7 @@ const ProductDetails = () => {
                   <div className='div-1'>
                     <div> 
 
-                        <div className="font-serif text-slate-800 text-[2.5rem] pt-5">
+                        <div className="i text-slate-800 text-[2.5rem] pt-5">
                         {product.product?.title}
                         <hr/> 
                         </div>

@@ -8,9 +8,9 @@ export const Footer = () => {
           <div>
             <div className="text-teal-600 flex">
               <img
-                src="../../src/assets/swapify-removebg.png"
+                src="src/assets/swapify-with-logo.png"
                 alt="Swapify Logo"
-                className="object-cover h-20 w-36"
+                className="object-cover h-20 w-36 hover:scale-105 transition-all duration-300 ease-in-out"
               />
             </div>
             <p className="mt-4 max-w-xs text-gray-500">
