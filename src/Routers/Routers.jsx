@@ -52,7 +52,7 @@ const Routers = () => {
 
 
           <Route path="/sell-product" element={<SellProduct />} />
-          <Route path="/sell-product-detail" element={<ProductsUpload />} />
+          
           {/*I want to handle sell Product componetns*/ }
           {/* <Route path="/product" element={<Product/>} /> */}
         </Routes>

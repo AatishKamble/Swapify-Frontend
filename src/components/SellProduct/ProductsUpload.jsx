@@ -1,10 +1,17 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { sellProduct } from "../../State/Product/Action";
 
-const ProductsUpload = () => {
+const ProductsUpload = ({ selectedCategory, backButton }) => {
+    const dispatch = useDispatch();
     const [productName, setProductName] = useState('');
     const [productDescription, setProductDescription] = useState('');
     const [expectedPrice, setExpectedPrice] = useState('');
-    const [address, setAddress] = useState('');
+    const [state, setState] = useState('');
+    const [city, setCity] = useState('');
+    const [village, setVillage] = useState('');
+    const [street, setStreet] = useState('');
+    const [pincode, setPincode] = useState('');
     const [images, setImages] = useState([]);
 
     const handleImageChange = (e) => {
@@ -12,9 +19,20 @@ const ProductsUpload = () => {
         setImages(files);
     };
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle form submission here
+        const productData = {
+            productName,
+            productDescription,
+            expectedPrice,
+            address: { state, city, village, street, pincode },
+            images,
+            mainCategory: selectedCategory.mainCategory,
+            subcategory: selectedCategory.subcategory
+        };
+
+        dispatch(sellProduct(productData));
     };
 
     return (
@@ -66,22 +84,66 @@ const ProductsUpload = () => {
                             </div>
                         </div>
 
-                        <div>
-                            <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-                                Address
-                            </label>
-                            <input
-                                type="text"
-                                id="address"
-                                className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm 
-                                         focus:border-blue-500 focus:ring-blue-500
-                                         transition duration-150 ease-in-out
-                                         text-gray-900 py-3 px-4"
-                                value={address}
-                                onChange={(e) => setAddress(e.target.value)}
-                                placeholder="Enter your address"
-                            />
-                        </div>
+                        <fieldset className="space-y-4 border border-gray-300 p-4 rounded-lg">
+                            <legend className="text-lg font-semibold text-gray-700">Address Details</legend>
+                            <div>
+                                <label htmlFor="street" className="block text-sm font-medium text-gray-700">Street</label>
+                                <input
+                                    type="text"
+                                    id="street"
+                                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm py-3 px-4"
+                                    value={street}
+                                    onChange={(e) => setStreet(e.target.value)}
+                                    placeholder="Enter street"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="village" className="block text-sm font-medium text-gray-700">Village</label>
+                                <input
+                                    type="text"
+                                    id="village"
+                                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm py-3 px-4"
+                                    value={village}
+                                    onChange={(e) => setVillage(e.target.value)}
+                                    placeholder="Enter village"
+                                />
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label htmlFor="state" className="block text-sm font-medium text-gray-700">State</label>
+                                    <input
+                                        type="text"
+                                        id="state"
+                                        className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm py-3 px-4"
+                                        value={state}
+                                        onChange={(e) => setState(e.target.value)}
+                                        placeholder="Enter state"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="city" className="block text-sm font-medium text-gray-700">City</label>
+                                    <input
+                                        type="text"
+                                        id="city"
+                                        className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm py-3 px-4"
+                                        value={city}
+                                        onChange={(e) => setCity(e.target.value)}
+                                        placeholder="Enter city"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label htmlFor="pincode" className="block text-sm font-medium text-gray-700">Pincode</label>
+                                <input
+                                    type="text"
+                                    id="pincode"
+                                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm py-3 px-4"
+                                    value={pincode}
+                                    onChange={(e) => setPincode(e.target.value)}
+                                    placeholder="Enter pincode"
+                                />
+                            </div>
+                        </fieldset>
 
                         <div>
                             <label htmlFor="productDescription" className="block text-sm font-medium text-gray-700">
@@ -141,7 +203,17 @@ const ProductsUpload = () => {
                             </div>
                         </div>
 
-                        <div className="flex justify-end">
+                        <div className="flex justify-between">
+                            <button
+                                type="button"
+                                onClick={() => backButton()}
+                                className="inline-flex items-center px-6 py-3 border border-transparent 
+                                         rounded-lg shadow-sm text-base font-medium text-white 
+                                         bg-green-600 hover:bg-green-700 
+                                         focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                                         transition duration-150 ease-in-out"
+                            >Back
+                            </button>
                             <button
                                 type="submit"
                                 className="inline-flex items-center px-6 py-3 border border-transparent 

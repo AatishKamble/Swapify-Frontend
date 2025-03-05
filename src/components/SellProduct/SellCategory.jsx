@@ -2,9 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const SellCategory = ({ onSelectCategory, onNavigate }) => {
-  const [selectedParentCategory, setSelectedCategory] = useState(null);
-  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+const SellCategory = ({onSelectCategory,selectedCategory}) => {
+ 
   const [open, setOpen] = useState(false);
   const nav= useNavigate()
   const categories = ["Books & Study Materials", "Electronic", "Photography & Videography", "Clothing & Accessories", "Furniture & Home Essentials", "Gaming & Accessories", "Sports & Fitness", "Toy", "Miscellaneous"];
@@ -22,21 +21,18 @@ const SellCategory = ({ onSelectCategory, onNavigate }) => {
   };
 
   function handleParentCategory(item) {
-    if (item !== selectedParentCategory) {
-      setSelectedCategory(item);
+    if (item !== selectedCategory.mainCategory) {
+      onSelectCategory(prev=>( {...prev,mainCategory:item}));
       setOpen(true);
     }
-    if (item === selectedParentCategory) {
+    if (item === selectedCategory.mainCategory) {
       setOpen(!open);
     }
   }
 
   function handlesubCategory(item) {
-    if (item !== selectedSubCategory) {
-      setSelectedSubCategory(item);
-      onSelectCategory(prev => ({ ...prev, mainCategory: selectedParentCategory, subcategory: selectedSubCategory }));
-      // Replace navigation with callback
-      nav("/sell-product-detail");
+    if (item !== selectedCategory.subcategory) {
+      onSelectCategory(prev=>( {...prev,subcategory:item}));
       
     }
   }
@@ -57,7 +53,7 @@ const SellCategory = ({ onSelectCategory, onNavigate }) => {
                   key={index}
                   onMouseEnter={() => handleParentCategory(item)}
                   className={`w-full px-4 py-3 text-left rounded-lg transition-all duration-200 
-                    ${selectedParentCategory === item 
+                    ${selectedCategory.mainCategory === item 
                       ? 'bg-blue-500 text-white shadow-md' 
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }
@@ -71,12 +67,12 @@ const SellCategory = ({ onSelectCategory, onNavigate }) => {
             {/* Sub Categories */}
             {open && (
               <div className="w-full md:w-1/2 space-y-2 border-l border-gray-200 pl-6">
-                {subcategories[selectedParentCategory]?.map((item, index) => (
+                {subcategories[selectedCategory.mainCategory]?.map((item, index) => (
                   <button
                     key={index}
                     onClick={() => handlesubCategory(item)}
                     className={`w-full px-4 py-2 text-left rounded-lg transition-all duration-200
-                      ${selectedSubCategory === item 
+                      ${selectedCategory.subcategory === item 
                         ? 'bg-green-500 text-white shadow-md' 
                         : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
                       }
