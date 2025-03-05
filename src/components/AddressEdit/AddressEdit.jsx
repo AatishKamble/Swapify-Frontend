@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaArrowLeft ,FaArrowRight } from "react-icons/fa";
 
 const AddressEdit = ({ setCurrentStep }) => {
   useEffect(() => {
@@ -167,7 +168,7 @@ const AddressEdit = ({ setCurrentStep }) => {
           type="button"
           onClick={() => setCurrentStep(0)}
         >
-          Previous
+          <FaArrowLeft />
         </button>
 
         <button
@@ -178,7 +179,7 @@ const AddressEdit = ({ setCurrentStep }) => {
           onClick={() => isFormSaved && setCurrentStep(2)}
           disabled={!isFormSaved}
         >
-          Next
+          <FaArrowRight />
         </button>
       </div>
     </div>

@@ -9,6 +9,8 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { getUserProfile, logout } from '../../State/Auth/Action.js';
+import { AiTwotoneShop   } from "react-icons/ai";
+import { IoMdLogIn } from "react-icons/io";
 
 
 const categories = [
@@ -97,27 +99,29 @@ export const Navbar = () => {
   return (
     <div className="sticky top-0 z-50 bg-[#E5D0CF]">
       <nav className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-screen-xl mx-auto px-4">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <Link to="/" className="flex-shrink-0">
               <img 
                 src="src/assets/swapify-with-logo.png" 
                 alt="logo" 
-                className="h-16 w-auto object-contain transition-transform hover:scale-105"
+                className="h-16 w-auto object-contain transition-transform "
               />
             </Link>
 
             {/* Navigation Links */}
-            <ul className="hidden md:flex items-center space-x-8">
-              <li>
+            <ul className="hidden md:flex items-center space-x-7">
+
+              {/* <li>
                 <Link
                   to="/"
                   className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm"
                 >
                   Home
                 </Link>
-              </li>
+              </li> */}
+
               <li className="relative">
                 <button
                   className="flex items-center text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm gap-1"
@@ -162,7 +166,8 @@ export const Navbar = () => {
                 )}
 
               </li>
-              {['Collections', 'Contact Us'].map((item) => (
+              {['Collections'].map((item) => (
+
                 <li key={item}>
                   <Link
                     to={item=='Collections' && '/items'}
@@ -171,6 +176,7 @@ export const Navbar = () => {
                     {item}
                   </Link>
                 </li>
+                
               ))}
             </ul>
 
@@ -178,7 +184,7 @@ export const Navbar = () => {
             {/* Search Bar */}
             <form 
               onSubmit={handleSearch} 
-              className="hidden md:flex items-center max-w-md w-full mx-4"
+              className="hidden md:flex items-center max-w-xl w-full mx-4"
             >
               <div className="relative w-full">
                 <input 
@@ -186,11 +192,11 @@ export const Navbar = () => {
                   placeholder="Search products..." 
                   value={searchQuery} 
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 py-2 rounded-full border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 outline-none text-sm"
-                />
+                  className="w-full px-4 py-2 rounded-md bg-blue-50  focus:border-blue-500 focus:ring-2 focus:ring-blue-50 transition-all duration-200 outline-none text-sm"
+                /> 
                 <button 
                   type="submit"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-500 transition-colors duration-200"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-500 transition-colors duration-200"
                 >
                   <SearchIcon className="h-5 w-5" />
                 </button>
@@ -198,14 +204,8 @@ export const Navbar = () => {
             </form>
 
             {/* Right Side Icons */}
-            <div className="hidden xl:flex items-center space-x-6">
-              <Link 
-                to="/sell-product" 
-                className="group flex flex-col items-center text-gray-700 hover:text-blue-600 transition-colors duration-200"
-              >
-                <SellIcon className="h-6 w-6" />
-                <span className="text-xs font-medium mt-1">Sell</span>
-              </Link>
+            <div className="hidden xl:flex items-center space-x-5 ">
+              
 
               {auth.user ? (
                 <div className="relative">
@@ -237,30 +237,46 @@ export const Navbar = () => {
                   )}
                 </div>
               ) : (
+
+
                 <Link 
                   to="/signin" 
-                  className="group flex flex-col items-center text-gray-700 hover:text-blue-600 transition-colors duration-200"
+                  className="group flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors duration-200"
                 >
-                  <LoginIcon className="h-6 w-6" />
-                  <span className="text-xs font-medium mt-1">Sign In</span>
+                  <IoMdLogIn className="h-6 w-6" />
+                  <span className="text-sm font-semibold">Login</span>
                 </Link>
               )}
 
+            {/* sell icon  */}
               <Link 
-                to="/wishlist" 
-                className="group flex flex-col items-center text-gray-700 hover:text-blue-600 transition-colors duration-200"
+                to="/sell-product" 
+                className="group flex  items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors duration-200"
               >
-                <FavoriteBorderIcon className="h-6 w-6" />
-                <span className="text-xs font-medium mt-1">Wishlist</span>
+                
+                <AiTwotoneShop  className="h-6 w-6 "/>
+
+                <span className="text-sm font-semibold">Sell</span>
               </Link>
 
+              {/* wishlist  */}
+              <Link 
+                to="/wishlist" 
+                className="group flex  items-center  space-x-2 text-gray-700 hover:text-blue-600 transition-colors duration-200"
+              >
+                <FavoriteBorderIcon className="h-6 w-6" />
+                <span className="text-sm font-semibold ">Wishlist</span>
+              </Link>
+
+              {/* cart */}
               <button 
                 onClick={() => navigate("/cart")}
-                className="group flex flex-col items-center text-gray-700 hover:text-blue-600 transition-colors duration-200"
+                className="group flex  items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors duration-200"
               >
                 <ShoppingCartOutlinedIcon className="h-6 w-6" />
-                <span className="text-xs font-medium mt-1">Cart</span>
+                <span className="text-sm font-semibold ">Cart</span>
               </button>
+
             </div>
           </div>
         </div>

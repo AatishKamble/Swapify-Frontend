@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { FaArrowLeft ,FaArrowRight } from "react-icons/fa";
+
 
 const Payment = ({ setCurrentStep }) => {
   useEffect(() => {
@@ -70,14 +72,14 @@ const Payment = ({ setCurrentStep }) => {
             type="button"
             onClick={() => setCurrentStep(2)}
           >
-            Previous
+            <FaArrowLeft/>
           </button>
 
           <button
             className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-lg transition-all"
             type="submit"
           >
-            Place Order
+            Place Order 
             
           </button>
         </div>

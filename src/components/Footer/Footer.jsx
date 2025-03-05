@@ -2,8 +2,8 @@ import React from 'react';
 
 export const Footer = () => {
   return (
-    <footer className="bg-transparent">
-      <div className="mx-auto max-w-screen-xl px-4 py-6 sm:px-6 lg:space-y-16">
+    <footer className="bg-transparent ">
+      <div className="mx-auto max-w-screen-2xl px-4 py-6 sm:px-6 lg:space-y-16">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <div className="text-teal-600 flex">

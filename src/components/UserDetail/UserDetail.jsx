@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector } from "react-redux"
 import VerifiedIcon from '@mui/icons-material/Verified';
+import { FaArrowLeft ,FaArrowRight } from "react-icons/fa";
 const UserDetail = ({ handleNext }) => {
 
     const auth = useSelector(store => store.auth)
@@ -9,7 +10,7 @@ const UserDetail = ({ handleNext }) => {
   
     return (
         <>
-            <div className='h-[400px]'>
+            <div className='h-[400px] '>
                 {auth.user &&
                     <div className='w-[800px] h-[130px] bg-slate-100 relative rounded-xl '>
                         <div className='  bg-slate-800 px-2 flex items-center h-[40px] rounded-t-xl'>
@@ -29,7 +30,7 @@ const UserDetail = ({ handleNext }) => {
 
 
                         <div className=' py-10 mt-10 justify-end  px-10  flex items-center h-[40px] rounded-b-xl' onClick={() => handleNext(prev=>prev+1)}>
-                            <button className='relative text-white bg-blue-700 hover:bg-blue-800  w-[100px] h-[40px] rounded-md font-bold ' >Next
+                            <button className='relative flex justify-center items-center text-white bg-blue-700 hover:bg-blue-800  w-[100px] h-[40px] rounded-md font-bold ' ><FaArrowRight />
                                 {/* Animation in the top-right corner */}
                             <span className="absolute top-0 right-0 translate-x-2/3 -translate-y-1/2 flex size-3">
                                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>

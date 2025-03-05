@@ -2,6 +2,7 @@ import CartItems from "../UserCart/CartItems";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserCart } from "../../State/Cart/Action.js";
+import { FaArrowRight , FaArrowLeft } from "react-icons/fa";
 
 const OrderSummary = ({ setCurrentStep }) => {
   const cart = useSelector((store) => store.cart);
@@ -67,7 +68,7 @@ const OrderSummary = ({ setCurrentStep }) => {
           type="button"
           onClick={() => setCurrentStep(1)}
         >
-          Previous
+          <FaArrowLeft />
         </button>
 
         <button
@@ -75,7 +76,7 @@ const OrderSummary = ({ setCurrentStep }) => {
           className="relative bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-lg transition-all duration-200"
           onClick={() => setCurrentStep(3)}
         >
-          Next
+          <FaArrowRight />
 
             <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 flex size-3">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
