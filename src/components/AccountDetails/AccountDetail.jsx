@@ -12,9 +12,9 @@ const AccountDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  async function cancelReq(id) {
-    await dispatch(cancelRequest(id));
-    dispatch(getSellProducts());
+   function cancelReq(id) {
+   dispatch(cancelRequest(id));
+  
   }
 
 
@@ -50,20 +50,18 @@ const AccountDetail = () => {
 
   return (
     <div className="p-6 bg-gray-100">
-      
       <div className="bg-white shadow-md rounded-lg p-6">
         <div className="flex justify-between items-center mb-4">
           <span className="text-lg font-semibold">Personal Information</span>
-          <button className="text-blue-500 cursor-pointer border border-solid p-1 rounded-lg hover:scale-110">Edit</button>
+          <span className="text-blue-500 cursor-pointer">Edit</span>
         </div>
         <form>
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
-              
-              <input type="text" value={user.user?.firstName} className="w-full p-2 border border-gray-300 rounded" name="firstName" placeholder='Last Name' required />
+              <input type="text" value={user.user?.firstName} className="w-full p-2 border border-gray-300 rounded" name="firstName" required />
             </div>
             <div>
-              <input type="text" value={user.user?.lastName} className="w-full p-2 border border-gray-300 rounded" name="lastName" placeholder='Last Name' required />
+              <input type="text" value={user.user?.lastName} className="w-full p-2 border border-gray-300 rounded" name="lastName" required />
             </div>
           </div>
         </form>
@@ -72,26 +70,24 @@ const AccountDetail = () => {
       <div className="bg-white shadow-md rounded-lg p-6 mt-6">
         <div className="flex justify-between items-center mb-4">
           <span className="text-lg font-semibold">Email Address</span>
-          <button className="text-blue-500 cursor-pointer border border-solid p-1 rounded-lg hover:scale-110">Edit</button>
+          <span className="text-blue-500 cursor-pointer">Edit</span>
         </div>
         <input type="text" value={user.user?.email} className="w-full p-2 border border-gray-300 rounded" name="email" required />
       </div>
 
-       <div className="bg-white shadow-md rounded-lg p-6 mt-6">
+      {/* <div className="bg-white shadow-md rounded-lg p-6 mt-6">
         <div className="flex justify-between items-center mb-4">
           <span className="text-lg font-semibold">Mobile Number</span>
-          <button className="text-blue-500 cursor-pointer border border-solid p-1 rounded-lg hover:scale-110">Edit</button>
+          <span className="text-blue-500 cursor-pointer">Edit</span>
         </div>
-        <input type="text" className="w-full p-2 border border-gray-300 rounded" name="mobileNumber" placeholder='Mobile No.' required />
-      </div>
+        <input type="text"   className="w-full p-2 border border-gray-300 rounded" name="mobileNumber" required />
+      </div> */}
 
-      <div className="p-6 mt-6 w-full bg-white shadow-lg border border-gray-200 rounded-3xl flex hover:shadow-xl transition duration-300">
-        <div className='h-fit'><span className="text-lg font-semibold text-green-800" >Your Uploaded Products* </span> </div> 
-        <div className="p-1 ml-4 mt-5 w-full max-w-5xl mx-auto">  
-        {user?.user?.productRequests?.map((item) => (
+ <div className="p-6 w-full max-w-5xl mx-auto">
+        {Array.isArray(product.products)&&product.products?.map((item) => (
           <div key={item?._id} className="relative bg-white shadow-lg border border-gray-200 rounded-xl flex items-center p-6 mb-6 hover:shadow-xl transition duration-300">
             <div className="w-32 h-32 flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden">
-              <img onClick={() => navigate(`/product/${item?._id}`)} src={item.images?.[0]} alt="Product" className="w-full h-full object-cover cursor-pointer transition duration-300 hover:scale-105" />
+              <img onClick={() => navigate(`/product/${item?._id}`)} src={item.images[0]?.imageUrl} alt="Product" className="w-full h-full object-cover cursor-pointer transition duration-300 hover:scale-105" />
             </div>
             <div className="flex-1 w-6 px-4">
               <p className="text-lg font-semibold text-gray-900">{item?.productName}</p>
@@ -107,7 +103,7 @@ const AccountDetail = () => {
               <p className="text-md font-semibold text-indigo-700">{item?.category?.name}</p>
               <p className="text-sm text-gray-500">{item?.category?.parentCategory?.name}</p>
             </div>
-            {product.cancelReq !== null ? <span>Successfully canceled request</span> :
+            { item.state === "cancelrequest"? <span className='text-red-500'>canceled request</span> :
               <button onClick={() => cancelReq(item?._id)} className="relative group flex items-center justify-center p-3 bg-red-50 border border-red-300 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition duration-300">
                 <DeleteOutlinedIcon />
                 <span className="absolute top-1/2 left-[110%] w-20 bg-gray-800 text-white text-xs rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
@@ -119,10 +115,7 @@ const AccountDetail = () => {
           </div>
         ))}
       </div>
-      </div>
-
       
-
 
       <div className="bg-white shadow-md rounded-lg p-6 mt-6">
         <div className="text-lg font-semibold mb-4">FAQs</div>
@@ -130,14 +123,15 @@ const AccountDetail = () => {
           {faqs.map((faq, index) => (
             <div key={index} className="border-b border-gray-200 pb-4">
               <button className="w-full text-left font-semibold text-gray-900 flex justify-between items-center py-2 focus:outline-none" onClick={() => toggleFAQ(index)}>
-                {faq.question}
-                <span className={`transform transition-transform duration-200 ${openIndex === index ? "rotate-180" : "rotate-0"}`}>
-                  ▼
-                </span>
-              </button>
-              <div className={`overflow-hidden transition-all duration-300 ${openIndex === index ? "max-h-40 opacity-100" : "max-h-0 opacity-0"}`}>
-                <p className="text-gray-700 mt-2">{faq.answer}</p>
-              </div>
+              {faq.question}
+              <span className={`transform transition-transform duration-200 ${openIndex === index ? "rotate-180" : "rotate-0"}`}>
+                ▼
+              </span>
+            </button>
+            <div className={`overflow-hidden transition-all duration-300 ${openIndex === index ? "max-h-40 opacity-100" : "max-h-0 opacity-0"}`}>
+              <p className="text-gray-700 mt-2">{faq.answer}</p>
+            </div>
+
             </div>
           ))}
         </div>

@@ -37,7 +37,7 @@ export const productReducer = (state = initialState, action) => {
                 return { ...state, isLoading: false, products: action.payload };
     
             case SELL_PRODUCT_SUCCESS:
-                return { ...state, isLoading: false, sellProduct: action.payload };
+                return { ...state, isLoading: false, Products:[ ...state.products, action.payload ]};
     
             case CANCEL_REQUEST_SUCCESS:
                 return {

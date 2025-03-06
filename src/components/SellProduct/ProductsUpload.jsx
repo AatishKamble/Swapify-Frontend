@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { sellProduct } from "../../State/Product/Action";
+import { getSellProducts, sellProduct } from "../../State/Product/Action";
 import { useNavigate } from "react-router-dom";
 
 const ProductsUpload = ({ selectedCategory, backButton }) => {
