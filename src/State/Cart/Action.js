@@ -1,8 +1,10 @@
 
 import {ADD_TO_CART_REQUEST,ADD_TO_CART_SUCCESS,ADD_TO_CART_FAILURE,REMOVE_CART_ITEM_REQUEST,REMOVE_CART_ITEM_SUCCESS,REMOVE_CART_ITEM_FAILURE, GET_USER_CART_FAILURE, GET_USER_CART_REQUEST, GET_USER_CART_SUCCESS , ADD_TO_WISHLIST_REQUEST, ADD_TO_WISHLIST_SUCCESS, ADD_TO_WISHLIST_FAILURE
-    ,REMOVE_WISHLIST_ITEM_REQUEST, REMOVE_WISHLIST_ITEM_SUCCESS, REMOVE_WISHLIST_ITEM_FAILURE
+    ,REMOVE_WISHLIST_ITEM_REQUEST, REMOVE_WISHLIST_ITEM_SUCCESS, REMOVE_WISHLIST_ITEM_FAILURE,
+    GET_USER_WISHLIST_REQUEST,GET_USER_WISHLIST_SUCCESS,GET_USER_WISHLIST_FAILURE
 } from "./ActionType.js";
 import { api } from "../../configApi/configApi.js";
+
 export const addToCart=(reqData)=> async(dispatch)=>{
 
     dispatch({type:ADD_TO_CART_REQUEST});
@@ -71,6 +73,20 @@ export const addToWishlist = (reqData) => async (dispatch) => {
         dispatch({ type: ADD_TO_WISHLIST_FAILURE, payload: error.message });
     }
 }
+
+export const getUserWishlist = () => async (dispatch) => {
+    dispatch({ type: GET_USER_WISHLIST_REQUEST });
+  
+    try {
+      const { data } = await api.get("/api/wishlist");
+      console.log("This is get wishlist:", data);
+      dispatch({ type: GET_USER_WISHLIST_SUCCESS, payload: data });
+    } catch (error) {
+      console.error("Error fetching wishlist:", error.message);
+      dispatch({ type: GET_USER_WISHLIST_FAILURE, payload: error.message });
+    }
+  };
+  
 
 // Remove Item from Wishlist
 export const removeItemFromWishlist = (productId) => async (dispatch) => {

@@ -60,6 +60,7 @@ export const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showCategories, setShowCategories] = useState(false);
+  const [timeoutId, setTimeoutId] = useState(null); // Add timeout state
 
   useEffect(() => {
     if (jwt) {
@@ -73,7 +74,40 @@ export const Navbar = () => {
     }
   }, [auth.user]);
 
-  const handleProfileClick = () => setOpen(!open);
+  const handleProfileClick = () => {
+    setOpen(prevOpen => {
+      const newOpen = !prevOpen;
+      if (newOpen) {
+        // Clear any existing timeout when opening
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+          setTimeoutId(null);
+        }
+        // Set new timeout to close after 5 seconds
+        const id = setTimeout(() => {
+          setOpen(false);
+          setTimeoutId(null);
+        },2000);
+        setTimeoutId(id);
+      } else {
+        // Clear timeout when closing manually
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+          setTimeoutId(null);
+        }
+      }
+      return newOpen;
+    });
+  };
+
+  // Cleanup timeout on component unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [timeoutId]);
   
   const handleLogout = () => {
     dispatch(logout());
@@ -219,16 +253,16 @@ export const Navbar = () => {
                   </button>
 
                   {open && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50 border border-gray-100">
+                    <div className="absolute right-0 mt-2 w-[7vw] bg-white rounded-lg shadow-lg py-1 z-50 border border-gray-100">
                       <button 
-                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+                        className="w-full text-center px-4 py-2 text-sm text-gray-900 hover:bg-gray-200  rounded-full transition-colors duration-300"
                         onClick={() => navigate('/account')}
                       >
                         Account
                       </button>
                       <hr className="my-1" />
                       <button 
-                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+                        className="w-full text-center px-4 py-2 text-sm text-red-500 hover:bg-gray-200  rounded-full transition-colors duration-300"
                         onClick={handleLogout}
                       >
                         Logout
@@ -261,7 +295,7 @@ export const Navbar = () => {
 
               {/* wishlist  */}
               <Link 
-                onClick={() => navigate("/list")}
+            
                 to="/wishlist" 
                 className="group flex  items-center  space-x-2 text-gray-700 hover:text-blue-600 transition-colors duration-200"
               >

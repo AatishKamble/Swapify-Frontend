@@ -45,18 +45,19 @@ const AccountDetail = () => {
 
   return (
     <div className="p-6 bg-gray-100">
+      
       <div className="bg-white shadow-md rounded-lg p-6">
         <div className="flex justify-between items-center mb-4">
           <span className="text-lg font-semibold">Personal Information</span>
-          <span className="text-blue-500 cursor-pointer">Edit</span>
+          <button className="text-blue-500 cursor-pointer border border-solid p-1 rounded-lg hover:scale-110">Edit</button>
         </div>
         <form>
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
-              <input type="text" className="w-full p-2 border border-gray-300 rounded" name="firstName" required />
+              <input type="text" className="w-full p-2 border border-gray-300 rounded" name="firstName" placeholder='First Name' required />
             </div>
             <div>
-              <input type="text" className="w-full p-2 border border-gray-300 rounded" name="lastName" required />
+              <input type="text" className="w-full p-2 border border-gray-300 rounded" name="lastName" placeholder='Last Name' required />
             </div>
           </div>
         </form>
@@ -65,20 +66,22 @@ const AccountDetail = () => {
       <div className="bg-white shadow-md rounded-lg p-6 mt-6">
         <div className="flex justify-between items-center mb-4">
           <span className="text-lg font-semibold">Email Address</span>
-          <span className="text-blue-500 cursor-pointer">Edit</span>
+          <button className="text-blue-500 cursor-pointer border border-solid p-1 rounded-lg hover:scale-110">Edit</button>
         </div>
-        <input type="text" className="w-full p-2 border border-gray-300 rounded" name="email" required />
+        <input type="text" className="w-full p-2 border border-gray-300 rounded" name="email" placeholder='Email' required />
       </div>
 
       <div className="bg-white shadow-md rounded-lg p-6 mt-6">
         <div className="flex justify-between items-center mb-4">
           <span className="text-lg font-semibold">Mobile Number</span>
-          <span className="text-blue-500 cursor-pointer">Edit</span>
+          <button className="text-blue-500 cursor-pointer border border-solid p-1 rounded-lg hover:scale-110">Edit</button>
         </div>
-        <input type="text" className="w-full p-2 border border-gray-300 rounded" name="mobileNumber" required />
+        <input type="text" className="w-full p-2 border border-gray-300 rounded" name="mobileNumber" placeholder='Mobile No.' required />
       </div>
 
-      <div className="p-6 w-full max-w-5xl mx-auto">
+      <div className="p-6 mt-6 w-full bg-white shadow-lg border border-gray-200 rounded-3xl flex hover:shadow-xl transition duration-300">
+        <div className='h-fit'><span className="text-lg font-semibold text-green-800" >Your Uploaded Products* </span> </div> 
+        <div className="p-1 ml-4 mt-5 w-full max-w-5xl mx-auto">  
         {user?.user?.productRequests?.map((item) => (
           <div key={item?._id} className="relative bg-white shadow-lg border border-gray-200 rounded-xl flex items-center p-6 mb-6 hover:shadow-xl transition duration-300">
             <div className="w-32 h-32 flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden">
@@ -110,6 +113,10 @@ const AccountDetail = () => {
           </div>
         ))}
       </div>
+      </div>
+
+      
+
 
       <div className="bg-white shadow-md rounded-lg p-6 mt-6">
         <div className="text-lg font-semibold mb-4">FAQs</div>

@@ -52,8 +52,8 @@ const ProductDetails = () => {
 
 
     dispatch(addToWishlist(data));
-    dispatch(getUserCart());
-    navigate('/list');
+    dispatch(getUserWishlist());
+    navigate('/wishlist');
   };
 
   
