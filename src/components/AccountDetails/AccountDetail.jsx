@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import { cancelRequest } from '../../State/Product/Action';
+import { cancelRequest, getSellProducts } from '../../State/Product/Action';
 import { useNavigate } from 'react-router-dom';
 
 const AccountDetail = () => {
   const user = useSelector(store => store.auth);
+  console.log(user)
   const product = useSelector(store => store.product);
-  console.log(product);
+  console.log("inacc", product);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  function cancelReq(id) {
-    dispatch(cancelRequest(id));
-    navigate("/account");
+  async function cancelReq(id) {
+    await dispatch(cancelRequest(id));
+    dispatch(getSellProducts());
   }
 
-  useEffect(() => {}, [product?.products]);
+
+
+  useEffect(() => {
+    dispatch(getSellProducts());
+  }, [dispatch]);
 
   const [openIndex, setOpenIndex] = useState(null);
 
@@ -53,10 +58,10 @@ const AccountDetail = () => {
         <form>
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
-              <input type="text" className="w-full p-2 border border-gray-300 rounded" name="firstName" required />
+              <input type="text" value={user.user?.firstName} className="w-full p-2 border border-gray-300 rounded" name="firstName" required />
             </div>
             <div>
-              <input type="text" className="w-full p-2 border border-gray-300 rounded" name="lastName" required />
+              <input type="text" value={user.user?.lastName} className="w-full p-2 border border-gray-300 rounded" name="lastName" required />
             </div>
           </div>
         </form>
@@ -67,49 +72,18 @@ const AccountDetail = () => {
           <span className="text-lg font-semibold">Email Address</span>
           <span className="text-blue-500 cursor-pointer">Edit</span>
         </div>
-        <input type="text" className="w-full p-2 border border-gray-300 rounded" name="email" required />
+        <input type="text" value={user.user?.email} className="w-full p-2 border border-gray-300 rounded" name="email" required />
       </div>
 
-      <div className="bg-white shadow-md rounded-lg p-6 mt-6">
+      {/* <div className="bg-white shadow-md rounded-lg p-6 mt-6">
         <div className="flex justify-between items-center mb-4">
           <span className="text-lg font-semibold">Mobile Number</span>
           <span className="text-blue-500 cursor-pointer">Edit</span>
         </div>
-        <input type="text" className="w-full p-2 border border-gray-300 rounded" name="mobileNumber" required />
-      </div>
+        <input type="text"   className="w-full p-2 border border-gray-300 rounded" name="mobileNumber" required />
+      </div> */}
 
-      <div className="p-6 w-full max-w-5xl mx-auto">
-        {user?.user?.productRequests?.map((item) => (
-          <div key={item?._id} className="relative bg-white shadow-lg border border-gray-200 rounded-xl flex items-center p-6 mb-6 hover:shadow-xl transition duration-300">
-            <div className="w-32 h-32 flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden">
-              <img onClick={() => navigate(`/product/${item?._id}`)} src={item.images?.[0]} alt="Product" className="w-full h-full object-cover cursor-pointer transition duration-300 hover:scale-105" />
-            </div>
-            <div className="flex-1 w-6 px-4">
-              <p className="text-lg font-semibold text-gray-900">{item?.productName}</p>
-              <p className="text-sm text-gray-600 mb-2 line-clamp-2 break-words">{item?.productDescription}</p>
-              <p className="text-xl text-indigo-600 font-semibold">₹ {item?.expectedPrice}</p>
-            </div>
-            <div className="flex-1 px-6 text-gray-700">
-              <p className="text-md font-medium">{item?.address?.[0]?.street}</p>
-              <p className="text-sm">{item?.address?.[0]?.village}, {item?.address?.[0]?.city}</p>
-              <p className="text-sm">{item?.address?.[0]?.state} - {item?.address?.[0]?.pincode}</p>
-            </div>
-            <div className="flex-1 px-6">
-              <p className="text-md font-semibold text-indigo-700">{item?.category?.name}</p>
-              <p className="text-sm text-gray-500">{item?.category?.parentCategory?.name}</p>
-            </div>
-            {product.cancelReq !== null ? <span>Successfully canceled request</span> :
-              <button onClick={() => cancelReq(item?._id)} className="relative group flex items-center justify-center p-3 bg-red-50 border border-red-300 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition duration-300">
-                <DeleteOutlinedIcon />
-                <span className="absolute top-1/2 left-[110%] w-20 bg-gray-800 text-white text-xs rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                  Cancel Request
-                  <span className="absolute top-1/2 right-full border-4 border-transparent border-r-gray-800"></span>
-                </span>
-              </button>
-            }
-          </div>
-        ))}
-      </div>
+      
 
       <div className="bg-white shadow-md rounded-lg p-6 mt-6">
         <div className="text-lg font-semibold mb-4">FAQs</div>

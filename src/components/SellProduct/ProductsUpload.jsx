@@ -32,17 +32,21 @@ const ProductsUpload = ({ selectedCategory, backButton }) => {
         formData.append("productName", productName);
         formData.append("productDescription", productDescription);
         formData.append("expectedPrice", expectedPrice);
-        formData.append("state", state);
-        formData.append("city", city);
-        formData.append("village", village);
-        formData.append("street", street);
-        formData.append("pincode", pincode);
+        formData.append("address", JSON.stringify({
+            street,
+            village,
+            city,
+            state,
+            pincode
+        }));
+        
         formData.append("mainCategory", selectedCategory.mainCategory);
         formData.append("subcategory", selectedCategory.subcategory);
     
-        images.forEach((image, index) => {
-            formData.append(`images`, image);
+        images.forEach((image) => {
+            formData.append("productimages", image); // ✅ Must match backend
         });
+        
     
         dispatch(sellProduct(formData,jwt));
         nav("/account");
