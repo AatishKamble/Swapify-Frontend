@@ -12,9 +12,9 @@ const AccountDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-   function cancelReq(id) {
+ function cancelReq(id) {
    dispatch(cancelRequest(id));
-  
+   dispatch(getSellProducts());
   }
 
 
@@ -82,8 +82,7 @@ const AccountDetail = () => {
         </div>
         <input type="text"   className="w-full p-2 border border-gray-300 rounded" name="mobileNumber" required />
       </div> */}
-
- <div className="p-6 w-full max-w-5xl mx-auto">
+      <div className="p-6 w-full max-w-5xl mx-auto">
         {Array.isArray(product.products)&&product.products?.map((item) => (
           <div key={item?._id} className="relative bg-white shadow-lg border border-gray-200 rounded-xl flex items-center p-6 mb-6 hover:shadow-xl transition duration-300">
             <div className="w-32 h-32 flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden">
@@ -104,7 +103,8 @@ const AccountDetail = () => {
               <p className="text-sm text-gray-500">{item?.category?.parentCategory?.name}</p>
             </div>
             { item.state === "cancelrequest"? <span className='text-red-500'>canceled request</span> :
-              <button onClick={() => cancelReq(item?._id)} className="relative group flex items-center justify-center p-3 bg-red-50 border border-red-300 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition duration-300">
+              <button onClick={() => cancelReq(item?._id)} className="relative group flex items-center justify-center p-3 bg-red-50 border border-red-300 text-red-600 rounded-lg hover:bg-red-600
+               hover:text-white transition duration-300">
                 <DeleteOutlinedIcon />
                 <span className="absolute top-1/2 left-[110%] w-20 bg-gray-800 text-white text-xs rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   Cancel Request
@@ -115,7 +115,6 @@ const AccountDetail = () => {
           </div>
         ))}
       </div>
-      
 
       <div className="bg-white shadow-md rounded-lg p-6 mt-6">
         <div className="text-lg font-semibold mb-4">FAQs</div>

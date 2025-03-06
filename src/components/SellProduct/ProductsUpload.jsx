@@ -49,6 +49,8 @@ const ProductsUpload = ({ selectedCategory, backButton }) => {
         
     
         dispatch(sellProduct(formData,jwt));
+        dispatch(getSellProducts());
+        
         nav("/account");
     };
     

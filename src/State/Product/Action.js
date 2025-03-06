@@ -42,7 +42,7 @@ export const sellProduct = (productData,jwt) => async (dispatch) => {
                 "Content-Type": "multipart/form-data"
             }
         });
-        dispatch(getSellProducts());
+       
         dispatch({ type: SELL_PRODUCT_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: SELL_PRODUCT_FAILURE, payload: error.message });
@@ -56,6 +56,7 @@ export const cancelRequest = (requestId) => async (dispatch) => {
         const { data } = await api.post(`/api/user/sell-product/id/${requestId}`);
         
         dispatch({ type: CANCEL_REQUEST_SUCCESS, payload: data });
+        
     } catch (error) {
         dispatch({ type: CANCEL_REQUEST_FAILURE, payload: error.message });
     }
