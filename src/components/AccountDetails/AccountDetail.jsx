@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import { cancelRequest } from '../../State/Product/Action';
+import { cancelRequest, getSellProducts } from '../../State/Product/Action';
 import { useNavigate } from 'react-router-dom';
 
 const AccountDetail = () => {
   const user = useSelector(store => store.auth);
+  console.log(user)
   const product = useSelector(store => store.product);
-  console.log(product);
+  console.log("inacc", product);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  function cancelReq(id) {
-    dispatch(cancelRequest(id));
-    navigate("/account");
+  async function cancelReq(id) {
+    await dispatch(cancelRequest(id));
+    dispatch(getSellProducts());
   }
 
-  useEffect(() => {}, [product?.products]);
+
+
+  useEffect(() => {
+    dispatch(getSellProducts());
+  }, [dispatch]);
 
   const [openIndex, setOpenIndex] = useState(null);
 
@@ -54,10 +59,11 @@ const AccountDetail = () => {
         <form>
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
-              <input type="text" className="w-full p-2 border border-gray-300 rounded" name="firstName" placeholder='First Name' required />
+              
+              <input type="text" value={user.user?.firstName} className="w-full p-2 border border-gray-300 rounded" name="firstName" placeholder='Last Name' required />
             </div>
             <div>
-              <input type="text" className="w-full p-2 border border-gray-300 rounded" name="lastName" placeholder='Last Name' required />
+              <input type="text" value={user.user?.lastName} className="w-full p-2 border border-gray-300 rounded" name="lastName" placeholder='Last Name' required />
             </div>
           </div>
         </form>
@@ -68,10 +74,10 @@ const AccountDetail = () => {
           <span className="text-lg font-semibold">Email Address</span>
           <button className="text-blue-500 cursor-pointer border border-solid p-1 rounded-lg hover:scale-110">Edit</button>
         </div>
-        <input type="text" className="w-full p-2 border border-gray-300 rounded" name="email" placeholder='Email' required />
+        <input type="text" value={user.user?.email} className="w-full p-2 border border-gray-300 rounded" name="email" required />
       </div>
 
-      <div className="bg-white shadow-md rounded-lg p-6 mt-6">
+       <div className="bg-white shadow-md rounded-lg p-6 mt-6">
         <div className="flex justify-between items-center mb-4">
           <span className="text-lg font-semibold">Mobile Number</span>
           <button className="text-blue-500 cursor-pointer border border-solid p-1 rounded-lg hover:scale-110">Edit</button>

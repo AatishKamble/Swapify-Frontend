@@ -35,13 +35,14 @@ export const findProductById = (reqData) => async (dispatch) => {
 export const sellProduct = (productData,jwt) => async (dispatch) => {
     dispatch({ type: SELL_PRODUCT_REQUEST });
     try {
-        const response = await axios.post(`/api/user/sell-product`, productData, {
+      
+        const {data} = await api.post(`/api/user/sell-product`, productData, {
             headers: {
                 "authorization": `Bearer ${jwt}`,
                 "Content-Type": "multipart/form-data"
             }
         });
-
+      
         dispatch({ type: SELL_PRODUCT_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: SELL_PRODUCT_FAILURE, payload: error.message });
@@ -52,7 +53,8 @@ export const sellProduct = (productData,jwt) => async (dispatch) => {
 export const cancelRequest = (requestId) => async (dispatch) => {
     dispatch({ type: CANCEL_REQUEST_REQUEST });
     try {
-        const { data } = await api.delete(`/api/user/sell-product/id/${requestId}`);
+        const { data } = await api.post(`/api/user/sell-product/id/${requestId}`);
+        console.log("cancel req",data);
         dispatch({ type: CANCEL_REQUEST_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: CANCEL_REQUEST_FAILURE, payload: error.message });
@@ -60,12 +62,14 @@ export const cancelRequest = (requestId) => async (dispatch) => {
 };
 
 // Function to fetch sold products modification
-export const getSellProducts = (userId) => async (dispatch) => {
+export const getSellProducts = () => async (dispatch) => {
     dispatch({ type: GET_SOLD_PRODUCTS_REQUEST });
 
     try {
-        const { data } = await api.get(`/api/user/sell-products/${userId}`);
-        dispatch({ type: GET_SOLD_PRODUCTS_SUCCESS, payload: data });
+   
+        const res = await api.get(`/api/user/sell-product`);
+       
+        dispatch({ type: GET_SOLD_PRODUCTS_SUCCESS, payload: res.data });
     } catch (error) {
         dispatch({ type: GET_SOLD_PRODUCTS_FAILURE, payload: error.message });
     }
