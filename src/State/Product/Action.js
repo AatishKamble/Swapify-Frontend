@@ -54,8 +54,9 @@ export const cancelRequest = (requestId) => async (dispatch) => {
     dispatch({ type: CANCEL_REQUEST_REQUEST });
     try {
         const { data } = await api.post(`/api/user/sell-product/id/${requestId}`);
-        console.log("cancel req",data);
+      
         dispatch({ type: CANCEL_REQUEST_SUCCESS, payload: data });
+        
     } catch (error) {
         dispatch({ type: CANCEL_REQUEST_FAILURE, payload: error.message });
     }
