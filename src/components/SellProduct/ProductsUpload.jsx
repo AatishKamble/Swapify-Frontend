@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { sellProduct } from "../../State/Product/Action";
+import { useNavigate } from "react-router-dom";
 
 const ProductsUpload = ({ selectedCategory, backButton }) => {
+    const nav = useNavigate();
+    const jwt = localStorage.getItem("jwt");
     const dispatch = useDispatch();
     const [productName, setProductName] = useState('');
     const [productDescription, setProductDescription] = useState('');
@@ -20,21 +23,31 @@ const ProductsUpload = ({ selectedCategory, backButton }) => {
     };
 
 
-    const handleSubmit = (e) => {
+
+    
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const productData = {
-            productName,
-            productDescription,
-            expectedPrice,
-            address: { state, city, village, street, pincode },
-            images,
-            mainCategory: selectedCategory.mainCategory,
-            subcategory: selectedCategory.subcategory
-        };
-
-        dispatch(sellProduct(productData));
+    
+        const formData = new FormData();
+        formData.append("productName", productName);
+        formData.append("productDescription", productDescription);
+        formData.append("expectedPrice", expectedPrice);
+        formData.append("state", state);
+        formData.append("city", city);
+        formData.append("village", village);
+        formData.append("street", street);
+        formData.append("pincode", pincode);
+        formData.append("mainCategory", selectedCategory.mainCategory);
+        formData.append("subcategory", selectedCategory.subcategory);
+    
+        images.forEach((image, index) => {
+            formData.append(`images`, image);
+        });
+    
+        dispatch(sellProduct(formData,jwt));
+        nav("/account");
     };
-
+    
     return (
         <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl mx-auto">

@@ -167,7 +167,7 @@ export const Home = () => {
                 <div class="flex justify-center">
                   <img src="https://image2.jdomni.in/banner/13062021/3E/57/E8/1D6E23DD7E12571705CAC761E7_1623567977295.png?output-format=webp" class="w-32 mb-3" />
                 </div>
-                <h2 class="title-font font-regular text-2xl text-gray-900">Affordable & Zero Cost</h2>
+                <h2 class="title-font font-regular text-2xl text-gray-900">Affordable Cost</h2>
               </div>
             </div>
 

@@ -1,7 +1,8 @@
 import { 
     FIND_PRODUCTS_REQUEST, FIND_PRODUCTS_SUCCESS, FIND_PRODUCTS_FAILURE, 
     FIND_PRODUCT_BY_ID_REQUEST, FIND_PRODUCT_BY_ID_SUCCESS, FIND_PRODUCT_BY_ID_FAILURE, 
-    SELL_PRODUCT_REQUEST, SELL_PRODUCT_SUCCESS, SELL_PRODUCT_FAILURE 
+    SELL_PRODUCT_REQUEST, SELL_PRODUCT_SUCCESS, SELL_PRODUCT_FAILURE, 
+    CANCEL_REQUEST_REQUEST, CANCEL_REQUEST_SUCCESS, CANCEL_REQUEST_FAILURE 
 } from "./ActionType.js";
 
 const initialState = {
@@ -9,7 +10,7 @@ const initialState = {
     product: null,
     isLoading: null,
     error: null,
-    sellProduct: null // Add this line to manage sell product state
+    sellProduct: null,
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -17,11 +18,13 @@ export const productReducer = (state = initialState, action) => {
         case FIND_PRODUCTS_REQUEST:
         case FIND_PRODUCT_BY_ID_REQUEST:
         case SELL_PRODUCT_REQUEST:
+        case CANCEL_REQUEST_REQUEST: // Handling cancel request loading state
             return { ...state, isLoading: true, error: null };
 
         case FIND_PRODUCTS_FAILURE:
         case FIND_PRODUCT_BY_ID_FAILURE:
         case SELL_PRODUCT_FAILURE:
+        case CANCEL_REQUEST_FAILURE: // Handling cancel request failure state
             return { ...state, isLoading: false, error: action.payload };
 
         case FIND_PRODUCT_BY_ID_SUCCESS:
@@ -31,7 +34,16 @@ export const productReducer = (state = initialState, action) => {
             return { ...state, isLoading: false, products: action.payload };
 
         case SELL_PRODUCT_SUCCESS:
-            return { ...state, isLoading: false, sellProduct: action.payload }; // Add this line to handle sell product success
+            return { ...state, isLoading: false, sellProduct: action.payload };
+
+            case CANCEL_REQUEST_SUCCESS:
+                return {
+                    ...state,
+                    isLoading: false,
+                    products: state.products.filter(
+                        product => product._id !== action.payload
+                    )
+                };
 
         default:
             return { ...state };

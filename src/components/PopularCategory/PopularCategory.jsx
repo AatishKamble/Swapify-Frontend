@@ -4,37 +4,37 @@
 
     const categories = [
         {
-          title: "Books & Study",
+          title: "Books & Study Materials",
           category: "Academic",
           image: "https://cdn-icons-png.flaticon.com/512/6347/6347299.png",
           bgColor: "bg-blue-500"
         },
         {
-          title: "Electronics",
+          title: "Electronic",
           category: "Gadgets",
           image: "https://cdn-icons-png.flaticon.com/512/5175/5175273.png",
           bgColor: "bg-purple-500"
         },
         {
-          title: "Photography",
+          title: "Photography & Videography",
           category: "Equipment",
           image: "https://cdn-icons-png.flaticon.com/512/7178/7178848.png",
           bgColor: "bg-pink-500"
         },
         {
-          title: "Gaming",
+          title: "Gaming & Accessories",
           category: "Entertainment",
           image: "https://cdn-icons-png.flaticon.com/512/10630/10630188.png",
           bgColor: "bg-green-500"
         },
         {
-          title: "Sports",
+          title: "Sports & Fitness",
           category: "Fitness",
           image: "https://cdn-icons-png.flaticon.com/512/9839/9839844.png",
           bgColor: "bg-red-500"
         },
         {
-          title: "Furniture",
+          title: "Furniture & Home Essentials",
           category: "Home",
           image: "https://cdn-icons-png.flaticon.com/512/4392/4392541.png",
           bgColor: "bg-yellow-500"
