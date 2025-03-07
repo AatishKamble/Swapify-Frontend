@@ -1,12 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { acceptSellRequest, getSellRequests, rejectSellRequest } from '../../State/Product/Action';
+
 
 const AdminPage = () => {
+
+  const nav = useNavigate();
+  const jwt = localStorage.getItem("jwt");
+  const dispatch = useDispatch();
+  const product = useSelector(store => store.product);
+  console.log("Admin", product.sellRequests);
+
+  useEffect(() => {
+      dispatch(getSellRequests());
+    }, [dispatch]);
+
+
   // Sample data for buyer requests
   const [buyerRequests, setBuyerRequests] = useState([
     { id: 1, buyer: 'John Doe', product: 'iPhone 13', quantity: 2, status: 'pending', date: '2025-03-05' },
     { id: 2, buyer: 'Jane Smith', product: 'MacBook Pro', quantity: 1, status: 'pending', date: '2025-03-04' },
     { id: 3, buyer: 'Robert Johnson', product: 'AirPods Pro', quantity: 3, status: 'pending', date: '2025-03-06' },
   ]);
+  
+  
 
   // Sample data for available products
   const [products, setProducts] = useState([
@@ -77,20 +95,16 @@ const AdminPage = () => {
 
   // Handler for accepting a buyer request
   const handleAccept = (id) => {
-    setBuyerRequests(
-      buyerRequests.map(request => 
-        request.id === id ? { ...request, status: 'accepted' } : request
-      )
-    );
+    
+    dispatch(acceptSellRequest(id));
+    dispatch(getSellRequests());
+
   };
 
   // Handler for rejecting a buyer request
   const handleReject = (id) => {
-    setBuyerRequests(
-      buyerRequests.map(request => 
-        request.id === id ? { ...request, status: 'rejected' } : request
-      )
-    );
+    dispatch(rejectSellRequest(id));
+    dispatch(getSellRequests());
   };
 
   // Handler for approving a cancellation request
@@ -142,7 +156,7 @@ const AdminPage = () => {
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
-              Buyer Requests
+              Seller Requests
             </button>
             <button
               onClick={() => setActiveTab('cancellations')}
@@ -172,39 +186,40 @@ const AdminPage = () => {
           <div className="bg-white shadow overflow-hidden sm:rounded-md">
             <div className="px-4 py-5 border-b border-gray-200 sm:px-6">
               <h3 className="text-lg leading-6 font-medium text-gray-900">
-                Buyer Requests
+                Seller Requests
               </h3>
               <p className="mt-1 text-sm text-gray-500">
                 Review and manage purchase requests from buyers
               </p>
             </div>
             <ul className="divide-y divide-gray-200">
-              {buyerRequests.length > 0 ? (
-                buyerRequests.map((request) => (
+              {product.sellRequests?.length > 0 ? (
+                product.sellRequests?.map((request) => (
                   <li key={request.id} className="px-4 py-4 sm:px-6">
                     <div className="flex items-center justify-between">
                       <div className="flex flex-col">
                         <span className="text-sm font-medium text-indigo-600 truncate">
-                          {request.buyer}
+                          {request.user.firstName} 
+                          {request.user.lastName}
                         </span>
                         <span className="flex items-center text-sm text-gray-500">
-                          {request.product} - Qty: {request.quantity}
+                          {request.productName}
                         </span>
                         <span className="text-sm text-gray-500">
-                          Requested on: {request.date}
+                          Requested on: {request.createdAt}
                         </span>
                       </div>
                       <div className="flex space-x-2">
-                        {request.status === 'pending' ? (
+                        {request.state === 'sellrequest' ? (
                           <>
                             <button
-                              onClick={() => handleAccept(request.id)}
+                              onClick={() => handleAccept(request._id)}
                               className="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                             >
                               Accept
                             </button>
                             <button
-                              onClick={() => handleReject(request.id)}
+                              onClick={() => handleReject(request._id)}
                               className="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                             >
                               Reject
@@ -212,9 +227,9 @@ const AdminPage = () => {
                           </>
                         ) : (
                           <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            request.status === 'accepted' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                            request.state === 'Request_Approved' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                           }`}>
-                            {request.status.charAt(0).toUpperCase() + request.status.slice(1)}
+                            {request.state.charAt(0).toUpperCase() + request.state.slice(1)}
                           </span>
                         )}
                       </div>

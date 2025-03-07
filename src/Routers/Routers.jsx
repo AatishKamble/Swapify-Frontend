@@ -21,6 +21,7 @@ import ProductsUpload from '../components/SellProduct/ProductsUpload.jsx';
 import { useLocation } from 'react-router-dom';
 import AccountDetail from '../components/AccountDetails/AccountDetail.jsx';
 import Wishlist from '../components/WishList/WishList.jsx';
+import AdminPage from '../components/AdminPage/AdminPage.jsx';
 const Routers = () => {
 
 // const location=useLocation();
@@ -49,6 +50,7 @@ const Routers = () => {
           <Route path="/signin" element={<Login />} />
           <Route path="/account" element={ <AccountDetail />} />
           <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/admin" element={<AdminPage/>} />
          
           <Route path="/product/:productId" element={<ProductDetails />} />
 

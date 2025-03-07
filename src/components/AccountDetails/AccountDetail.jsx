@@ -102,7 +102,7 @@ const AccountDetail = () => {
               <p className="text-md font-semibold text-indigo-700">{item?.category?.name}</p>
               <p className="text-sm text-gray-500">{item?.category?.parentCategory?.name}</p>
             </div>
-            { item.state === "cancelrequest"? <span className='text-red-500'>canceled request</span> :
+            { item.state === "sellrequest"? 
               <button onClick={() => cancelReq(item?._id)} className="relative group flex items-center justify-center p-3 bg-red-50 border border-red-300 text-red-600 rounded-lg hover:bg-red-600
                hover:text-white transition duration-300">
                 <DeleteOutlinedIcon />
@@ -110,7 +110,7 @@ const AccountDetail = () => {
                   Cancel Request
                   <span className="absolute top-1/2 right-full border-4 border-transparent border-r-gray-800"></span>
                 </span>
-              </button>
+              </button>:<span className='text-red-500'>{item.state}</span> 
             }
           </div>
         ))}
