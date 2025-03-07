@@ -116,7 +116,7 @@ export const rejectSellRequest = (requestId) => async (dispatch) => {
     try {
         const res = await api.delete(`/api/admin/product_request/id/${requestId}`); // API endpoint for rejecting requests
         console.log("Rejected Request:", res.data);
-        dispatch({ type: REJECT_SELL_REQUEST_SUCCESS, payload: { id: requestId } });
+        dispatch({ type: REJECT_SELL_REQUEST_SUCCESS, payload: res.data  });
     } catch (error) {
         console.log("Error rejecting request:", error.message);
         dispatch({ type: REJECT_SELL_REQUEST_FAILURE, payload: error.message });

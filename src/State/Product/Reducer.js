@@ -68,7 +68,9 @@ export const productReducer = (state = initialState, action) => {
         case REJECT_SELL_REQUEST_SUCCESS:  // Handling successful rejection of sell request
             return { 
                 ...state, 
-                isLoading: false 
+                isLoading: false,
+                sellRequests: action.payload.content.filter((items)=>items.state==="sellrequest")
+
                
             };
 
