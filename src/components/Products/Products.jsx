@@ -24,10 +24,10 @@ const Products = () => {
   const dispatch = useDispatch();
 
 
-  const decodedQueryString = decodeURIComponent(location.search);
-  const searchParams = new URLSearchParams(decodedQueryString);
-
-  let categoryValue = searchParams.getAll("Categories");
+  
+  const searchParams = new URLSearchParams(location.search);
+  
+  let categoryValue = searchParams.getAll("Categories").map(decodeURIComponent);
   let priceValue = searchParams.get("Price") || null;
   let sortValue = searchParams.get("sort");
   let pageNumber = searchParams.get("page") || 1;
@@ -42,7 +42,7 @@ const Products = () => {
       minPrice = 0;
       maxPrice = 1000000;
     }
-    console.log(categoryValue)
+   
     const data = {
       category: categoryValue,
       minPrice,
@@ -52,7 +52,7 @@ const Products = () => {
       pageSize: 10
     }
 
-
+    console.log(data);
     dispatch(findProducts(data));
 
   },

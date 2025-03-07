@@ -34,6 +34,7 @@ const FilterBy = ({ FilterByType, dataArray, More }) => {
         const searchValue = event.target.value;
         setSearch(searchValue);
         const searchResult = dataArray.filter(item => item.toLowerCase().includes(searchValue.toLowerCase()));
+        // console.log(searchResult,"aatish");
         setSearchResult(searchResult);
     }
     function updateUrlParams(selectedValues){
@@ -129,6 +130,7 @@ const FilterBy = ({ FilterByType, dataArray, More }) => {
       toShowElement.map((item, index) => (
         <li key={index} className="text-lg font-medium py-2 px-3 rounded-lg hover:bg-gray-100 transition-all duration-200">
           <div className="flex items-center gap-3">
+            {/* {console.log({item},"hiiiiiiii")} */}
             <input
               type="checkbox"
               name={item}

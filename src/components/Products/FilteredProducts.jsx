@@ -10,6 +10,8 @@ const FilteredProducts = () => {
   const searchParams = new URLSearchParams(location.search);
 
   const { product } = useSelector((store) => store);
+  
+  console.log(product?.products?.content);
 
   // Get current page from query, default to 1
   const currentPage = Number(searchParams.get("page")) || 1;

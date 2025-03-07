@@ -244,7 +244,7 @@ const ProductDetails = () => {
 
                       <h2 className="text-[1.4rem] i text-slate-900 py-2">
                         Description</h2>
-                      <p className="text-[1rem] font-normal text-justify text-gray-600 ">
+                      <p className="text-[1rem] i font-normal text-justify text-gray-600  ">
                         {product.product?.description}</p>
 
                 </div> {/* main div of product details ends here */}
