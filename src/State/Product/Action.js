@@ -102,7 +102,7 @@ export const acceptSellRequest = (requestId) => async (dispatch) => {
     try {
         const res = await api.post(`/api/admin/product_request/${requestId}`); // API endpoint for accepting requests
         console.log("Accepted Request:", res.data);
-        dispatch({ type: ACCEPT_SELL_REQUEST_SUCCESS, payload: { id: requestId } });
+        dispatch({ type: ACCEPT_SELL_REQUEST_SUCCESS, payload: res.data});
     } catch (error) {
         console.log("Error accepting request:", error.message);
         dispatch({ type: ACCEPT_SELL_REQUEST_FAILURE, payload: error.message });

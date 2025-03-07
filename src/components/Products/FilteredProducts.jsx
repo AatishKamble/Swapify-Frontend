@@ -13,11 +13,14 @@ const FilteredProducts = () => {
   const searchParams=new URLSearchParams(location.search);
 
   const {product}=useSelector(store=>store);
+
+  console.log("products by filter",product);
   
 
   function handlePageChange(event, page) {
     
     searchParams.set("page",page);
+    console.log(" this is",page,event.target); 
     const query=searchParams.toString();
     navigate({search:`?${query}`})
     window.scrollTo(0, 0);
