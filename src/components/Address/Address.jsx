@@ -1,120 +1,295 @@
-
-import { useState } from "react";
-import Title from '../FormTitle/Title.jsx'
-import InputField from "../FormFields/InputField.jsx";
+import { useState } from "react"
+import { motion } from "framer-motion"
+import Title from "../FormTitle/Title.jsx"
+import InputField from "../FormFields/InputField.jsx"
+import { MapPin, User, Phone, Home, Briefcase } from "lucide-react"
 
 const Address = () => {
-
-  //state
-  const [isWork, setIsWork] = useState(false);
+  // State
+  const [isWork, setIsWork] = useState(false)
   const [formData, setFormData] = useState({
     openSaturday: false,
     openSunday: false,
-    defaultAddress: false
-  });
+    defaultAddress: false,
+  })
 
-
-  
-  //showing work options 
-
+  // Showing work options
   function handleWorkClick() {
-
-    setIsWork(true);
+    setIsWork(true)
   }
 
   function handleHomeClick() {
-
-    setIsWork(false);
+    setIsWork(false)
   }
 
-
-  //form handling
+  // Form handling
   function handleSubmit(event) {
-    event.preventDefault();
-    console.log("Form submitted successfully", formData);
+    event.preventDefault()
+    console.log("Form submitted successfully", formData)
     for (const key in formData) {
       if (Object.hasOwnProperty.call(formData, key)) {
-        console.log(key + ": " + formData[key]);
+        console.log(key + ": " + formData[key])
       }
     }
   }
 
-  //checkbox handling
+  // Checkbox handling
   function handleCheckbox(event) {
-    const { name, checked } = event.target;
-
-    setFormData(formData => ({
+    const { name, checked } = event.target
+    setFormData((formData) => ({
       ...formData,
-      [name]: checked
-    }));
+      [name]: checked,
+    }))
   }
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  }
 
-
-
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4, ease: "easeOut" },
+    },
+  }
 
   return (
-    <>
-      <div className="grid auto-cols-auto auto-rows-auto gap-y-5 grid-rows-1 justify-center align-middle mt-[100px] bg-white w-auto ">
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto">
         <Title title="Address" subtitle="Edit Your Address" />
 
-
-        <div className="font-bold md:m-[30px] m-[5px] h-auto border-[1px] border-solid border-[#2d2d2d] w-auto p-[5px] md:p-[30px] ">
-          <form onSubmit={handleSubmit} method='get'>
-            <h2>Contact details</h2>
-
-            <InputField type="text" name="fullName" lableText="Full Name" setFormData={setFormData} value={formData.fullName ||""}/>
-            <InputField type="tel" name="phone" lableText="Mobile Number" setFormData={setFormData} value={formData.phone ||""}/>
-
-            <h2>Address</h2>
-
-            <InputField type="text" name="pincode" lableText="Pincode" setFormData={setFormData} value={formData.pincode ||""}/>
-            <InputField type="text" name="address" lableText="Address(House No,building,area,street)" setFormData={setFormData} value={formData.address ||""} />
-            <InputField type="text" name="locality" lableText="Locality/Town" setFormData={setFormData} value={formData.locality ||""}/>
-
-            <div className="flex flex-col md:flex-row ">
-
-              <InputField type="text" name="city" lableText="City" setFormData={setFormData} value={formData.city ||""} />
-              <InputField type="text" name="state" lableText="State" setFormData={setFormData} value={formData.state ||""} />
-
-            </div>
-
-            <h2 className="mb-[20px]">Save Address As</h2>
-            <div className="md:w-[300px] w-[200px] h-[25px] flex  ms-[35px] ">
-              <button className="h-[30px] w-[100px] text-[15px] font-bold font-['Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif] text-[#000000] rounded-xl border-2 border-solid border-[#181717] mb-[10px] me-[10px] ms-[10px] "
-                type="button" onClick={handleHomeClick} style={{ borderColor: isWork ? "" : "red", color: isWork ? "" : "red" }}>Home</button>
-              <button className="h-[30px] w-[100px] text-[15px] font-bold font-['Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif] text-[#000000] rounded-xl border-2 border-solid border-[#181717] mb-[10px] me-[10px] ms-[10px] " type="button" onClick={handleWorkClick} style={{ borderColor: isWork && "red", color: isWork ? "red" : "" }}>Work</button>
-
-            </div>
-            {isWork && <div className="flex flex-col m-[20px] text-[15px] mb-[20px]">
-
-              <div className="mt-[20px]  ms-[30px]">
-                <input type="checkbox" name="openSaturday" checked={formData.openSaturday} className=" scale-100 border-2 border-solid border-[#151212]" onChange={handleCheckbox} />
-                <label htmlFor="openSaturday" className="md:text-[15px] text-[14px] font-['Times New Roman', Times, serif] mt-[10p] ms-[10px] font-normal" >Open On Saturday</label>
+        <motion.div
+          className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 md:p-8"
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+        >
+          <form onSubmit={handleSubmit} method="get">
+            {/* Contact Details Section */}
+            <motion.div className="mb-8" variants={itemVariants}>
+              <div className="flex items-center gap-2 mb-6">
+                <div className="p-2 bg-gray-50 rounded-lg text-gray-600">
+                  <User size={20} />
+                </div>
+                <h2 className="text-lg font-semibold text-gray-800">Contact Details</h2>
               </div>
-              <div className="md:mt-[20px] mt-[10px] ms-[30px]">
-                <input type="checkbox" name="openSunday" checked={formData.openSunday} className="scale-100 border-2 border-solid border-[#151212]" onChange={handleCheckbox} />
-                <label htmlFor="openSunday" className="md:text-[15px] text-[14px] font-['Times New Roman', Times, serif] md:mt-[5px] ms-[10px] font-normal">Open On Sunday</label>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                <InputField
+                  type="text"
+                  name="fullName"
+                  lableText="Full Name"
+                  setFormData={setFormData}
+                  value={formData.fullName || ""}
+                  placeholder="Enter your full name"
+                  required
+                  icon={<User size={18} />}
+                />
+
+                <InputField
+                  type="tel"
+                  name="phone"
+                  lableText="Mobile Number"
+                  setFormData={setFormData}
+                  value={formData.phone || ""}
+                  placeholder="Enter your mobile number"
+                  required
+                  icon={<Phone size={18} />}
+                />
               </div>
-            </div>}
+            </motion.div>
 
-            <div className=" font-normal mt-[50px] md:ms-[50px] ms-[20px] flex justify-start">
-              <input type="checkbox" name="defaultAddress" checked={formData.defaultAddress} className="scale-100 border-2 border-solid border-[#151212] text-[15px]" onChange={handleCheckbox} />
-              <label htmlFor="defaultAddress" className="ms-[20px] md:text-[15px] text-[14px]">Make this my default address</label>
+            {/* Address Section */}
+            <motion.div className="mb-8" variants={itemVariants}>
+              <div className="flex items-center gap-2 mb-6">
+                <div className="p-2 bg-gray-50 rounded-lg text-gray-600">
+                  <MapPin size={20} />
+                </div>
+                <h2 className="text-lg font-semibold text-gray-800">Address</h2>
+              </div>
 
-            </div>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                  <InputField
+                    type="text"
+                    name="pincode"
+                    lableText="Pincode"
+                    setFormData={setFormData}
+                    value={formData.pincode || ""}
+                    placeholder="Enter your pincode"
+                    required
+                  />
 
+                  <InputField
+                    type="text"
+                    name="locality"
+                    lableText="Locality/Town"
+                    setFormData={setFormData}
+                    value={formData.locality || ""}
+                    placeholder="Enter your locality or town"
+                    required
+                  />
+                </div>
 
+                <InputField
+                  type="text"
+                  name="address"
+                  lableText="Address (House No, Building, Area, Street)"
+                  setFormData={setFormData}
+                  value={formData.address || ""}
+                  placeholder="Enter your complete address"
+                  required
+                  icon={<MapPin size={18} />}
+                />
 
-            <div className="flex justify-center align-middle md:mt-[90px] mt-[40px]">
-              <button className="md:w-[250px] w-auto p-[5px] mx-[20px] border-2 border-solid border-[#080119] rounded md:text-[18px] text-[16px] mb-[30px] bg-[#e90376c4] h-[35px] ">Save Address Details</button>
-            </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                  <InputField
+                    type="text"
+                    name="city"
+                    lableText="City"
+                    setFormData={setFormData}
+                    value={formData.city || ""}
+                    placeholder="Enter your city"
+                    required
+                  />
 
+                  <InputField
+                    type="text"
+                    name="state"
+                    lableText="State"
+                    setFormData={setFormData}
+                    value={formData.state || ""}
+                    placeholder="Enter your state"
+                    required
+                  />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Address Type Section */}
+            <motion.div className="mb-8" variants={itemVariants}>
+              <div className="flex items-center gap-2 mb-6">
+                <div className="p-2 bg-gray-50 rounded-lg text-gray-600">
+                  {isWork ? <Briefcase size={20} /> : <Home size={20} />}
+                </div>
+                <h2 className="text-lg font-semibold text-gray-800">Save Address As</h2>
+              </div>
+
+              <div className="flex gap-4 mb-6">
+                <motion.button
+                  type="button"
+                  className={`px-6 py-2.5 rounded-xl font-medium text-sm flex items-center gap-2 transition-all duration-200 ${
+                    !isWork
+                      ? "bg-gray-800 text-white shadow-md"
+                      : "bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200"
+                  }`}
+                  onClick={handleHomeClick}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Home size={16} />
+                  Home
+                </motion.button>
+
+                <motion.button
+                  type="button"
+                  className={`px-6 py-2.5 rounded-xl font-medium text-sm flex items-center gap-2 transition-all duration-200 ${
+                    isWork
+                      ? "bg-gray-800 text-white shadow-md"
+                      : "bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200"
+                  }`}
+                  onClick={handleWorkClick}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Briefcase size={16} />
+                  Work
+                </motion.button>
+              </div>
+
+              {isWork && (
+                <motion.div
+                  className="bg-gray-50 p-5 rounded-xl space-y-4 border border-gray-100"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id="openSaturday"
+                      name="openSaturday"
+                      checked={formData.openSaturday}
+                      className="h-4 w-4 text-gray-800 focus:ring-gray-500 border-gray-300 rounded transition-colors"
+                      onChange={handleCheckbox}
+                    />
+                    <label htmlFor="openSaturday" className="ml-3 text-sm text-gray-700">
+                      Open On Saturday
+                    </label>
+                  </div>
+
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id="openSunday"
+                      name="openSunday"
+                      checked={formData.openSunday}
+                      className="h-4 w-4 text-gray-800 focus:ring-gray-500 border-gray-300 rounded transition-colors"
+                      onChange={handleCheckbox}
+                    />
+                    <label htmlFor="openSunday" className="ml-3 text-sm text-gray-700">
+                      Open On Sunday
+                    </label>
+                  </div>
+                </motion.div>
+              )}
+            </motion.div>
+
+            {/* Default Address Option */}
+            <motion.div className="mb-8" variants={itemVariants}>
+              <div className="flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100">
+                <input
+                  type="checkbox"
+                  id="defaultAddress"
+                  name="defaultAddress"
+                  checked={formData.defaultAddress}
+                  className="h-4 w-4 text-gray-800 focus:ring-gray-500 border-gray-300 rounded transition-colors"
+                  onChange={handleCheckbox}
+                />
+                <label htmlFor="defaultAddress" className="ml-3 text-sm text-gray-700">
+                  Make this my default address
+                </label>
+              </div>
+            </motion.div>
+
+            {/* Submit Button */}
+            <motion.div className="flex justify-center" variants={itemVariants}>
+              <motion.button
+                type="submit"
+                className="px-8 py-3 bg-gray-800 text-white font-medium rounded-xl shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200"
+                whileHover={{ scale: 1.02, boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Save Address Details
+              </motion.button>
+            </motion.div>
           </form>
-        </div>
+        </motion.div>
       </div>
-    </>
+    </div>
   )
 }
 
-export default Address;
+export default Address
+

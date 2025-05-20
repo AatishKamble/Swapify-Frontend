@@ -1,16 +1,22 @@
+import { motion } from "framer-motion"
 
-
-const Title = ({title,subtitle}) => {
+const Title = ({ title, subtitle }) => {
   return (
-  <>
-     <div className="flex justify-center align-middle flex-col mt-[20px] w-[100%] h-auto border-b-[2px] border-solid border-[#c3c1c1]  ">
-            <p className='font-serif p-[2px] no-underline md:text-3xl text-2xl text-[#100e0e] '>{title}</p>
-            <p className='underline md:text-xl text-[16px] text-[#7e7c7c] p-[10px]'>{subtitle}</p>
-          </div>
-      
-  
-  </>
-  );
+    <motion.div
+      className="w-full mb-8"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="text-center">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">{title}</h1>
+        <p className="text-gray-600 text-sm md:text-base">{subtitle}</p>
+      </div>
+      <div className="mt-4 flex justify-center">
+        <div className="w-20 h-1 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full"></div>
+      </div>
+    </motion.div>
+  )
 }
 
 export default Title

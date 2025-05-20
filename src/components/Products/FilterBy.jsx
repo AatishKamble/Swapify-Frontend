@@ -1,155 +1,254 @@
-import React, { useEffect, useState } from 'react';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import { useEffect, useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { useLocation, useNavigate } from "react-router-dom"
+import { Search, X, ChevronDown, ChevronRight, Check } from "lucide-react"
 
-import { useLocation,useNavigate } from 'react-router-dom';
+const FilterBy = ({ FilterByType, dataArray, More, useRadioButtons = false }) => {
+  const [visible, setVisible] = useState(false)
+  const [showInput, setShowInput] = useState(false)
+  const [search, setSearch] = useState("")
+  const [searchResult, setSearchResult] = useState([])
+  const [selected, setSelected] = useState([])
+  const [toShowElement, setToShowElement] = useState(dataArray.slice(0, 5))
 
-const FilterBy = ({ FilterByType, dataArray, More }) => {
-    const [visible, setVisible] = useState(false);
-    const [showInput, setShowInput] = useState(false);
-    const [search, setSearch] = useState('');
-    const [searchResult, setSearchResult] = useState([]);
-    const [selected, setSelected] = useState([]);
-    const [toShowElement, setToShowElement] = useState(dataArray.slice(0, 5));
+  const location = useLocation()
+  const history = useNavigate()
+  const searchParams = new URLSearchParams(location.search)
 
-    const location=useLocation();
+  // Toggle filter section visibility
+  function handleVisibility() {
+    setVisible(!visible)
+  }
 
-    const history=useNavigate();
-    
-    const searchParams=new URLSearchParams(location.search);
-  
+  // Toggle search input
+  function handleInputShow() {
+    setShowInput(!showInput)
+    setSearch("")
+  }
 
-    function handleVisibility() {
-        setVisible(!visible);
+  // Handle search input change
+  function handleSearch(event) {
+    const searchValue = event.target.value
+    setSearch(searchValue)
+    const searchResult = dataArray.filter((item) => item.toLowerCase().includes(searchValue.toLowerCase()))
+    setSearchResult(searchResult)
+  }
+
+  // Update URL parameters based on selected filters
+  function updateUrlParams(selectedValues) {
+    // Always clear the parameter first
+    searchParams.delete(FilterByType)
+
+    if (selectedValues.length > 0) {
+      // For radio buttons (single selection), we only add one value
+      if (useRadioButtons) {
+        searchParams.append(FilterByType, selectedValues[0])
+      } else {
+        // For checkboxes (multiple selection), we add all values
+        selectedValues.forEach((value) => {
+          searchParams.append(FilterByType, value)
+        })
+      }
     }
 
-    function handleInputShow() {
-        setShowInput(!showInput);
-        setSearch('');
-    }
+    history({ search: `?${searchParams.toString()}` })
+  }
 
-    function handleSearch(event) {
-        const searchValue = event.target.value;
-        setSearch(searchValue);
-        const searchResult = dataArray.filter(item => item.toLowerCase().includes(searchValue.toLowerCase()));
-        // console.log(searchResult,"aatish");
-        setSearchResult(searchResult);
-    }
-    function updateUrlParams(selectedValues){
-        
-        if (selectedValues.length > 0) {
-            searchParams.delete(FilterByType);
-            selectedValues.forEach(value => {
-                searchParams.append(FilterByType, value);
-            });
-          
+  // Initialize selected values from URL on component mount
+  useEffect(() => {
+    const selectedValues = searchParams.getAll(FilterByType)
+    setSelected(selectedValues)
+    setVisible(true)
+  }, [location.search, FilterByType])
+
+  // Handle input change (checkbox or radio)
+  function handleInputChange(event) {
+    const value = event.target.value
+
+    if (useRadioButtons) {
+      // For radio buttons, we replace the entire selection
+      const newSelected = [value]
+      setSelected(newSelected)
+      updateUrlParams(newSelected)
+    } else {
+      // For checkboxes, we toggle the selection
+      setSelected((prevSelected) => {
+        if (prevSelected.includes(value)) {
+          const updateSelected = prevSelected.filter((item) => item !== value)
+          updateUrlParams(updateSelected)
+          return updateSelected
         } else {
-            // If no items are selected, remove the parameter completely
-            searchParams.delete(FilterByType);
+          const updatedSelected = [...prevSelected, value]
+          updateUrlParams(updatedSelected)
+          return updatedSelected
         }
-        history({ search: `?${searchParams.toString()}` });
-
-
+      })
     }
+  }
 
-    useEffect(()=>{
-        
-        const selectedValues=searchParams.getAll(FilterByType);
-        setSelected(selectedValues);
-        setVisible(true);
+  // Update visible elements when selection changes
+  useEffect(() => {
+    const combinedItems = [...selected, ...dataArray.filter((item) => !selected.includes(item))]
+    setToShowElement(combinedItems.slice(0, 10))
+  }, [selected, dataArray])
 
-    },[location.search,FilterByType])
+  // Animation variants
+  const containerVariants = {
+    hidden: { height: 0, opacity: 0 },
+    visible: {
+      height: "auto",
+      opacity: 1,
+      transition: {
+        height: { duration: 0.3 },
+        opacity: { duration: 0.3, delay: 0.1 },
+      },
+    },
+  }
 
-    function handleInputChnage(event) {
-        const value = event.target.value;
-        setSelected(prevSelected => {
-            if (prevSelected.includes(value)) {
-                const updateSelected=prevSelected.filter(item => item !== value)
-                updateUrlParams(updateSelected);
-                return updateSelected;
-            } else {
-                const updatedSelected = [...prevSelected, value];
-                updateUrlParams(updatedSelected);
-                return updatedSelected;
-            }
-        });
-    }
+  // Add a function to clear filters for this filter type
+  function clearFilters() {
+    setSelected([])
+    searchParams.delete(FilterByType)
+    history({ search: `?${searchParams.toString()}` })
+  }
 
-  
-
-    useEffect(() => {
-      
-        const combinedItems = [...selected, ...dataArray.filter(item => !selected.includes(item))];
-        setToShowElement(combinedItems.slice(0, 10));
-    }, [selected, dataArray]);
-
-    return (
-        <>
-            <div className=' h-12'>
-     
-                {showInput ? (
-                    <div className='h-full mt-2 flex items-center justify-center '>
-                        <input type="text" placeholder='search' value={search} className='ps-1 border px-2 py-1 border-blue-200 rounded-md text-[1.25rem] outline-none' onChange={handleSearch} />
-                       <span className=' cursor-pointer ms-2'><CloseOutlinedIcon style={{ fontSize: "1.75rem" }} onClick={handleInputShow} /></span> 
-                    </div>
-                ) : (
-                    <div className={`ps-4 flex items-center justify-start relative`}>
-                        <p className='text-[1.2rem] font-semibold p-2'>{FilterByType}</p>
-                        <span className='absolute right-2'>
-                            {visible ? (
-                                <span>{More && <SearchOutlinedIcon onClick={handleInputShow} />} <KeyboardArrowDownIcon onClick={handleVisibility} /></span>
-                            ) : (
-                                <KeyboardArrowRightIcon onClick={handleVisibility} />
-                            )}
-                        </span>
-                    </div>
-                )}
+  return (
+    <div className="border-b border-gray-200 py-2">
+      <div className="px-4 py-2">
+        {showInput ? (
+          <motion.div
+            className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+          >
+            <Search size={18} className="text-gray-400" />
+            <input
+              type="text"
+              placeholder={`Search ${FilterByType.toLowerCase()}...`}
+              value={search}
+              onChange={handleSearch}
+              className="flex-1 bg-transparent border-none outline-none text-gray-800 placeholder-gray-400 text-sm"
+              autoFocus
+            />
+            <button onClick={handleInputShow} className="text-gray-400 hover:text-gray-600 transition-colors">
+              <X size={18} />
+            </button>
+          </motion.div>
+        ) : (
+          <div className="flex items-center justify-between">
+            <h3 className="font-medium text-gray-800 text-[15px]">{FilterByType}</h3>
+            <div className="flex items-center gap-2">
+              {More && (
+                <button
+                  onClick={handleInputShow}
+                  className="p-1 text-gray-500 hover:text-primary-600 transition-colors"
+                >
+                  <Search size={18} />
+                </button>
+              )}
+              <button onClick={handleVisibility} className="p-1 text-gray-500 hover:text-primary-600 transition-colors">
+                {visible ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+              </button>
             </div>
-
-            <div className={`overflow-hidden ${visible ? 'w-full h-auto pb-4 ps-4 pt-3 transition-all duration-300 ease-in-out' : 'hidden'}`}>
-  <ul className="list-none bg-white shadow-lg rounded-xl p-3">
-    {search ? (
-      searchResult.map((item, index) => (
-        <li key={index} className="text-lg font-medium py-2 px-3 rounded-lg hover:bg-gray-100 transition-all duration-200">
-          <div className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              name={item}
-              value={item}
-              checked={selected.includes(item)}
-              className="h-5 w-5 accent-blue-500 rounded-md cursor-pointer"
-              onChange={handleInputChnage}
-            />
-            <label htmlFor={item} className="cursor-pointer text-gray-800">{item}</label>
           </div>
-        </li>
-      ))
-    ) : (
-      toShowElement.map((item, index) => (
-        <li key={index} className="text-lg font-medium py-2 px-3 rounded-lg hover:bg-gray-100 transition-all duration-200">
-          <div className="flex items-center gap-3">
-            {/* {console.log({item},"hiiiiiiii")} */}
-            <input
-              type="checkbox"
-              name={item}
-              value={item}
-              checked={selected.includes(item)}
-              className="h-5 w-5 accent-blue-500 rounded-md cursor-pointer"
-              onChange={handleInputChnage}
-            />
-            <label htmlFor={item} className="cursor-pointer text-gray-800">{item}</label>
-          </div>
-        </li>
-      ))
-    )}
-  </ul>
-</div>
+        )}
+      </div>
 
-            
-        </>
-    );
+      <AnimatePresence>
+        {visible && (
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            className="px-4 pb-2 overflow-hidden"
+          >
+            <div className="bg-white rounded-lg">
+              {(search ? searchResult : toShowElement).map((item, index) => (
+                <motion.div
+                  key={index}
+                  className="flex items-center justify-between py-2 px-1 hover:bg-gray-50 rounded-md transition-colors"
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    transition: { delay: index * 0.03 },
+                  }}
+                >
+                  <div className="flex items-center gap-3 flex-1">
+                    <div className="relative flex items-center">
+                      <input
+                        type={useRadioButtons ? "radio" : "checkbox"}
+                        id={`${FilterByType}-${item}`}
+                        name={useRadioButtons ? FilterByType : `${FilterByType}-${item}`}
+                        value={item}
+                        checked={selected.includes(item)}
+                        onChange={handleInputChange}
+                        className="w-4 h-4 opacity-0 absolute cursor-pointer"
+                      />
+                      {useRadioButtons ? (
+                        <div
+                          className={`w-4 h-4 border ${selected.includes(item) ? "border-primary-600" : "border-gray-300"} rounded-full flex items-center justify-center`}
+                        >
+                          {selected.includes(item) && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              className="w-2 h-2 rounded-full bg-primary-600"
+                            />
+                          )}
+                        </div>
+                      ) : (
+                        <div
+                          className={`w-4 h-4 border ${selected.includes(item) ? "border-primary-600 bg-primary-50" : "border-gray-300 bg-white"} rounded-sm flex items-center justify-center`}
+                        >
+                          {selected.includes(item) && (
+                            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
+                              <Check size={14} className="text-primary-600" />
+                            </motion.div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    <label htmlFor={`${FilterByType}-${item}`} className="text-sm text-gray-700 cursor-pointer">
+                      {item}
+                    </label>
+                  </div>
+                  {selected.includes(item) && (
+                    <span className="text-xs bg-primary-50 text-primary-700 px-2 py-0.5 rounded-full ml-2">
+                      Selected
+                    </span>
+                  )}
+                </motion.div>
+              ))}
+
+              {search && searchResult.length === 0 && (
+                <motion.p
+                  className="text-sm text-gray-500 py-2 text-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  No {FilterByType.toLowerCase()} found matching "{search}"
+                </motion.p>
+              )}
+            </div>
+            {visible && selected.length > 0 && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-2 flex justify-end">
+                <button
+                  onClick={clearFilters}
+                  className="text-xs text-primary-600 hover:text-primary-800 flex items-center gap-1 px-2 py-1 rounded-md hover:bg-primary-50 transition-colors"
+                >
+                  <X size={12} />
+                  Clear {FilterByType}
+                </button>
+              </motion.div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
 }
 
 export default FilterBy;

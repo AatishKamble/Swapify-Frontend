@@ -1,61 +1,87 @@
-import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import { motion } from "framer-motion"
+import { useNavigate } from "react-router-dom"
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee"
+import { ShoppingCart, Heart } from "lucide-react"
 
-import {useNavigate} from "react-router-dom"
-const Cart = ({ productName,productImage,productPrice,productId}) => {
- 
-  
-const navigate=useNavigate();
+const Cart = ({ productName, productImage, productPrice, productId }) => {
+  const navigate = useNavigate()
+
+  // Handle add to cart - prevent navigation when clicking the cart button
+  const handleAddToCart = (e) => {
+    e.stopPropagation()
+    // Add to cart functionality here
+  }
 
   return (
-  <>
-<div
-  key={productId}
-  className="w-[300px] border cursor-pointer hover:shadow-md hover:shadow-gray-600 hover:scale-105 transition-all transform duration-300 ease-out border-gray-300 rounded-lg p-4"
-  onClick={() => {
-    navigate(`/product/${productId}`);
-  }}
->
-           <div className="relative">
-                <img src={productImage} alt={productName} width={270} height={270} className="object-contain w-full h-[270px]" />
-              </div>
-              <div className="mt-4">
-                <h3 className="text-gray-800 font-medium text-base">{productName}</h3>
-                {/* <p className="uppercase text-green-600 text-xs font-medium"></p> */}
-                <div className="flex items-end justify-between mt-1">
-                  <span className="text-blue-600 text-xl font-semibold"><span className='i '>₹ </span>{productPrice}</span>
-                  <button className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center shadow text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                      <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                      <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                      <path d="M17 17h-11v-14h-2" />
-                      <path d="M6 5l14 1l-1 7h-13" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
+    <motion.div
+      className="w-[300px] bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-300"
+      whileHover={{
+        y: -5,
+        scale: 1.02,
+        transition: { duration: 0.3 },
+      }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      onClick={() => {
+        navigate(`/product/${productId}`);
+      }}
+    >
+      {/* Product Image with hover effect */}
+      <div className="relative overflow-hidden bg-gray-50 h-[270px]">
+        {/* Wishlist button */}
+        <motion.button
+          className="absolute top-3 right-3 z-10 bg-white p-1.5 rounded-full shadow-sm hover:bg-gray-50 text-gray-500 hover:text-red-500 transition-colors"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={(e) => {
+            e.stopPropagation()
+            // Add wishlist functionality here
+          }}
+        >
+          <Heart size={18} />
+        </motion.button>
 
-
-  {/* <div className=' w-[18rem] h-[20rem] p-2 relative border-[1px] border-solid border-slate-700 hover:scale-105 duration-200 cursor-pointer hover:shadow-lg hover:shadow-slate-800' onClick={()=>{navigate(`/product/${productId}`)}}>
-    <img src={productImage} alt="Laptop" className=' object-cover h-[200px] w-[100%] ' />
-    
-    <div className=' absolute p-2 w-full left-1'>
-      
-      <p className=' text-[1.25rem] font-semibold align-middle m-0 '><span><CurrencyRupeeIcon /></span><span>{productPrice}</span></p>
-      <p className='text-[1rem] p-1 align-middle font-normal   '>{productName}</p>
-
-      <div className="flex justify-end text-[1rem] mt-1 ">
-<span className='text-[12px] text-gray-600 p-1 '>{differenceInDays} days</span>
+        {/* Product image */}
+        <motion.div
+          className="w-full h-full flex items-center justify-center p-4"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
+        >
+          <img
+            src={productImage || "/placeholder.svg?height=270&width=270"}
+            alt={productName}
+            className="object-contain w-full h-full"
+          />
+        </motion.div>
       </div>
-    </div>
-  </div> */}
-  
-       
-    
-  </>
+
+      {/* Product details */}
+      <div className="p-4">
+        <h3 className="text-gray-800 font-medium text-lg mb-2 line-clamp-2 min-h-[3rem]">{productName}</h3>
+
+        <div className="flex items-center justify-between mt-3">
+          <div className="flex items-center text-primary-600">
+            <CurrencyRupeeIcon fontSize="small" />
+            <span className="text-xl font-semibold">{productPrice}</span>
+          </div>
+
+          <motion.button
+            className="w-10 h-10 rounded-full bg-primary-600 flex items-center justify-center shadow-md text-white"
+            whileHover={{
+              scale: 1.05,
+              backgroundColor: "#4338CA",
+              boxShadow: "0 4px 12px rgba(79, 70, 229, 0.3)",
+            }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleAddToCart}
+          >
+            <ShoppingCart size={20} />
+          </motion.button>
+        </div>
+      </div>
+    </motion.div>
   )
 }
 
-
-export default Cart;
+export default Cart

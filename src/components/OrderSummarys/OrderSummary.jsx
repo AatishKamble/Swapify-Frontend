@@ -1,91 +1,411 @@
-import CartItems from "../UserCart/CartItems";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getUserCart } from "../../State/Cart/Action.js";
-import { FaArrowRight , FaArrowLeft } from "react-icons/fa";
+import { useEffect, useState, useContext } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { motion } from "framer-motion"
+import { getUserCart } from "../../State/Cart/Action.js"
+import CartItems from "../UserCart/CartItems"
+import { ShoppingBag, MapPin, CreditCard, ArrowLeft, ArrowRight, Truck, Edit2 } from "lucide-react"
+import { CheckoutContext } from "../../pages/Checkout.jsx"
 
 const OrderSummary = ({ setCurrentStep }) => {
-  const cart = useSelector((store) => store.cart);
-  const auth = useSelector((store) => store.auth);
+  const cart = useSelector((store) => store.cart)
+  const auth = useSelector((store) => store.auth)
+  const dispatch = useDispatch()
+  const { checkoutData, updateCheckoutData } = useContext(CheckoutContext)
 
-  const dispatch = useDispatch();
-  
-  useEffect(() => {
-    dispatch(getUserCart());
-  }, [cart.deleteCartItem]);
+  // State for products and address
+  const [selectedAddress, setSelectedAddress] = useState(null)
+  const [products, setProducts] = useState([])
+  const [subtotal, setSubtotal] = useState(0)
+  const [tax, setTax] = useState(0)
+  const [total, setTotal] = useState(0)
 
+  const [localProducts, setLocalProducts] = useState([])
+
+  // First, modify the useEffect that handles direct product loading to prevent the loop
   useEffect(() => {
-    window.scrollTo(1, 1);
-  });
+    // Load address from context
+    if (checkoutData.shippingAddress) {
+      setSelectedAddress(checkoutData.shippingAddress)
+    }
+
+    // Check if this is a direct product purchase or cart checkout
+    const isDirect = localStorage.getItem("direct")
+    const buyingProduct = localStorage.getItem("buyingProd")
+
+    if (isDirect && buyingProduct) {
+      // Direct product purchase
+      try {
+        const product = JSON.parse(buyingProduct)
+        console.log("Direct product from localStorage:", product) // Debug log
+        setProducts([product])
+
+        // Update isDirect in context ONLY if it's different from current value
+        // This prevents the infinite loop
+        if (checkoutData.isDirect !== true) {
+          updateCheckoutData("isDirect", true)
+        }
+      } catch (error) {
+        console.error("Error parsing direct product:", error)
+      }
+    } else {
+      // Normal cart checkout - only dispatch if not direct
+      if (!checkoutData.isDirect) {
+        dispatch(getUserCart())
+      }
+    }
+  }, [dispatch, checkoutData.shippingAddress]) // Remove checkoutData.isDirect from dependencies
+
+  // Modify the useEffect that updates products from cart to prevent loops
+  useEffect(() => {
+    if (!checkoutData.isDirect && cart?.cart?.cartItems) {
+      setProducts(cart.cart.cartItems)
+    }
+  }, [cart.cart, checkoutData.isDirect])
+
+  // Calculate tax and total
+  useEffect(() => {
+    const newSubtotal = checkoutData.isDirect
+      ? products.reduce((total, item) => total + (item.price || item.expectedPrice || 0), 0)
+      : cart?.cart?.totalPrice || 0
+
+    const newTax = Math.round(newSubtotal * 0.05)
+    const newTotal = newSubtotal + newTax
+
+    setSubtotal(newSubtotal)
+    setTax(newTax)
+    setTotal(newTotal)
+  }, [products, cart?.cart?.totalPrice, checkoutData.isDirect])
+
+  // Modify the useEffect that stores order data in checkout context
+  useEffect(() => {
+    // Only run this effect if we have products and an address
+    if ((products.length > 0 || cart?.cart) && selectedAddress) {
+      // Create a batch of updates to apply at once
+      const updates = {}
+
+      // Only update if values have changed - use deep comparison for products
+      if (JSON.stringify(checkoutData.products) !== JSON.stringify(products)) {
+        updates.products = products
+      }
+
+      if (checkoutData.totalPrice !== subtotal) {
+        updates.totalPrice = subtotal
+      }
+
+      if (checkoutData.tax !== tax) {
+        updates.tax = tax
+      }
+
+      if (checkoutData.totalAmount !== total) {
+        updates.totalAmount = total
+      }
+
+      // Only call updateCheckoutData if we have changes to make
+      if (Object.keys(updates).length > 0) {
+        // Apply all updates at once
+        Object.entries(updates).forEach(([key, value]) => {
+          updateCheckoutData(key, value)
+        })
+      }
+    }
+  }, [products, selectedAddress, subtotal, tax, total]) // Remove checkoutData dependencies to prevent loops
+
+  // Add this after other useEffects
+  useEffect(() => {
+    // Initialize localProducts when products change
+    if (products.length > 0) {
+      setLocalProducts(products)
+    }
+    console.log("Local products updated:", localProducts) // Debug log
+  }, [products])
+
+  // Add this function before the return statement
+  const handleProductRemoval = (productId) => {
+    // Remove product from local state only
+    const updatedProducts = localProducts.filter(product => 
+      product._id !== productId
+    )
+    setLocalProducts(updatedProducts)
+
+    // Update checkoutData with new products
+    updateCheckoutData('products', updatedProducts)
+  }
+
+  // Modify the calculation useEffect
+  useEffect(() => {
+    const newSubtotal = checkoutData.isDirect
+      ? localProducts.reduce((total, item) => total + (item.price || item.expectedPrice || 0), 0)
+      : localProducts.reduce((total, item) => total + (item.price || item.expectedPrice || 0) * (item.quantity || 1), 0)
+
+    const newTax = Math.round(newSubtotal * 0.05)
+    const newTotal = newSubtotal + newTax
+
+    setSubtotal(newSubtotal)
+    setTax(newTax)
+    setTotal(newTotal)
+  }, [localProducts, checkoutData.isDirect])
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3 },
+    },
+  }
+
+  // Debug function to check product structure
+  const debugProduct = (product) => {
+    if (!product) return null
+
+    // Try to access properties using different possible structures
+    const name = product.productName || product.title || "Product"
+    const description = product.productDescription || product.description || ""
+    const price = product.price || product.expectedPrice || 0
+
+    // Try to get image URL from different possible structures
+    let imageUrl = "/placeholder.svg?height=80&width=80"
+    if (product.images && product.images.length > 0 && product.images[0].imageUrl) {
+      imageUrl = product.images[0].imageUrl
+    } else if (product.imageURL) {
+      imageUrl = product.imageURL
+    }
+
+    return { name, description, price, imageUrl }
+  }
 
   return (
-    <div className="w-full h-auto bg-inherit relative px-8 py-6">
+    <motion.div
+      className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {/* Header */}
-      <h2 className="font-bold text-[2rem] text-slate-600">Order Information</h2>
-
-      {/* Order Details Section */}
-      <div className="flex justify-between h-auto px-8 py-6 border-2 border-slate-200 shadow-md rounded-lg bg-white mt-4">
-        {/* Shipping Address */}
-        <div className="w-[300px]">
-          <h2 className="font-bold text-lg text-gray-800 mb-2">Shipping Address</h2>
-          <p className="text-gray-700 font-semibold">{auth.user?.firstName} {auth.user?.lastName}</p>
-          <p className="text-gray-600">Address</p>
-          <p className="text-gray-600">City, State</p>
-          <p className="text-gray-600">Pincode</p>
-        </div>
-
-        {/* Payment Method */}
-        <div className="w-[200px]">
-          <h2 className="font-bold text-lg text-gray-800 mb-2">Payment Method</h2>
-          <p className="text-gray-700">By Card</p>
-        </div>
-
-        {/* Order Summary */}
-        <div className="w-[300px]">
-          <h2 className="font-bold text-lg text-gray-800 mb-2">Order Summary</h2>
-          <p className="flex justify-between text-gray-700">
-            Items Subtotal <span className="font-semibold">₹{cart?.cart?.totalPrice}</span>
-          </p>
-          <p className="flex justify-between text-gray-700">
-            Delivery Charges <span className="font-semibold">Free</span>
-          </p>
-          <p className="flex justify-between text-gray-900 font-bold">
-            Total <span>₹{cart?.cart?.totalPrice}</span>
-          </p>
-        </div>
+      <div className="bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4">
+        <motion.div className="flex items-center" variants={itemVariants}>
+          <ShoppingBag size={22} className="text-white mr-2" />
+          <h2 className="text-xl font-semibold text-white">Order Summary</h2>
+        </motion.div>
       </div>
 
-      {/* Products Section */}
-      <h2 className="mt-10 font-bold text-[1.5rem] text-slate-600">PRODUCTS</h2>
-      <div className="border-2 border-slate-800 mt-5 px-10 py-6 rounded-lg shadow-md bg-white">
-        <CartItems cart={cart} />
+      {/* Content */}
+      <div className="p-6">
+        {/* Order Details Section */}
+        <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" variants={itemVariants}>
+          {/* Shipping Address */}
+          <div className="bg-gray-50 rounded-xl p-4 border border-gray-100 relative">
+            <div className="flex items-start gap-2 mb-3">
+              <MapPin size={18} className="text-primary-600 mt-0.5 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold text-gray-800 mb-1">Shipping Address</h3>
+                {selectedAddress ? (
+                  <>
+                    <p className="text-gray-700 text-sm font-medium">{selectedAddress.fullName}</p>
+                    <p className="text-gray-600 text-sm">
+                      {selectedAddress.address}, {selectedAddress.locality}
+                    </p>
+                    <p className="text-gray-600 text-sm">
+                      {selectedAddress.city}, {selectedAddress.state} - {selectedAddress.pincode}
+                    </p>
+                    <p className="text-gray-600 text-sm">Phone: {selectedAddress.phone}</p>
+                  </>
+                ) : (
+                  <p className="text-gray-500 text-sm">No address selected</p>
+                )}
+              </div>
+            </div>
+            <button
+              onClick={() => setCurrentStep(1)}
+              className="absolute top-3 right-3 p-1 text-gray-500 hover:text-primary-600 transition-colors"
+            >
+              <Edit2 size={16} />
+            </button>
+          </div>
+
+          {/* Delivery Method */}
+          <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+            <div className="flex items-start gap-2 mb-3">
+              <Truck size={18} className="text-primary-600 mt-0.5 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold text-gray-800 mb-1">Delivery Method</h3>
+                <p className="text-gray-700 text-sm">Standard Delivery</p>
+                <p className="text-gray-600 text-sm">Free - 3-5 business days</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Payment Method */}
+          <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+            <div className="flex items-start gap-2 mb-3">
+              <CreditCard size={18} className="text-primary-600 mt-0.5 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold text-gray-800 mb-1">Payment Method</h3>
+                <p className="text-gray-700 text-sm">To be selected</p>
+                <p className="text-gray-600 text-sm italic">Proceed to next step</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Order Summary */}
+        <motion.div className="mb-8" variants={itemVariants}>
+          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+            <h3 className="font-semibold text-gray-800 mb-4">Price Details</h3>
+            <div className="space-y-2 mb-4">
+              <div className="flex justify-between text-gray-600">
+                <span>Items Subtotal ({localProducts.length} items)</span>
+                <span>₹{subtotal}</span>
+              </div>
+              <div className="flex justify-between text-gray-600">
+                <span>Shipping</span>
+                <span className="text-green-600">Free</span>
+              </div>
+              <div className="flex justify-between text-gray-600">
+                <span>Tax (5%)</span>
+                <span>₹{tax}</span>
+              </div>
+            </div>
+            <div className="border-t border-gray-200 pt-3 flex justify-between font-semibold text-gray-800">
+              <span>Total</span>
+              <span>₹{total}</span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Products Section */}
+        <motion.div variants={itemVariants}>
+          <h3 className="font-semibold text-gray-800 mb-4">Order Items</h3>
+          <div className="bg-gray-50 rounded-xl border border-gray-100 p-4">
+            {checkoutData.isDirect ? (
+              // Display direct product
+              localProducts.length > 0 && (
+                <div className="flex items-center border-b border-gray-100 pb-4">
+                  {(() => {
+                    const product = debugProduct(localProducts[0])
+                    return (
+                      <>
+                        <div className="w-20 h-20 rounded-lg bg-gray-100 overflow-hidden mr-4 flex-shrink-0">
+                          <img
+                            src={product.imageUrl || "/placeholder.svg"}
+                            alt={product.name}
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                        <div className="flex-grow">
+                          <h4 className="text-gray-800 font-medium">{product.name}</h4>
+                          <p className="text-gray-500 text-sm">{product.description?.substring(0, 60)}...</p>
+                          <p className="text-gray-800 font-semibold mt-1">₹{product.price}</p>
+                        </div>
+                      </>
+                    )
+                  })()}
+                </div>
+              )
+            ) : (
+              // Display cart items with removal functionality
+              <div className="space-y-4">
+                {localProducts.map((item) => (
+                  <div key={item._id} className="flex items-center justify-between border-b border-gray-100 pb-4">
+                    <div className="flex items-center">
+                      <div className="w-20 h-20 rounded-lg bg-gray-100 overflow-hidden mr-4 flex-shrink-0">
+                        <img
+                          src={item.product.imageURL || item.product.images?.[0]?.imageUrl || "/placeholder.svg"}
+                          alt={item.product.title || item.title}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="text-gray-800 font-medium">{item.product.title}</h4>
+                        <p className="text-gray-500 text-sm">
+                          {(item.product.description)?.substring(0, 60)}...
+                        </p>
+                        <p className="text-gray-800 font-semibold mt-1">
+                          ₹{item.price || item.expectedPrice} × {item.quantity || 1}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => handleProductRemoval(item._id)}
+                      className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                    >
+                      <motion.svg
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M3 6h18"></path>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                      </motion.svg>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </motion.div>
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex justify-between items-center bg-inherit px-5 py-6 mt-6">
-        <button
-          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-all duration-200"
+      <motion.div
+        className="flex justify-between bg-gray-50 px-6 py-4 border-t border-gray-100"
+        variants={itemVariants}
+      >
+        <motion.button
+          className="flex items-center gap-2 bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-5 rounded-xl transition-all duration-200 shadow-sm"
           type="button"
           onClick={() => setCurrentStep(1)}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
         >
-          <FaArrowLeft />
-        </button>
+          <ArrowLeft size={16} />
+          <span>Back</span>
+        </motion.button>
 
-        <button
+        <motion.button
+          className="relative flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-5 rounded-xl transition-all duration-200 shadow-sm"
           type="button"
-          className="relative bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-lg transition-all duration-200"
           onClick={() => setCurrentStep(3)}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          disabled={!selectedAddress}
         >
-          <FaArrowRight />
+          <span>Continue to Payment</span>
+          <ArrowRight size={16} />
 
-            <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 flex size-3">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
-                <span className="relative inline-flex size-3 rounded-full bg-sky-500"></span>
+          {/* Animated notification dot */}
+          <span className="absolute top-0 right-0 -mt-1 -mr-1">
+            <span className="flex h-3 w-3 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-primary-500"></span>
             </span>
-        </button>
-      </div>
-    </div>
-  );
-};
+          </span>
+        </motion.button>
+      </motion.div>
+    </motion.div>
+  )
+}
 
 export default OrderSummary;

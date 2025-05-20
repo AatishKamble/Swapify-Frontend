@@ -1,244 +1,187 @@
-import { HomeCarousel } from "../components/Carousel/HomeCarousel";
-import { Footer } from "../components/Footer/Footer";
-import { LandingPageRecommandations } from "../components/LandingPageRecommandations/LandingPageRecommandations";
-import { Navbar } from "../components/Navbar/Navbar";
-import CategoryCard from "../components/CategoryCard/CategoryCard";
-import PopularCategory from "../components/PopularCategory/PopularCategory";
-import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react"
+import { motion, useAnimation, useInView } from "framer-motion"
+import { HomeCarousel } from "../components/Carousel/HomeCarousel"
+import PopularCategory from "../components/PopularCategory/PopularCategory"
+import RecommendedProducts from "../components/RecommendedProducts/RecommendedProducts"
 
 export const Home = () => {
-  const products = [
+  // Refs for scroll detection
+  const whySwapifyRef = useRef(null)
+
+  // Check if sections are in view with a smaller threshold for mobile
+  // Using a smaller amount value (0.05 instead of 0.2) to trigger animations earlier
+  const whySwapifyInView = useInView(whySwapifyRef, {
+    once: false,
+    amount: 0.05, // Reduced from 0.2 to trigger earlier
+    margin: "0px 0px -100px 0px", // Negative bottom margin to trigger before element is fully in view
+  })
+
+  // Animation controls
+  const whySwapifyControls = useAnimation()
+
+  // Trigger animations when sections come into view
+  useEffect(() => {
+    if (whySwapifyInView) {
+      whySwapifyControls.start("visible")
+    }
+  }, [whySwapifyInView, whySwapifyControls])
+
+  // Why Swapify data
+  const whySwapifyReasons = [
     {
-      title: "The Alchemist",
-      subCategory: "Fiction",
-      price: "12.99",
+      title: "Easy & Secure Exchange",
+      description: "Safe transactions with verified campus users",
       image:
-        "https://down-th.img.susercontent.com/file/th-11134207-23030-tk280chrklov08",
+        "https://image3.jdomni.in/banner/13062021/58/97/7C/E53960D1295621EFCB5B13F335_1623567851299.png?output-format=webp",
+      color: "bg-blue-600",
+      lightColor: "from-blue-50 to-blue-100",
+      borderColor: "border-blue-600",
     },
     {
-      title: "Lenovo",
-      subCategory: "Laptop",
-      price: "1200",
+      title: "Affordable Cost",
+      description: "Student-friendly prices on all items",
       image:
-        "https://5.imimg.com/data5/SELLER/Default/2022/9/SE/KH/KN/101111/used-refurbished-lenovo-thinkpad-l460-500x500.jpeg",
+        "https://image2.jdomni.in/banner/13062021/3E/57/E8/1D6E23DD7E12571705CAC761E7_1623567977295.png?output-format=webp",
+      color: "bg-green-600",
+      lightColor: "from-green-50 to-green-100",
+      borderColor: "border-green-600",
     },
     {
-      title: "Canon EOS 90D",
-      subCategory: "Photography & Videography",
-      price: "499.99",
+      title: "Quick & Hassle-Free Deals",
+      description: "Simple process from listing to delivery",
       image:
-        "https://tse3.mm.bing.net/th?id=OIP.MHKM2xCcmMjALsDkBU1lYgHaHa&pid=Api&P=0&h=180",
+        "https://image3.jdomni.in/banner/13062021/16/7E/7E/5A9920439E52EF309F27B43EEB_1623568010437.png?output-format=webp",
+      color: "bg-purple-600",
+      lightColor: "from-purple-50 to-purple-100",
+      borderColor: "border-purple-600",
     },
     {
-      title: "Levi's Denim Jacket",
-      subCategory: "Clothing & Accessories",
-      price: "29.99",
+      title: "Trusted Student Community",
+      description: "Connect with peers from your campus",
       image:
-        "https://image.made-in-china.com/2f0j00tpLocJmnMqbk/School-Cloth.jpg",
+        "https://image3.jdomni.in/banner/13062021/EB/99/EE/8B46027500E987A5142ECC1CE1_1623567959360.png?output-format=webp",
+      color: "bg-orange-600",
+      lightColor: "from-orange-50 to-orange-100",
+      borderColor: "border-orange-600",
     },
-    {
-      title: "Ergonomic Office Chair",
-      subCategory: "Furniture & Home Essentials",
-      price: "199.99",
-      image:
-        "https://ik.imagekit.io/2xkwa8s1i/img/npl_modified_images/Chair_image/WSCHRALLENBBCBBNBNBN/WSCHRALLENBBCBBNBNBN_1.jpg?tr=w-1200",
+  ]
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
     },
-    {
-      title: "Dummbell",
-      subCategory: "Sports & Fitness",
-      price: "199.99",
-      image:
-        "https://i5.walmartimages.com/asr/1919deb4-8b44-4a77-9e83-630d9afe1495_1.5f004859de4efd15aea4c51f25685ddd.jpeg",
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+      },
     },
-    {
-      title: "Snake Ladder",
-      subCategory: "Board Games",
-      price: "199.99",
-      image: "https://cf.shopee.ph/file/0302f7f77cf35db3070603a73a626e6b",
+  }
+
+  const headingVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
     },
-  ];
+  }
 
   return (
     <>
       <HomeCarousel />
-
-      {
-        //Categories
-      }
-
       <PopularCategory />
 
-      {
-        //Featured products
-      }
-      <div className="container mx-auto  px-4 py-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-          Recommanded Products
-        </h2>
+      {/* Recommended Products Section - Now using the dynamic component */}
+      <RecommendedProducts />
 
-        <div className="grid grid-cols-4 max-w-fit mx-auto  gap-4 gap-x-5">
-          {products.map((product, index) => (
-            <div
-              key={index}
-              className="w-[280px] border border-blue-200 rounded-lg shadow-md p-4"
-            >
-              <div className="relative">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  width={270}
-                  height={270}
-                  className="object-contain w-full h-[270px]"
-                />
-              </div>
-              <div className="mt-4">
-                <h3 className="text-gray-800 font-medium text-base">
-                  {product.title}
-                </h3>
-                <p className="uppercase text-green-600 text-xs font-medium">
-                  {product.subCategory}
-                </p>
-                <div className="flex items-end justify-between mt-2">
-                  <span className="text-blue-600 text-xl font-semibold">
-                    <span className="i">₹ </span>
-                    {product.price}
-                  </span>
-                  <button className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center shadow text-white">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart"
-                    >
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                      <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                      <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                      <path d="M17 17h-11v-14h-2" />
-                      <path d="M6 5l14 1l-1 7h-13" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
+      {/* Why Swapify Section */}
+      <section ref={whySwapifyRef} className="py-20 bg-white">
+        <div className="container mx-auto px-6 sm:px-8 lg:px-12">
+          {/* Animated heading */}
+          <motion.div
+            className="text-center mb-16"
+            initial="hidden"
+            animate={whySwapifyControls}
+            variants={headingVariants}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-3 text-gray-800">Why Swapify?</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+            <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+              Discover why students across campus choose Swapify for their buying and selling needs
+            </p>
+          </motion.div>
 
-          <div className="flex justify-center items-center ">
-            <div className="flex-shrink-0 flex justify-center items-center  relative overflow-hidden bg-[#dfb6dc] rounded-lg w-full h-full shadow-lg group  transition-shadow duration-300">
-              <Link to="/items">
-                <svg
-                  className="absolute bottom-0 left-0 mb-8 scale-150 group-hover:scale-[1.65] transition-transform"
-                  viewBox="0 0 375 283"
-                  fill="none"
-                  style={{ opacity: 0.1 }}
+          {/* Animated reasons grid */}
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10"
+            variants={containerVariants}
+            initial="hidden"
+            animate={whySwapifyControls}
+          >
+            {whySwapifyReasons.map((reason, index) => (
+              <motion.div
+                key={index}
+                className="mx-auto w-full max-w-xs sm:max-w-none" // Center cards and limit width on small screens
+                variants={itemVariants}
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: 0.2 },
+                }}
+              >
+                <div
+                  className={`bg-gradient-to-br ${reason.lightColor} rounded-2xl shadow-md overflow-hidden h-full border-b-4 ${reason.borderColor}`}
                 >
-                  <rect
-                    x="159.52"
-                    y="175"
-                    width="152"
-                    height="152"
-                    rx="8"
-                    transform="rotate(-45 159.52 175)"
-                    fill="white"
-                  />
-                  <rect
-                    y="107.48"
-                    width="152"
-                    height="152"
-                    rx="8"
-                    transform="rotate(-45 0 107.48)"
-                    fill="white"
-                  />
-                </svg>
-                <div className="relative pt-10 px-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <div
-                    className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
-                    style={{
-                      background: "radial-gradient(black, transparent 60%)",
-                      transform: "rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)",
-                      opacity: 0.2,
-                    }}
-                  />
-                  <img
-                    className="relative w-40 h-40 object-contain"
-                    src="https://cdn-icons-png.flaticon.com/512/9258/9258154.png"
-                  />
-                </div>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
+                  {/* Icon container with animation */}
+                  <div className="relative pt-8 pb-4 px-6 flex flex-col items-center">
+                    {/* Decorative circle */}
+                    <div
+                      className={`absolute top-0 right-0 w-24 h-24 rounded-full bg-gradient-to-br ${reason.lightColor} opacity-70 -mr-8 -mt-8`}
+                    ></div>
 
-      {/* {why choose use} */}
+                    <motion.div
+                      className="relative z-10 w-24 h-24 bg-white rounded-full flex items-center justify-center mb-6 shadow-md border-2 border-gray-100"
+                      whileHover={{
+                        rotate: [0, -5, 5, -5, 0],
+                        scale: 1.1,
+                      }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <img
+                        src={reason.image || "/placeholder.svg"}
+                        alt={reason.title}
+                        className="w-16 h-16 object-contain"
+                      />
+                    </motion.div>
 
-      <section class="text-gray-700  mt-20 body-font">
-        <div class="flex justify-center  mt-10 text-4xl i ">Why Swapify ?</div>
-        <div class="container max-w-fit mx-auto px-5 py-12 ">
-          <div class="flex flex-wrap text-center justify-center">
-            <div class="p-4 md:w-1/4 sm:w-1/2">
-              <div class="px-4 py-6 transform transition duration-500 hover:scale-110">
-                <div class="flex justify-center">
-                  <img
-                    src="https://image3.jdomni.in/banner/13062021/58/97/7C/E53960D1295621EFCB5B13F335_1623567851299.png?output-format=webp"
-                    class="w-32 mb-3"
-                  />
-                </div>
-                <h2 class="title-font font-regular text-2xl text-gray-900">
-                  Easy & Secure Exchange
-                </h2>
-              </div>
-            </div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-2 text-center">{reason.title}</h3>
 
-            <div class="p-4 md:w-1/4 sm:w-1/2">
-              <div class="px-4 py-6 transform transition duration-500 hover:scale-110">
-                <div class="flex justify-center">
-                  <img
-                    src="https://image2.jdomni.in/banner/13062021/3E/57/E8/1D6E23DD7E12571705CAC761E7_1623567977295.png?output-format=webp"
-                    class="w-32 mb-3"
-                  />
+                    <p className="text-gray-600 text-center mb-4">{reason.description}</p>
+                  </div>
                 </div>
-                <h2 class="title-font font-regular text-2xl text-gray-900">
-                  Affordable Cost
-                </h2>
-              </div>
-            </div>
-
-            <div class="p-4 md:w-1/4 sm:w-1/2">
-              <div class="px-4 py-6 transform transition duration-500 hover:scale-110">
-                <div class="flex justify-center">
-                  <img
-                    src="https://image3.jdomni.in/banner/13062021/16/7E/7E/5A9920439E52EF309F27B43EEB_1623568010437.png?output-format=webp"
-                    class="w-32 mb-3"
-                  />
-                </div>
-                <h2 class="title-font font-regular text-2xl text-gray-900">
-                  Quick & Hassle-Free Deals
-                </h2>
-              </div>
-            </div>
-
-            <div class="p-4 md:w-1/4 sm:w-1/2">
-              <div class="px-4 py-6 transform transition duration-500 hover:scale-110">
-                <div class="flex justify-center">
-                  <img
-                    src="https://image3.jdomni.in/banner/13062021/EB/99/EE/8B46027500E987A5142ECC1CE1_1623567959360.png?output-format=webp"
-                    class="w-32 mb-3"
-                  />
-                </div>
-                <h2 class="title-font font-regular text-2xl text-gray-900">
-                  Trusted Student Community
-                </h2>
-              </div>
-            </div>
-          </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
     </>
-  );
-};
+  )
+}
+
+export default Home
+
