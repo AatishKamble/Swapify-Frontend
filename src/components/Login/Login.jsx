@@ -97,7 +97,7 @@ const Login = () => {
         })
       })
       .finally(() => {
-        navigate("/profile")
+       
         setIsLoading(false)
       })
   }
