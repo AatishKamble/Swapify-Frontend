@@ -87,19 +87,7 @@ const Login = () => {
 
     setIsLoading(true)
     dispatch(login(formData))
-      .then(() => {
-        setFormData({ email: "", password: "" })
-      })
-      .catch((error) => {
-        setErrors({
-          email: "Invalid email or password",
-          password: "Invalid email or password",
-        })
-      })
-      .finally(() => {
-       
         setIsLoading(false)
-      })
   }
 
   // Animation variants
