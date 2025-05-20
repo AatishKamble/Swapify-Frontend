@@ -17,6 +17,7 @@ const Login = () => {
     password: "",
   })
 
+ 
   const [errors, setErrors] = useState({
     email: "",
     password: "",
@@ -244,7 +245,9 @@ const Login = () => {
               )}
             </motion.button>
           </form>
-
+{
+  auth?.error?.message ? <p className="mt-2 text-sm text-center text-red-600">{auth?.error?.message}</p>:""
+}
           <motion.div variants={itemVariants} className="mt-8">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">

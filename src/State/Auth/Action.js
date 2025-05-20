@@ -69,8 +69,10 @@ const login = (userData) => async (dispatch) => {
         }
 
         dispatch(loginSuccess(user.jwt))
+        
     } catch (error) {
-        dispatch(loginFailure(error.message))
+   
+        dispatch(loginFailure(error.response.data))
     }
 }
 
